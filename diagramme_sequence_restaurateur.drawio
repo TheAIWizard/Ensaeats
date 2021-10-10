@@ -28,7 +28,7 @@
                 <mxCell id="33" value="" style="endArrow=none;startArrow=none;endFill=0;startFill=0;endSize=8;html=1;verticalAlign=bottom;dashed=1;labelBackgroundColor=none;dashPattern=10 10;fontSize=15;" parent="1" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
                         <mxPoint x="1000" as="sourcePoint"/>
-                        <mxPoint x="1010" y="1160" as="targetPoint"/>
+                        <mxPoint x="1010" y="1520" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="34" value="Base de Données" style="pointerEvents=1;shadow=0;dashed=0;html=1;aspect=fixed;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.vvd.storage;fillColor=#000066;strokeColor=#000066;fontSize=15;labelBackgroundColor=#ffffff;fontStyle=1" parent="1" vertex="1">
@@ -40,7 +40,7 @@
                 <mxCell id="36" value="" style="endArrow=none;startArrow=none;endFill=0;startFill=0;endSize=8;html=1;verticalAlign=bottom;dashed=1;labelBackgroundColor=none;dashPattern=10 10;fontSize=15;exitX=0.471;exitY=0.858;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
                         <mxPoint x="960.7186200000001" y="81.48000000000002" as="sourcePoint"/>
-                        <mxPoint x="960" y="1160" as="targetPoint"/>
+                        <mxPoint x="970" y="1520" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="37" value="YELP" style="pointerEvents=1;shadow=0;dashed=0;html=1;aspect=fixed;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.vvd.guest_agent_customization;fontSize=15;fillColor=#006600;strokeColor=#FFFFFF;labelBackgroundColor=#ffffff;fontStyle=1" parent="1" vertex="1">
