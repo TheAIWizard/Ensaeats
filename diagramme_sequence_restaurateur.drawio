@@ -207,7 +207,7 @@
                 <mxCell id="117" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;labelBackgroundColor=#ffffff;fontSize=15;strokeColor=#000000;strokeWidth=1;fillColor=#FFFFFF;" vertex="1" parent="1">
                     <mxGeometry x="294" y="1220" width="10" height="260" as="geometry"/>
                 </mxCell>
-                <mxCell id="118" value="Envoie_modification&lt;br style=&quot;font-size: 15px&quot;&gt;(Menu)" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=15;" edge="1" parent="1">
+                <mxCell id="118" value="Transfert_modification&lt;br style=&quot;font-size: 15px&quot;&gt;(Menu)" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=15;" edge="1" parent="1">
                     <mxGeometry x="-0.068" y="-60" width="80" relative="1" as="geometry">
                         <mxPoint x="304.0100000000002" y="1270" as="sourcePoint"/>
                         <mxPoint x="510" y="1270" as="targetPoint"/>
