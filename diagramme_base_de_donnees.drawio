@@ -102,7 +102,7 @@
                     <mxGeometry x="157" y="409" width="40" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="122" value="Table_menus_commande" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;sketch=0;strokeColor=#E07A5F;fillColor=#F2CC8F;fontColor=#393C56;rounded=1;" parent="1" vertex="1">
-                    <mxGeometry x="315" y="623" width="203" height="104" as="geometry"/>
+                    <mxGeometry x="318" y="585" width="203" height="104" as="geometry"/>
                 </mxCell>
                 <mxCell id="123" value="id : NUMERIC" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;labelBackgroundColor=none;labelBorderColor=none;fontColor=#393C56;fontStyle=4;rounded=1;" parent="122" vertex="1">
                     <mxGeometry y="26" width="203" height="26" as="geometry"/>
@@ -161,9 +161,9 @@
                         <Array as="points"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="158" value="" style="endArrow=none;dashed=1;html=1;fontColor=#393C56;strokeColor=#E07A5F;fillColor=#F2CC8F;exitX=0.413;exitY=0.01;exitDx=0;exitDy=0;exitPerimeter=0;labelBackgroundColor=#F4F1DE;" parent="1" source="122" edge="1">
+                <mxCell id="158" value="" style="endArrow=none;dashed=1;html=1;fontColor=#393C56;strokeColor=#E07A5F;fillColor=#F2CC8F;labelBackgroundColor=#F4F1DE;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="350" y="610" as="sourcePoint"/>
+                        <mxPoint x="400" y="581" as="sourcePoint"/>
                         <mxPoint x="400" y="519" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
