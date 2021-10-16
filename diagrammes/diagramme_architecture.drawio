@@ -1,20 +1,20 @@
 <mxfile host="65bd71144e">
     <diagram id="pbh2ctj3G5VBj-bnsWR5" name="Page-1">
-        <mxGraphModel dx="466" dy="413" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="659" dy="413" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="12" value="Restaurateur" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="75" y="850" width="110" height="60" as="geometry"/>
+                    <mxGeometry x="75" y="842" width="110" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="13" value="" style="triangle;whiteSpace=wrap;html=1;rotation=-90;" parent="1" vertex="1">
                     <mxGeometry x="102.5" y="760.04" width="54.99" height="124.97" as="geometry"/>
                 </mxCell>
-                <mxCell id="14" value="OU" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" parent="1" vertex="1">
-                    <mxGeometry x="115" y="760.04" width="30" height="20" as="geometry"/>
+                <mxCell id="14" value="&lt;font color=&quot;#000000&quot;&gt;OU&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="116" y="762.04" width="28" height="17" as="geometry"/>
                 </mxCell>
                 <mxCell id="15" value="Base de données" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" parent="1" vertex="1">
-                    <mxGeometry x="680" y="600" width="60" height="80" as="geometry"/>
+                    <mxGeometry x="666" y="600" width="74" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="16" value="API" style="shape=ext;double=1;rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="400" y="720" width="120" height="80" as="geometry"/>
@@ -40,8 +40,8 @@
                 <mxCell id="24" value="" style="pointerEvents=1;shadow=0;dashed=0;html=1;aspect=fixed;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.vvd.laptop;rounded=0;sketch=0;" parent="1" vertex="1">
                     <mxGeometry x="70.27999999999999" y="650" width="119.45" height="86" as="geometry"/>
                 </mxCell>
-                <mxCell id="25" value="Client" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" parent="1" vertex="1">
-                    <mxGeometry x="102.49999999999999" y="680" width="50" height="20" as="geometry"/>
+                <mxCell id="25" value="&lt;font color=&quot;#000000&quot;&gt;Client&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
+                    <mxGeometry x="107.49999999999999" y="682" width="41" height="17" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
