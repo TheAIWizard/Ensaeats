@@ -1,12 +1,12 @@
 <mxfile host="65bd71144e">
     <diagram id="8u0bxdynmH37dt6yqb02" name="Page-1">
-        <mxGraphModel dx="733" dy="486" grid="0" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+        <mxGraphModel dx="706" dy="250" grid="0" gridSize="10" guides="1" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="3" value="" style="endArrow=none;html=1;shadow=1;strokeColor=#000000;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="161" y="520" as="sourcePoint"/>
+                        <mxPoint x="161" y="572" as="sourcePoint"/>
                         <mxPoint x="161" y="31" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
@@ -17,10 +17,10 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="5" value="Enregistrement d'une commande&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="240" y="240" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="237" y="240" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="6" value="Modification de la carte d'un restaurant&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="240" y="310" width="120" height="60" as="geometry"/>
+                <mxCell id="6" value="Ajouter/Supprimer un menu à son restaurant" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="237" y="309" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="7" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;" parent="1" target="6" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -35,7 +35,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="10" value="Consulter la liste des commandes d'un restaurant" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="240" y="380" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="237" y="440" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="11" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;" parent="1" target="12" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -44,7 +44,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="12" value="Rechercher des restaurants selon la localisation&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="240" y="100" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="237" y="100" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="13" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;" parent="1" target="14" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -53,20 +53,20 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="14" value="Consulter la liste des commandes d'un utilisateur" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="240" y="450" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="237" y="507" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="15" value="" style="endArrow=none;html=1;strokeColor=#000000;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="160" y="520" as="sourcePoint"/>
-                        <mxPoint x="576" y="520" as="targetPoint"/>
+                        <mxPoint x="161" y="572" as="sourcePoint"/>
+                        <mxPoint x="577" y="572" as="targetPoint"/>
                         <Array as="points">
-                            <mxPoint x="160" y="520"/>
+                            <mxPoint x="161" y="572"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="16" value="" style="endArrow=none;html=1;strokeColor=#000000;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="576" y="522" as="sourcePoint"/>
+                        <mxPoint x="576" y="573" as="sourcePoint"/>
                         <mxPoint x="576" y="29" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
@@ -89,10 +89,10 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="21" value="Rechercher des restaurants selon le nom&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="240" y="170" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="237" y="170" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="22" value="Rechercher / Filtrer des restaurants selon la spécialité&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="240" y="30" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="235" y="30" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="23" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;" parent="1" target="22" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -100,17 +100,26 @@
                         <mxPoint x="240" y="130" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="26" value="" style="endArrow=none;html=1;startArrow=classic;startFill=1;endFill=0;dashed=1;strokeColor=#000000;" parent="1" edge="1">
+                <mxCell id="26" value="" style="endArrow=none;html=1;startArrow=classic;startFill=1;endFill=0;dashed=1;strokeColor=#000000;exitX=1;exitY=0.547;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1" target="27" source="10">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="360" y="409.5" as="sourcePoint"/>
                         <mxPoint x="443" y="410" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="27" value="Filtrer selon une période temporelle&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="444" y="380" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="445" y="440" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="28" value="&lt;font color=&quot;#000000&quot;&gt;&amp;lt;&amp;lt;extends&amp;gt;&amp;gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=0;" parent="1" vertex="1">
-                    <mxGeometry x="386" y="390" width="40" height="20" as="geometry"/>
+                    <mxGeometry x="385" y="449" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="Ajouter/ Supprimer un article à son restaurant" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="237" y="377" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="" style="endArrow=classic;html=1;entryX=-0.017;entryY=0.519;entryDx=0;entryDy=0;strokeColor=#000000;entryPerimeter=0;" edge="1" parent="1" target="29">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="121" y="261" as="sourcePoint"/>
+                        <mxPoint x="250" y="350" as="targetPoint"/>
+                    </mxGeometry>
                 </mxCell>
             </root>
         </mxGraphModel>

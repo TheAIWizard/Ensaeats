@@ -1,5 +1,6 @@
 from app.model.location import Location
 from app.model.restaurant import Restaurant
+from yelp_mapper import YelpMapper
 
 
 class YelpMapper:

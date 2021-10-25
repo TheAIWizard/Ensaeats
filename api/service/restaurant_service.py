@@ -1,4 +1,4 @@
-from yelp_api import YelpApiService
+from yelp_api_service import YelpApiService
 from typing import List
 
 
@@ -8,14 +8,14 @@ class RestaurantsService:
     def getRestaurants(location: str, term: str = '', radius : int = 3000) -> List[Restaurant]:
         response = YelpApiService.get_businesses(term, location, radius)
         restaurants = []
-        restaurants.append(YelpMapper.buisness_to_restaurant(buisness)
-                           for buisness in response.json()["buisnesses"])
+        restaurants.append(YelpMapper.businesses_to_restaurants(business)
+                           for business in response.json()["businesses"])
         return restaurants
 
     @staticmethod
     def getRestaurant(id: str) -> Restaurant:
-        response = YelpApiService.getBuisness(id)
-        restaurant = YelpMapper.buisness_to_restaurant(response.json())
+        response = YelpApiService.getBusiness(id)
+        restaurant = YelpMapper.businesses_to_restaurants(response.json())
         return restaurant
 
     @staticmethod
