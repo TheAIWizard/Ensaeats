@@ -1,0 +1,22 @@
+INSERT INTO ensaeats.restaurant(id_restaurant, nom) VALUES
+('NL0ROvACBWrwYv1BZxBWtQ', 'La Saint Georges'),
+('0zdd2TaH8lCdOtnjIYGBgA', 'Parc du Thabor'),
+('LTy9AUgMnLn8YS21KfFZ8g', 'La Fontaine aux Perles'),
+('Rye9AjT3ZKXex8UKG7GU_g', 'Crêperie Ouzh-Taol'),
+('YI6c9mEylXOX4AskuNUTgA', 'Le Fuji'),
+('phyz886BDOKEMBhPgfr1VQ', 'Falafel'),
+('a3gokbfEKALx_1xGvXfL4A', 'La Gavotte'),
+('EaNYafmtrZ1qK7DJ3M5zkQ', 'La Réserve'),
+('ZJqNk7xPR5EB0EBoenUFPg', 'Crêperie La Pommeraie'),
+('ihhIbISGmRBy06tfwQVYow', 'Le Bistrot du Quai'),
+('npMGUHZuf4MUMZ7MFM9FlA', 'Couleurs Café'),
+('oUdvXPdM3sItZ1zhh8Cjgw', "L'Ambassade"),
+('y5Yj0dwdgUAYG1TWW8TFqA', 'Le Café des Bains'),
+('a7OxWe8DkyKQoqcnfOSxkw', 'Le Bocal'),
+('VlKrxdwwx0xm6ByUiHGAqQ', "L'Atelier des Gourmets"),
+('Y3Kb865M0hUdL5rB-dLYuQ', "O'Connells"),
+('6lAItmD8hHO-VpwOmBJUvQ', 'Le Pagnol'),
+('3beOjsPVwhj0F-zqioxMFg', 'Crêperie Sainte-Anne'),
+('dAY2x-MlSP0_hAWnG9z8yQ', "L'Artiste Assoiffé"),
+('Ud_ayHS1QXhi8ULDwGiGmA', 'Ar Pillig')
+;
