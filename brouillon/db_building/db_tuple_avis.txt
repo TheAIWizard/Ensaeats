@@ -1,26 +1,3 @@
-INSERT INTO ensaeats.restaurant(id_restaurant, nom) VALUES
-('NL0ROvACBWrwYv1BZxBWtQ', 'La Saint Georges'),
-('0zdd2TaH8lCdOtnjIYGBgA', 'Parc du Thabor'),
-('LTy9AUgMnLn8YS21KfFZ8g', 'La Fontaine aux Perles'),
-('Rye9AjT3ZKXex8UKG7GU_g', 'Crêperie Ouzh-Taol'),
-('YI6c9mEylXOX4AskuNUTgA', 'Le Fuji'),
-('phyz886BDOKEMBhPgfr1VQ', 'Falafel'),
-('a3gokbfEKALx_1xGvXfL4A', 'La Gavotte'),
-('EaNYafmtrZ1qK7DJ3M5zkQ', 'La Réserve'),
-('ZJqNk7xPR5EB0EBoenUFPg', 'Crêperie La Pommeraie'),
-('ihhIbISGmRBy06tfwQVYow', 'Le Bistrot du Quai'),
-('npMGUHZuf4MUMZ7MFM9FlA', 'Couleurs Café'),
-('oUdvXPdM3sItZ1zhh8Cjgw', "L'Ambassade"),
-('y5Yj0dwdgUAYG1TWW8TFqA', 'Le Café des Bains'),
-('a7OxWe8DkyKQoqcnfOSxkw', 'Le Bocal'),
-('VlKrxdwwx0xm6ByUiHGAqQ', "L'Atelier des Gourmets"),
-('Y3Kb865M0hUdL5rB-dLYuQ', "O'Connells"),
-('6lAItmD8hHO-VpwOmBJUvQ', 'Le Pagnol'),
-('3beOjsPVwhj0F-zqioxMFg', 'Crêperie Sainte-Anne'),
-('dAY2x-MlSP0_hAWnG9z8yQ', "L'Artiste Assoiffé"),
-('Ud_ayHS1QXhi8ULDwGiGmA', 'Ar Pillig')
-;
-INSERT INTO ensaeats.avis(id_avis,avis,id_restaurant) VALUES
 (200, "One of the best creperies in Rennes, and it's very upscale compared to your tradition crepe place. Of course, that means the prices are upscale too. But the...", 'NL0ROvACBWrwYv1BZxBWtQ'),
 (201, 'The headline for my review of La Saint George is "This is a super place for fancy crepes!".  I am cleaning up some review drafts I started before COVID hit....', 'NL0ROvACBWrwYv1BZxBWtQ'),
 (202, 'The name comes up often when asking locals about the best crêperie in Rennes. To be honest, the place is a little too trendy-looking for me. Lots of velvet...', 'NL0ROvACBWrwYv1BZxBWtQ'),
