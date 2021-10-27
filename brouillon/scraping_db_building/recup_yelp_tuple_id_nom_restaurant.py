@@ -25,4 +25,3 @@ for element in result_restaurant:
     file.write(str(element) + ",\n")
 file.write(";")
 file.close()
-

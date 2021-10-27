@@ -8,9 +8,12 @@ df_business_id=df[['url']]
 list_business_id=(list(df['url']))
 
 #récupération des résultats dans un fichier .txt
-file = open("yelp_business_id", "w",encoding="utf-8") 
+file = open("brouillon/scraping_db_building/yelp_business_url", "w",encoding="utf-8") 
 for address in list_business_id:
-    file.write(address.replace('https://www.yelp.com/biz/','') + "\n")
+    #file.write(address.replace('https://www.yelp.com/biz/','') + "\n") #si on souhaite recup que la partie après https:.../
+
+    #extraction du texte avant '?'
+    file.write(address[:address.find('?')] + "\n")
 file.close()
 
 
