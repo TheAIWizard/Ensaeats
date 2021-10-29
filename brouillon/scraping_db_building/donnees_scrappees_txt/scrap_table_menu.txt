@@ -1,0 +1,5 @@
+(241758, 'Menu retour du marché du 26 au 30 Octobre 2021', 34),
+(175454, 'Menu légumes', 54),
+(804514, 'Menu plaisir', 51),
+(736594, 'Menu au rythme des saisons', 71),
+(513128, 'Menu épicurien', 89),
