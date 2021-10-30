@@ -1,12 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
-import json
+import pandas as pd
 import hashlib
 from os.path import exists
 
 """ ETAPE 1: SCRAPER LE SITE OFFICIEL SUR LA PAGE YELP ASSOCIE AU SITE DU RESTAURANT """
 
-page=requests.get('https://www.yelp.com/biz/la-fontaine-aux-perles-rennes')
+site_restau_yelp='https://www.yelp.com/biz/la-fontaine-aux-perles-rennes'
+page=requests.get(site_restau_yelp)
 
 #conversion de la page en objet BeautifulSoup
 #html_page = urlopen(page)
@@ -24,7 +25,6 @@ lien_existe=(recup_lien!=[])
 lien='https://www.yelp.com'+recup_lien[0] if lien_existe else None
 
 """ ETAPE 2: RECUPERER LE SITE OFICIEL SUR LA PAGE DE REDIRECTION"""
-
 
 #accedons à la page de redirection vers la page officielle du restaurant
 page_officiel_redirect=requests.get(lien)
@@ -96,57 +96,74 @@ for div in list(extract_page_menu) :
 #on en déduit les tuples recherché pour la construction des tables: table_menu, table_article, table_menu_article
 table_menu=list(zip(id_menu,liste_menu,prix_menu))
 table_article=list(zip(id_plat,liste_plat,['plat' for i in range(len(id_plat))],composition))
-print(table_menu_article)
+#print(table_menu_article)
 
 #print(soup_menu.findAll('div',{'class',"small-12 medium-12 large-12 cell"}))
 
 """ ETAPE 4: STOCKER LES RESULTATS DANS DES FICHIERS TXT"""
 #récupération des résultats dans un fichier .txt
-
-#tuples pour la table menu
-#si le fichier n'existe pas déjà
-if not(exists('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_menu.txt')):
-    menu = open("brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_menu.txt", "w",encoding="utf-8") 
-    for element in table_menu:
-        menu.write(str(element) + ",\n")
-    menu.close()
-else:
-    #sinon on rajoute du contenu au fichier déjà existant
-    with open('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_menu.txt', 'a+') as f:
-        for element in table_menu:
-            f.write(str(element) + ",\n")
+#création d'une fonction pour cette tâche
+def stockage_tuple_requete_creation_table_fichier_txt(chemin,liste):
+    """ chemin: [str], liste [list of tuples]"""
+    #si le fichier n'existe pas déjà
+    if not(exists(chemin)):
+        file = open(chemin, "w",encoding="utf-8") 
+        for element in liste:
+            file.write(str(element) + ",\n")
+        file.close()
+    else:
+        #sinon on rajoute du contenu au fichier déjà existant
+        with open(chemin, 'a+',encoding="utf-8") as f:
+            for element in liste:
+                f.write(str(element) + ",\n")
             f.close()
-
+    
+""" #tuples pour la table menu
+stockage_tuple_requete_creation_table_fichier_txt('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_menu.txt',table_menu)
 #tuples pour la table article
-#si le fichier n'existe pas déjà
-if not(exists('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_article.txt')):
-    article = open("brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_article.txt", "w",encoding="utf-8") 
-    for element in table_article:
-        article.write(str(element) + ",\n")
-    article.close()
-else:
-    #sinon on rajoute du contenu au fichier déjà existant
-    with open('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_article.txt', 'a+') as f:
-        for element in table_article:
-            f.write(str(element) + ",\n")
-            f.close()
-
-#tuples pour la table menu
-#si le fichier n'existe pas déjà
-if not(exists('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_menu_article.txt')):
-    menu_article = open("brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_menu_article.txt", "w",encoding="utf-8") 
-    for element in table_menu_article:
-        menu_article.write(str(element) + ",\n")
-    menu_article.close()
-else:
-    #sinon on rajoute du contenu au fichier déjà existant
-    with open('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_menu_article.txt', 'a+') as f:
-        for element in table_menu_article:
-            f.write(str(element) + ",\n")
-            f.close()
+stockage_tuple_requete_creation_table_fichier_txt('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_article.txt',table_article)
+#tuples pour la table menu_article
+stockage_tuple_requete_creation_table_fichier_txt('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_menu_article.txt',table_menu_article) """
 
 """ ETAPE 5: REITERER TOUTES CES ETAPES AVEC LES AUTRES URL DONNEES PAE LE PROGRAMME recup_partie_url_restau ..."""
 
-#Récupérons tout d'abord les restaurants de YELP ayant des liens de redirection vers le site officiel sur YELP
+""" ETAPE 5.1 REFERENCER LES RESTAURANTS AYANT DES RUBRIQUES MENUS/CARTE QUI NE SOIENT PAS DES IMAGES OU DES PDFS: IL FAUDRA ENUITE FAIRE DU CAS PAR CAS"""
 
-#Affichons le nom des restaurants à scrapper
+#Récupérons tout d'abord les restaurants de YELP ayant des liens de redirection vers le site officiel sur YELP
+params = {'term': 'restaurants','location': 'Bruz', 'latitude': 48.05089, 'longitude': -1.74192, 'limit':50, 'sort_by': 'rating', 'radius': 20000}
+r=requests.get('https://api.yelp.com/v3/businesses/search',headers={'Authorization': 'Bearer fn70eRh36s5xOBDKdreUKbTNiwwzcMCgh3ydHo8UwT5dSFe_lqle6YLhKN1Xh29LqCf9AmLCmpjksKRa0fWvoWg4RuFS5GhyEvFqMWPMKqILPpx2NHaONy5GOjl4YXYx'},params=params)
+json=r.json()
+df=pd.DataFrame(json['businesses'])
+list_business_id=list(df['url'])
+liste_url_restau=[]
+for address in list_business_id:
+    liste_url_restau.append(address[:address.find('?')])
+#ajout colonne id haché: l'algo de hachage sha512 ressort le même hachage pour la même entrée sur Python
+df['id_hash']=df['id'].apply(lambda x: int(hashlib.sha512(x.encode("utf-8")).hexdigest(), 16) % (10 ** 8) )
+#liste des tuples: (id_restaurant,alias) pour retrouver l'id_restaurant étant donné l'alias (retrouvé lui-même dans le lien du site sur YELP)
+tuple_id_restau_alias=list(df[['id_hash','alias']].to_records(index=False))
+
+''' Restaurant_Menu : id_restaurant id_menu (profitons de cette requête de YELP pour récupérer ces tuples, en particulier l'id_restaurant)'''
+alias_restaurant_site=site_restau_yelp[site_restau_yelp.rfind('/')+1:]
+#connaissant l'alias, chercher l'id correspondant dans la liste de tuples
+id_restaurant_site=[tuple for tuple in tuple_id_restau_alias if tuple[1] == alias_restaurant_site][0][0]
+table_restaurant_menu=[(id_restaurant_site,id_du_menu) for id_du_menu in id_menu]
+#récupération des résultats dans un fichier .txt (il manquait la table table_restaurant_menu)
+#stockage_tuple_requete_creation_table_fichier_txt('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_restaurant_menu.txt',table_restaurant_menu)
+
+#Récupérons ceux ayant un site officiel
+requests_restau=[requests.get(url) for url in liste_url_restau]
+soups_restau=[BeautifulSoup(page.text, "html.parser") for page in requests_restau]
+lien_officiel_restau=[[link.get('href') for link in good_soop.findAll('a',{'class':"css-ac8spe"}) if 'http' in link.get('href')] for good_soop in soups_restau]
+extrait_lien_redirection_restau=[lien[0] for lien in lien_officiel_restau if lien] #on ne garde que les listes non-vides
+lien_redirection_restau=['https://www.yelp.com'+lien for lien in extrait_lien_redirection_restau if lien]
+#Récupérons leur site officiel
+requests_officiel_restau=[requests.get(url) for url in lien_redirection_restau]
+soups_officiel_restau = [BeautifulSoup(page.text, "html.parser") for page in requests_officiel_restau]
+#la page de redirection ne contient que des <string>, retrouvons le lien de la page officielle
+script_pages_officiels=[[(script.string) for script in soup.findAll('script') if 'http' in script.string] for soup in soups_officiel_restau ]
+liens_pages_officiels=[lien[0] for lien in script_pages_officiels]
+#si la page se finit par .com on extrait de 'http' à 'm'(de 'com') sinon si se finit par '.bzh' jusqu'à 'h' sinon on extrait jusqu'au 'r' de 'fr
+liens_pages_officiels=[script_page_officiel[script_page_officiel.find('http'):script_page_officiel.rfind('m')]+'m' if 'com' in script_page_officiel else script_page_officiel[script_page_officiel.find('http'):script_page_officiel.rfind('h')]+'h' if 'bzh' in script_page_officiel else script_page_officiel[script_page_officiel.find('http'):script_page_officiel.rfind('r')]+'r' for script_page_officiel in liens_pages_officiels]
+
+print(liens_pages_officiels)
