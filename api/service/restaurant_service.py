@@ -1,4 +1,6 @@
-from yelp_api_service import YelpApiService
+from service.yelp_api_service import YelpApiService
+from service.yelp_mapper import YelpMapper
+from metier.restaurant import Restaurant
 from typing import List
 
 
@@ -6,10 +8,9 @@ class RestaurantsService:
 
     @staticmethod
     def getRestaurants(location: str, term: str = '', radius : int = 3000) -> List[Restaurant]:
-        response = YelpApiService.get_businesses(term, location, radius)
+        response = YelpApiService.get_businesses(location, term, radius)
         restaurants = []
-        restaurants.append(YelpMapper.businesses_to_restaurants(business)
-                           for business in response.json()["businesses"])
+        restaurants.append(YelpMapper.businesses_to_restaurants(response))
         return restaurants
 
     @staticmethod
@@ -19,13 +20,13 @@ class RestaurantsService:
         return restaurant
 
     @staticmethod
-    def addMenuOnRestaurant(id_restaurant: str, menu: Menu):
-        raise NotImplementedError
+    def addMenuOnRestaurant(id_restaurant: str, id_article1, id_article2, id_article3 ):
+        pass
 
     @staticmethod
     def updateMenuOnRestaurant(id_restaurant: str, id_menu: str, menu):
-        raise NotImplementedError
+        pass
 
     @staticmethod
     def deleteMenuOnRestaurant(id_restaurant: str, id_menu: str):
-        raise NotImplementedError
+        pass

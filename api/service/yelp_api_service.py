@@ -19,7 +19,7 @@ class YelpApiService():
         # la localisation, du term : nom du restaurant, et du term 
         url = "https://api.yelp.com/v3/businesses/search"
         headers = {"Authorization" : "Bearer "+my_key}
-        response = requests.get(url, params={"term": term, "location": location, "categories":'food',"radius":radius}, headers={'Authorization': "bearer "+my_key})
+        response = requests.get(url, params={"term": term, "location": location, "categories":'Restaurants',"radius":radius}, headers={'Authorization': "bearer "+my_key})
         return response.json()
 
 
