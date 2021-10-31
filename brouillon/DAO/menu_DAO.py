@@ -14,7 +14,8 @@ class MenuDao(metaclass=Singleton):
         :param offest: the offset of the request
         :type offest: int
         """
-        request = "SELECT * FROM ensaeats.menu"
+        request= "SELECT * FROM ensaeats.menu JOIN ensaeats.table_menu_article USING(id_menu)"\
+                  "JOIN ensaeats.article USING(id_article)"
         if limit :
             request+=f"LIMIT {limit}"
         if offest :
@@ -31,12 +32,14 @@ class MenuDao(metaclass=Singleton):
                 menu = Menu(
                       id_menu = row["id_menu"]
                     , nom_menu=row['nom']
-                    #, plat=row['attack_name'] faire un lien avec menu.article
-                    #, boisson=row['attack_description'] et dessert alors?
+                    #, plat=row['attack_name'] peut-être à préciser dans la commande 
+                    #, boisson=row['attack_description'] 
                     , prix=row["prix"]
                 )
                 menus.append(menu)
         return menus
+
+    """ pour agréger : SELECT city, STRING_AGG(email,';') WITHIN GROUP (ORDER BY email) email_list FROM sales.customers GROUP BY city; """
 
     def find_all_menus_by_id_restaurant(self,id_restaurant:int) -> List[Menu]:
         """
@@ -47,6 +50,8 @@ class MenuDao(metaclass=Singleton):
         """
         request = "SELECT * FROM ensaeats.menu JOIN ensaeats.table_restaurant_menu USING(id_menu)"\
                   "JOIN ensaeats.restaurant USING(id_restaurant)"\
+                  "JOIN ensaeats.table_menu_article USING(id_menu)"\
+                  "JOIN ensaeats.article USING(id_article)"\
                   "WHERE id_restaurant=%(id_restaurant)s"
 
         with DBConnection().connection as connection:
@@ -62,7 +67,7 @@ class MenuDao(metaclass=Singleton):
                 menu = Menu(
                       id_menu = row["id_menu"]
                     , nom_menu=row['nom']
-                    #, plat=row['attack_name'] faire un lien avec menu.article
+                    #, plat=row['attack_name'] dans ce cas on devrait faire
                     #, boisson=row['attack_description'] et dessert alors?
                     , prix=row["prix"]
                 )
