@@ -86,8 +86,8 @@ class MenuDao(metaclass=Singleton):
                     "(%(id_menu)s, %(nom)s, %(prix)s)"\
                     "RETURNING id_menu;"
                 , {"id_menu" : menu.id_menu
-                  , "name": menu.nom
-                  , "prix": menu.prix})
+                  , "name": menu.nom_menu
+                  , "prix": menu.prix_menu})
                 res = cursor.fetchone()
         if res :
             menu.id=res['id_menu']
@@ -120,11 +120,11 @@ class MenuDao(metaclass=Singleton):
                 cursor.execute(
                     "UPDATE ensaeats.menu SET" \
                     " id_menu = %(id_menu)s"\
-                    ", nom = %(nom)s"\
-                    ", prix = %(prix)s"
+                    ", nom = %(nom_menu)s"\
+                    ", prix = %(prix_menu)s"
                 , {"id_menu" : menu.id_menu
-                  , "nom": menu.nom
-                  , "prix": menu.prix})
+                  , "nom": menu.nom_menu
+                  , "prix": menu.prix_menu})
                 if cursor.rowcount :
                     updated = True
         return updated
