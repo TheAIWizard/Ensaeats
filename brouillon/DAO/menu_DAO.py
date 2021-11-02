@@ -1,7 +1,7 @@
 from typing import List, Optional
 from brouillon.utils.singleton import Singleton
-from DAO.db_connection import DBConnection
-from metier.menu import Menu
+from brouillon.DAO.db_connection import DBConnection
+from brouillon.metier.menu import Menu
 
 class MenuDao(metaclass=Singleton):
     def find_all_menus(self, limit:int=0, offest:int=0) -> List[Menu]:
@@ -13,7 +13,7 @@ class MenuDao(metaclass=Singleton):
         :param offest: the offset of the request
         :type offest: int
         """
-        request= "SELECT * FROM ensaeats.menu JOIN ensaeats.menu"
+        request= "SELECT * FROM ensaeats.menu;"
         if limit :
             request+=f"LIMIT {limit}"
         if offest :
@@ -30,7 +30,7 @@ class MenuDao(metaclass=Singleton):
                 menu = Menu(
                       id_menu = row["id_menu"]
                     , nom_menu=row['nom']
-                    , prix=row["prix"]
+                    , prix_menu=row["prix"]
                 )
                 menus.append(menu)
         return menus
@@ -44,8 +44,9 @@ class MenuDao(metaclass=Singleton):
         :param id_menu: The menu id
         :type id_menu: int
         """
-        request = "SELECT * FROM ensaeats.menu JOIN ensaeats.menu"\
-                  "WHERE id_restaurant=%(id_restaurant)s"
+        request = "SELECT * FROM ensaeats.menu "\
+                  "JOIN ensaeats.table_restaurant_menu USING(id_menu) "\
+                  "WHERE id_restaurant=%(id_restaurant)s;"
 
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
@@ -60,7 +61,7 @@ class MenuDao(metaclass=Singleton):
                 menu = Menu(
                       id_menu = row["id_menu"]
                     , nom_menu=row['nom']
-                    , prix=row["prix"]
+                    , prix_menu=row["prix"]
                 )
                 menus.append(menu)
         return menus
@@ -112,10 +113,11 @@ class MenuDao(metaclass=Singleton):
                     "UPDATE ensaeats.menu SET" \
                     " id_menu = %(id_menu)s"\
                     ", nom = %(nom_menu)s"\
-                    ", prix = %(prix_menu)s"
+                    ", prix = %(prix_menu)s;"
                 , {"id_menu" : menu.id_menu
                   , "nom": menu.nom_menu
                   , "prix": menu.prix_menu})
                 if cursor.rowcount :
                     updated = True
         return updated
+

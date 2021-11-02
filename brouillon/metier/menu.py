@@ -4,15 +4,9 @@ class Menu:
     """
     def __init__(self, id_menu,
                  nom_menu,
-                 plat,
-                 boisson,
-                 dessert,
                  prix_menu) -> None:
         self.id_menu = id_menu
         self.nom_menu = nom_menu
-        self.plat = plat
-        self.boisson = boisson
-        self.dessert= dessert
         self.prix_menu = prix_menu
         #tu as oublié le dessert
         
