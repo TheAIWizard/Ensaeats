@@ -244,7 +244,7 @@ INSERT INTO ensaeats.table_menu_article(id_menu,id_article) VALUES
 (736594, 3040391),
 (513128, 7670464)
 ;
-INSERT INTO ensaeats.avis(id_article,nom,type_article,composition) VALUES
+INSERT INTO ensaeats.article(id_article,nom,type_article,composition) VALUES
 (8904720, 'Cannelloni de courge', 'plat', 'Butternut, farce boudin, pommes et vinaigrette au jus de viande'),
 (4301198, 'Aile de raie', 'plat', 'Rôtie au beurre noisette, chou-fleur et choux de Bruxelles, sauce crémeuse au chorizo'),
 (2223791, 'Le tout caramel', 'plat', 'Biscuit streusel noisette, pâte à choux et glace caramel '),
