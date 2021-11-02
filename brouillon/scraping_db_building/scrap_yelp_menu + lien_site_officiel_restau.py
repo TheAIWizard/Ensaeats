@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import hashlib
 from os.path import exists
-
+import webbrowser
 """ ETAPE 1: SCRAPER LE SITE OFFICIEL SUR LA PAGE YELP ASSOCIE AU SITE DU RESTAURANT """
 
 site_restau_yelp='https://www.yelp.com/biz/la-fontaine-aux-perles-rennes'
@@ -118,12 +118,12 @@ def stockage_tuple_requete_creation_table_fichier_txt(chemin,liste):
                 f.write(str(element) + ",\n")
             f.close()
     
-""" #tuples pour la table menu
+#tuples pour la table menu
 stockage_tuple_requete_creation_table_fichier_txt('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_menu.txt',table_menu)
 #tuples pour la table article
 stockage_tuple_requete_creation_table_fichier_txt('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_article.txt',table_article)
 #tuples pour la table menu_article
-stockage_tuple_requete_creation_table_fichier_txt('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_menu_article.txt',table_menu_article) """
+stockage_tuple_requete_creation_table_fichier_txt('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_menu_article.txt',table_menu_article)
 
 """ ETAPE 5: REITERER TOUTES CES ETAPES AVEC LES AUTRES URL DONNEES PAE LE PROGRAMME recup_partie_url_restau ..."""
 
@@ -149,7 +149,7 @@ alias_restaurant_site=site_restau_yelp[site_restau_yelp.rfind('/')+1:]
 id_restaurant_site=[tuple for tuple in tuple_id_restau_alias if tuple[1] == alias_restaurant_site][0][0]
 table_restaurant_menu=[(id_restaurant_site,id_du_menu) for id_du_menu in id_menu]
 #récupération des résultats dans un fichier .txt (il manquait la table table_restaurant_menu)
-#stockage_tuple_requete_creation_table_fichier_txt('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_restaurant_menu.txt',table_restaurant_menu)
+stockage_tuple_requete_creation_table_fichier_txt('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_table_restaurant_menu.txt',table_restaurant_menu)
 
 #Récupérons ceux ayant un site officiel
 requests_restau=[requests.get(url) for url in liste_url_restau]
@@ -158,12 +158,16 @@ lien_officiel_restau=[[link.get('href') for link in good_soop.findAll('a',{'clas
 extrait_lien_redirection_restau=[lien[0] for lien in lien_officiel_restau if lien] #on ne garde que les listes non-vides
 lien_redirection_restau=['https://www.yelp.com'+lien for lien in extrait_lien_redirection_restau if lien]
 #Récupérons leur site officiel
-requests_officiel_restau=[requests.get(url) for url in lien_redirection_restau]
-soups_officiel_restau = [BeautifulSoup(page.text, "html.parser") for page in requests_officiel_restau]
+requests_redirect_restau=[requests.get(url) for url in lien_redirection_restau]
+soups_redirect_restau = [BeautifulSoup(page.text, "html.parser") for page in requests_redirect_restau]
 #la page de redirection ne contient que des <string>, retrouvons le lien de la page officielle
-script_pages_officiels=[[(script.string) for script in soup.findAll('script') if 'http' in script.string] for soup in soups_officiel_restau ]
-liens_pages_officiels=[lien[0] for lien in script_pages_officiels]
+script_redirect_officiels=[[(script.string) for script in soup.findAll('script') if 'http' in script.string] for soup in soups_redirect_restau ]
+liens_pages_officiels=[lien[0] for lien in script_redirect_officiels]
 #si la page se finit par .com on extrait de 'http' à 'm'(de 'com') sinon si se finit par '.bzh' jusqu'à 'h' sinon on extrait jusqu'au 'r' de 'fr
 liens_pages_officiels=[script_page_officiel[script_page_officiel.find('http'):script_page_officiel.rfind('m')]+'m' if 'com' in script_page_officiel else script_page_officiel[script_page_officiel.find('http'):script_page_officiel.rfind('h')]+'h' if 'bzh' in script_page_officiel else script_page_officiel[script_page_officiel.find('http'):script_page_officiel.rfind('r')]+'r' for script_page_officiel in liens_pages_officiels]
-
+#pour voir la structure des pages, ouvrons les sur un navigateur
+#for onglet in liens_pages_officiels: webbrowser.open(onglet, new=1)
+#exportons dans un fichier txt les sites officiels
+stockage_tuple_requete_creation_table_fichier_txt('brouillon/scraping_db_building/donnees_scrappees_txt/scrap_lien_site_officiel_restau.txt',liens_pages_officiels)
 print(liens_pages_officiels)
+
