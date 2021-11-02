@@ -7,16 +7,17 @@ from DAO.db_connection import DBConnection
 
 class RestaurantDao(metaclass=Singleton):
 
-    def find_restaurant_by_name(self, name:str)-> Restaurant:
+    def find_id_restaurant_by_name(self, name:str)-> List:
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
                     "SELECT * " \
-                    "\nFROM ensaeats.restaurant JOIN ensaeats.avis ON ensaeats.restaurant.id_restaurant = ensaeats.avis.id_restaurant  "\
+                    "\nFROM ensaeats.restaurant "\
                     "\nWHERE restaurant.nom = %(name)s"
                     , {"name": name}
                 )
                 res = cursor.fetchone()
+        if res:
+            return res["nom", "id_restaurant"]
 
 
- 
