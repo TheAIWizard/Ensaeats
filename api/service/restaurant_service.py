@@ -1,7 +1,7 @@
-from api.service.yelp_api_service import YelpApiService
-from api.service.yelp_mapper import YelpMapper
-from api.metier.restaurant import Restaurant
-from api.metier.article import Article
+from service.yelp_api_service import YelpApiService
+from service.yelp_mapper import YelpMapper
+from API.metier.restaurant import Restaurant
+from API.metier.article import Article
 from typing import List
 
 

@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Header, HTTPException
-from api.metier.user import User
-from api.service.user_service import UserService
+from API.metier.user import User
+from API.service.user_service import UserService
 from typing import Optional
-from api.exception.user_not_authenticated_exception import UserNotAuthenticated
-from api.service.restaurant_service import RestaurantsService
+from API.exception.user_not_authenticated_exception import UserNotAuthenticated
+from API.service.restaurant_service import RestaurantsService
 router = APIRouter()
 
 
