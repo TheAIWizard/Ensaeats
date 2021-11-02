@@ -1,4 +1,4 @@
-from Brouillon_Nikiema.Restaurant_service import RestaurantsService
+from Restaurant_service import RestaurantsService
 from typing import Optional
 
 router = APIRouter()
