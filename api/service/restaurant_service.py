@@ -1,7 +1,7 @@
-from API.service.yelp_api_service import YelpApiService
-from API.service.yelp_mapper import YelpMapper
-from API.metier.restaurant import Restaurant
-from API.metier.article import Article
+from api.service.yelp_api_service import YelpApiService
+from api.service.yelp_mapper import YelpMapper
+from api.metier.restaurant import Restaurant
+from api.metier.article import Article
 from typing import List
 
 
@@ -20,15 +20,14 @@ class RestaurantsService:
 
     @staticmethod
     def getRestaurant(id: str) -> Restaurant:
-        response = YelpApiService.getBusiness(id)
+        response = YelpApiService.get_business_by_id(id)
         restaurant = YelpMapper.businesses_to_restaurants(response.json())
         return restaurant
 
     @staticmethod
     def addArticleOnRestaurant(id_restaurant: str, nom : str, composition : str, type : str):
         article = Article(nom , composition, type)
-        
-
+    
 
     @staticmethod
     def addMenuOnRestaurant(id_restaurant: str, id_article1, id_article2, id_article3 ):

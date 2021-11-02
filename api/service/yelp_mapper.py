@@ -1,5 +1,5 @@
-from API.metier.restaurant import Restaurant
-from API.metier.adresse import Adresse
+from metier.restaurant import Restaurant
+from metier.adresse import Adresse
 from typing import List
 
 class YelpMapper:
