@@ -2,7 +2,6 @@ from typing import List, Optional
 from utils.singleton import Singleton
 from DAO.db_connection import DBConnection
 from metier.menu import Menu
-from metier.article import Article
 
 class MenuDao(metaclass=Singleton):
     def find_all_menus(self, limit:int=0, offest:int=0) -> List[Menu]:
@@ -14,8 +13,7 @@ class MenuDao(metaclass=Singleton):
         :param offest: the offset of the request
         :type offest: int
         """
-        request= "SELECT * FROM ensaeats.menu JOIN ensaeats.table_menu_article USING(id_menu)"\
-                  "JOIN ensaeats.article USING(id_article)"
+        request= "SELECT * FROM ensaeats.menu JOIN ensaeats.menu"
         if limit :
             request+=f"LIMIT {limit}"
         if offest :
@@ -46,10 +44,7 @@ class MenuDao(metaclass=Singleton):
         :param id_menu: The menu id
         :type id_menu: int
         """
-        request = "SELECT * FROM ensaeats.menu JOIN ensaeats.table_restaurant_menu USING(id_menu)"\
-                  "JOIN ensaeats.restaurant USING(id_restaurant)"\
-                  "JOIN ensaeats.table_menu_article USING(id_menu)"\
-                  "JOIN ensaeats.article USING(id_article)"\
+        request = "SELECT * FROM ensaeats.menu JOIN ensaeats.menu"\
                   "WHERE id_restaurant=%(id_restaurant)s"
 
         with DBConnection().connection as connection:
@@ -65,8 +60,6 @@ class MenuDao(metaclass=Singleton):
                 menu = Menu(
                       id_menu = row["id_menu"]
                     , nom_menu=row['nom']
-                    #, plat=row['attack_name'] dans ce cas on devrait faire
-                    #, boisson=row['attack_description'] et dessert alors?
                     , prix=row["prix"]
                 )
                 menus.append(menu)
