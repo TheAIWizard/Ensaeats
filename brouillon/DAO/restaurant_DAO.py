@@ -1,7 +1,7 @@
 from typing import List
 from api.metier.restaurant import Restaurant
-from utils.singleton import Singleton
-from DAO.db_connection import DBConnection
+from brouillon.utils.singleton import Singleton
+from brouillon.DAO.db_connection import DBConnection
 
 
 

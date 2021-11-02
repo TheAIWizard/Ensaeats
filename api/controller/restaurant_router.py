@@ -31,3 +31,21 @@ async def get_restaurant(username: Optional[str] = Header(None), password: Optio
 
     except UserNotAuthenticated:
         raise HTTPException(status_code=401, detail="User must be logged")
+
+
+
+
+@router.post("/restaurant", tags = ['POST'])
+async def post_article(nom : str, composition : str, type: str, username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+    try:
+        # user = UserService.authenticate_and_get_user(
+        #     username=username, password=password)
+        # print(user)
+        # # call your service here
+        return RestaurantsService.addArticleOnRestaurant(nom, composition, type)
+
+    except UserNotAuthenticated:
+        raise HTTPException(status_code=401, detail="User must be logged")
+
+
+
