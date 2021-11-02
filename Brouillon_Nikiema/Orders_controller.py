@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import FastAPI
 from Restaurant_service import RestaurantsService
 from typing import Optional
 
