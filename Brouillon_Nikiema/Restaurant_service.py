@@ -1,6 +1,7 @@
 from Brouillon_Nikiema.yelp_api_service import YelpApiService
 from typing import List
 from api.metier.restaurant import Restaurant
+from brouillon.metier.menu import Menu
 
 class RestaurantsService:
 
