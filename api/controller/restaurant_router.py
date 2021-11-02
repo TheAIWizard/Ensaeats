@@ -21,7 +21,7 @@ def get_restaurants(username: Optional[str] = Header(None), password: Optional[s
 
 
 @router.get("/restaurant/{id_restaurant}")
-async def get_restaurant(username: Optional[str] = Header(None), password: Optional[str] = Header(None), id_restaurant: str):
+async def get_restaurant(username: Optional[str] = Header(None), password: Optional[str] = Header(None), id_restaurant: str = ''):
     try:
         # user = UserService.authenticate_and_get_user(
         #     username=username, password=password)
