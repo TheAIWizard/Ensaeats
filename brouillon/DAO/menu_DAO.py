@@ -32,8 +32,6 @@ class MenuDao(metaclass=Singleton):
                 menu = Menu(
                       id_menu = row["id_menu"]
                     , nom_menu=row['nom']
-                    #, plat=row['attack_name'] peut-être à préciser dans la commande 
-                    #, boisson=row['attack_description'] 
                     , prix=row["prix"]
                 )
                 menus.append(menu)
