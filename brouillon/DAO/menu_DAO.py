@@ -1,5 +1,5 @@
 from typing import List, Optional
-from utils.singleton import Singleton
+from brouillon.utils.singleton import Singleton
 from DAO.db_connection import DBConnection
 from metier.menu import Menu
 
