@@ -1,6 +1,6 @@
-from api.metier.user import User
-from api.dao.configuration import DBConnection
-from api.exception.user_not_found_exception import UserNotFoundException
+from API.metier.user import User
+from API.dao.configuration import DBConnection
+from API.exception.user_not_found_exception import UserNotFoundException
 
 
 class UserDao:

@@ -1,4 +1,4 @@
-from api.metier.adresse import Adresse
+from API.metier.adresse import Adresse
 
 class Restaurant():
     def __init__(self, id_restaurant : str, nom : str, adresse: Adresse, statut : bool): 

@@ -1,8 +1,7 @@
 from Brouillon_Nikiema.Restaurant_service import RestaurantsService
-from brouillon.DAO.menu_DAO import MenuDao
-from brouillon.metier.menu import Menu
+
+from brouillon.DAO.restaurant_DAO import RestaurantDao
 
 #RestaurantsService.getRestaurants()
-menu=MenuDao()
-menu_à_ajouter=Menu(10002,'Menu la spéciale',1000)
-print(menu.add_menu(menu_à_ajouter))
+menu=RestaurantDao()
+print(menu.find_id_restaurant_by_name("Falafel"))

@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Header, HTTPException
-from api.metier.user import User
-from api.service.user_service import UserService
+from API.metier.user import User
+from API.service.user_service import UserService
 from typing import Optional
-from api.exception.user_not_authenticated_exception import UserNotAuthenticated
-from api.service.restaurant_service import RestaurantsService
+from API.exception.user_not_authenticated_exception import UserNotAuthenticated
+from API.service.restaurant_service import RestaurantsService
 router = APIRouter()
 
 
@@ -31,3 +31,21 @@ async def get_restaurant(username: Optional[str] = Header(None), password: Optio
 
     except UserNotAuthenticated:
         raise HTTPException(status_code=401, detail="User must be logged")
+
+
+
+
+@router.post("/restaurant", tags = ['POST'])
+async def post_article(nom : str, composition : str, type: str, username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+    try:
+        # user = UserService.authenticate_and_get_user(
+        #     username=username, password=password)
+        # print(user)
+        # # call your service here
+        return RestaurantsService.addArticleOnRestaurant(nom, composition, type)
+
+    except UserNotAuthenticated:
+        raise HTTPException(status_code=401, detail="User must be logged")
+
+
+

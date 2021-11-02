@@ -4,10 +4,10 @@ class Restaurant :
     
     """
     
-    def __init__(self, id_restau,
-                 nom_restau,
-                 statut_restau,
-                 specialite) -> None:
+    def __init__(self, id_restau: int,
+                 nom_restau: str,
+                 statut_restau: str,
+                 specialite: str) -> None:
         self.id_restau = id_restau
         self.nom_restau = nom_restau
         self.statut_restau = statut_restau

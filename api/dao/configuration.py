@@ -2,7 +2,7 @@ import os
 
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from api.utils.singleton import Singleton
+from API.utils.singleton import Singleton
 
 
 class DBConnection(metaclass=Singleton):
