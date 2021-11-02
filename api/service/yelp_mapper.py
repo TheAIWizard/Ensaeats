@@ -1,5 +1,5 @@
-from metier.restaurant import Restaurant
-from metier.adresse import Adresse
+from API.metier.restaurant import Restaurant
+from API.metier.adresse import Adresse
 from typing import List
 
 class YelpMapper:
@@ -32,8 +32,8 @@ class YelpMapper:
         code_postal = location["zip_code"]
         pays = location["country"]
         ville = location["city"]
-        localisation = Adresse(adresse, code_postal, ville, pays)
+        adresse = Adresse(adresse, code_postal, ville, pays)
 
         # Permet de récuperer l adresse en format str 
-        adresse = localisation.adresse + ' ' + localisation.code_postal + ' ' + localisation.ville + ' ' + localisation.pays
+        #adresse = localisation.adresse + ' ' + localisation.code_postal + ' ' + localisation.ville + ' ' + localisation.pays
         return adresse

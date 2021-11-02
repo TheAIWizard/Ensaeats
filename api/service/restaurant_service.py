@@ -1,6 +1,7 @@
-from service.yelp_api_service import YelpApiService
-from service.yelp_mapper import YelpMapper
-from metier.restaurant import Restaurant
+from API.service.yelp_api_service import YelpApiService
+from API.service.yelp_mapper import YelpMapper
+from API.metier.restaurant import Restaurant
+from API.metier.article import Article
 from typing import List
 
 
@@ -11,11 +12,11 @@ class RestaurantsService:
         response = YelpApiService.get_businesses(location, term, radius) # recupere les infos de l'API de yelp
         restaurants = []
         restaurants=YelpMapper.businesses_to_restaurants(response) # recupere une liste d'objets restaurant
-        info_restaurants = []
-        for restaurant in restaurants : 
-            res = [restaurant.id_restaurant, restaurant.nom, restaurant.adresse, restaurant.statut]
-            info_restaurants.append(res)
-        return info_restaurants
+        # info_restaurants = []
+        # for restaurant in restaurants : 
+        #     res = [restaurant.id_restaurant, restaurant.nom, restaurant.adresse, restaurant.statut]
+        #     info_restaurants.append(res)
+        return restaurants
 
     @staticmethod
     def getRestaurant(id: str) -> Restaurant:
@@ -24,8 +25,9 @@ class RestaurantsService:
         return restaurant
 
     @staticmethod
-    def addArticleOnRestaurant(id_restaurant: str, nom : str, description : str, type : str):
-        pass
+    def addArticleOnRestaurant(id_restaurant: str, nom : str, composition : str, type : str):
+        article = Article(nom , composition, type)
+        
 
 
     @staticmethod
