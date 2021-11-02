@@ -1,6 +1,8 @@
 from Brouillon_Nikiema.yelp_api_service import YelpApiService
 from typing import List
-from api.metier.restaurant import Restaurant
+from API.metier.restaurant import Restaurant
+from brouillon.metier.menu import Menu
+from API.service.yelp_mapper import YelpMapper
 
 class RestaurantsService:
 
@@ -9,7 +11,7 @@ class RestaurantsService:
         response = YelpApiService.get_businesses(term, location, radius)
         restaurants = []
         restaurants.append(YelpMapper.businesses_to_restaurants(business)
-                           for business in response.json()["businesses"])
+                           for business in response["businesses"])
         return restaurants
 
     @staticmethod
