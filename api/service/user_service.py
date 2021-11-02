@@ -1,6 +1,6 @@
-from API.exception.user_not_authenticated_exception import UserNotAuthenticated
-from API.metier.user import User
-from API.dao.user_dao import UserDao
+from api.exception.user_not_authenticated_exception import UserNotAuthenticated
+from api.metier.user import User
+from api.dao.user_dao import UserDao
 
 
 class UserService:
