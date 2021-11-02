@@ -69,13 +69,13 @@ class MenuDao(metaclass=Singleton):
 
     def add_menu(self, menu : Menu) -> bool:
         created = False
-
+    #rajouter identification restaurateur
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
                     "INSERT INTO ensaeats.menu (id_menu, nom,"\
                     " prix) VALUES "\
-                    "(%(id_menu)s, %(nom)s, %(prix)s)"\
+                    "(%(id_menu)s, %(nom_menu)s, %(prix_menu)s)"\
                     "RETURNING id_menu;"
                 , {"id_menu" : menu.id_menu
                   , "name": menu.nom_menu
@@ -97,7 +97,9 @@ class MenuDao(metaclass=Singleton):
                     "DELETE FROM ensaeats.table_restaurant_menu "\
                     "WHERE id_menu=%(id_menu)s"
                     "RETURNING id_menu;"
-                , {"id_menu" : menu.id_menu})
+                , {"id_menu" : menu.id_menu
+                  ,"nom": menu.nom_menu
+                  ,"prix": menu.prix_menu})
                 res = cursor.fetchone()
         if res :
             menu.id=res['id_menu']
