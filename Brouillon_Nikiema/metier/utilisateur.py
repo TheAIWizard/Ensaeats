@@ -11,3 +11,11 @@ class Utilisateur :
         self.user=user
         self.commande=commande
 
+    def str(self):
+           
+        return " {} {}".format(str(self.nom), 
+        str(self.nom_prenom))
+
+    def affiche(self):
+        print(self.str())
+
