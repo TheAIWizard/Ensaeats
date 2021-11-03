@@ -1,3 +1,4 @@
+from Brouillon_Nikiema.metier.menu import Menu 
 class Commande:
     """Constructeur des commandes
     """
@@ -5,10 +6,10 @@ class Commande:
                  date : str,
                  paiement : float,
                  statut_commande : str,
-                 liste_menu: list) -> None:
+                 liste_menu: list, menu = Menu) -> None:
         self.id_commande = id_commande
         self.date = date
         self. paiement = paiement
         self.statut_commande = statut_commande
         self.liste_menu = liste_menu
-        
+        self.menu=Menu
