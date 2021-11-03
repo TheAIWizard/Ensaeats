@@ -123,18 +123,6 @@ class MenuDao(metaclass=Singleton):
 
     def delete_menu(self, menu : Menu) -> bool:
         deleted_menu,deleted_restaurant_menu,deleted_menu_article = False,False,False
-        #suppression du menu dans la table menu
-        with DBConnection().connection as connection:
-            with connection.cursor() as cursor :
-                cursor.execute(
-                    "DELETE FROM ensaeats.menu "\
-                    "WHERE id_menu=%(id_menu)s"\
-                    "RETURNING id_menu;"\
-                , {"id_menu" : menu.id_menu})
-                res = cursor.fetchone()
-        if res :
-            menu.id=res['id_menu']
-            deleted_menu = True
         #suppression du menu dans la table table_restaurant_menu
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
@@ -145,7 +133,6 @@ class MenuDao(metaclass=Singleton):
                 , {"id_menu" : menu.id_menu})
                 res = cursor.fetchone()
         if res :
-            menu.id=res['id_menu']
             deleted_restaurant_menu = True
         #suppression de l'id_menu dans la table table_menu_article
         with DBConnection().connection as connection:
@@ -157,8 +144,18 @@ class MenuDao(metaclass=Singleton):
                 , {"id_menu" : menu.id_menu})
                 res = cursor.fetchone()
         if res :
-            menu.id=res['id_menu']
             deleted_menu_article = True
+        #suppression du menu dans la table menu
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "DELETE FROM ensaeats.menu "\
+                    "WHERE id_menu=%(id_menu)s"\
+                    "RETURNING id_menu;"\
+                , {"id_menu" : menu.id_menu})
+                res = cursor.fetchone()
+        if res :
+            deleted_menu = True
         return deleted_menu,deleted_restaurant_menu,deleted_menu_article
 
     def update_menu(self, menu:Menu)-> bool:
