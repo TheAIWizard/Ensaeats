@@ -20,7 +20,7 @@ class ArticleDao(metaclass=Singleton):
         if res :
             for row in res :
                 article = Article(nom=row['nom']
-                    , type_article=row["type_article"]
+                    , type=row["type_article"]
                     , composition=row["composition"]
                 )
                 articles.append(article)
@@ -46,27 +46,29 @@ class ArticleDao(metaclass=Singleton):
             created = True
         return created
         
-    def update_article(article:Article, id_article_ancien):
+    def update_article(id_article_ancien, article:Article):
         ''' Supprime la ligne avec l'id article ancien et ajouter l'article dans la base de données '''
         deleted_menu_article,deleted_article = False,False
+
         #suppression de id_article_ancien dans la table table_menu_article
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
                     "DELETE FROM ensaeats.table_menu_article "\
-                    "WHERE id_article=%(id_article_ancien)s"\
-                    "RETURNING id_article;"
+                    " WHERE id_article=%(id_article)s"\
+                    " RETURNING id_article;"
                 , {"id_article" : id_article_ancien})
                 res = cursor.fetchone()
         if res :
             deleted_menu_article = True
+
         #suppression de id_article_ancien dans la table article
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
                     "DELETE FROM ensaeats.article"\
-                    "WHERE id_article=%(id_article_ancien)s"\
-                    "RETURNING id_menu;"\
+                    " WHERE id_article=%(id_article)s"\
+                    " RETURNING id_article;"
                 , {"id_article" : id_article_ancien})
                 res = cursor.fetchone()
         if res :

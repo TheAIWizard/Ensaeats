@@ -75,7 +75,7 @@ async def put_article(id_article : int, nom : str = None, composition : str = No
 
         article = Article(nom, composition, type)
 
-        return RestaurantsService.updateArticle(id_article, article)
+        return RestaurantsService.updateArticle(id_article_ancien= id_article, article = article)
 
     except UserNotAuthenticated:
         raise HTTPException(status_code=401, detail="User must be logged")
