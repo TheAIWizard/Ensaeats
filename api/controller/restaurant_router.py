@@ -82,7 +82,7 @@ async def put_article(id_article : int, nom : str = None, composition : str = No
 
 
 @router.get("/menus/", tags=["Menus"])
-async def get_menus_by_id_restaurant(username: Optional[str] = Header(None), password: Optional[str] = Header(None), id_restaurant: str = ''):
+async def get_menus_by_id_restaurant(id_restaurant: str , username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
     try:
         # user = UserService.authenticate_and_get_user(
         #     username=username, password=password)
@@ -92,7 +92,6 @@ async def get_menus_by_id_restaurant(username: Optional[str] = Header(None), pas
 
     except UserNotAuthenticated:
         raise HTTPException(status_code=401, detail="User must be logged")
-
 
 
 @router.post("/menus", tags = ['Menus'])
@@ -124,7 +123,6 @@ async def put_menu(id_restaurant : str, id_menu : int, nom : str = None, prix : 
         #     username=username, password=password)
         # print(user)
         # # call your service here
-
         # Je récupère le menu à vouloir modifier 
         menu = MenuDao.find_menu_by_id_menu(id_menu)
 
@@ -161,7 +159,7 @@ async def delete_menu(id_restaurant : str, id_menu : int, username: Optional[str
         #     username=username, password=password)
         # print(user)
         # # call your service here
-        menu = MenuDao.get_menu_by_id(id_menu) 
+        menu = MenuDao.find_menu_by_id_menu(id_menu) 
         return RestaurantsService.deleteMenuOnRestaurant(id_restaurant, menu)
 
     except UserNotAuthenticated:
