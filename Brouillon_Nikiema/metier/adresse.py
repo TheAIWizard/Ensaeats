@@ -14,5 +14,14 @@ attribute
         self.ville = ville
         self.pays = pays
         self.num_rue=num
+
+
+    def str(self):
+           
+        return "{} {} {} {} {}".format(str(self.num_rue), str(self.adresse), str(self.code_postal),
+        str(self.ville), str(self.pays))
+
+    def affiche(self):
+        print(self.str()) 
         
     
