@@ -22,8 +22,21 @@ class YelpMapper:
         return liste_restaurant
 
     @staticmethod
+    def business_to_restaurant(response) -> Restaurant:
+        # transforme le json en une liste d'objet metier
+        nom = response["name"]
+        id = response["id"]
+        location = response["location"]
+        statut = response["is_closed"]
+        adresse = YelpMapper.yelp_location_to_location(location)
+        restaurant = Restaurant(id_restaurant = id , nom = nom , adresse = adresse, statut = statut)
+            
+        return restaurant
+
+
+    @staticmethod
     def yelp_location_to_location(location : dict) -> str :
-        ''' Transforme en objet Adresse et renvoie en format str '''
+        ''' Transforme en objet Adresse  '''
 
         if location["address1"] is None : 
             adresse = ''
@@ -33,7 +46,5 @@ class YelpMapper:
         pays = location["country"]
         ville = location["city"]
         adresse = Adresse(adresse, code_postal, ville, pays)
-
-        # Permet de récuperer l adresse en format str 
-        #adresse = localisation.adresse + ' ' + localisation.code_postal + ' ' + localisation.ville + ' ' + localisation.pays
+        
         return adresse

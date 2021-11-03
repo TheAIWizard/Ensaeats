@@ -1,10 +1,10 @@
 class Commande:
     """Constructeur des commandes
     """
-    def __init__(self, id_commande,
-                 date,
-                 paiement,
-                 statut_commande,
+    def __init__(self, id_commande : int,
+                 date : str,
+                 paiement : float,
+                 statut_commande : str,
                  liste_menu: list) -> None:
         self.id_commande = id_commande
         self.date = date

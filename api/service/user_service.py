@@ -4,7 +4,6 @@ from API.dao.user_dao import UserDao
 
 
 class UserService:
-
     @staticmethod
     def createUser(user: User) -> User:
         return UserDao.createUser(user)

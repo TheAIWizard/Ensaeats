@@ -2,6 +2,7 @@ from API.service.yelp_api_service import YelpApiService
 from API.service.yelp_mapper import YelpMapper
 from API.metier.restaurant import Restaurant
 from API.metier.article import Article
+from API.metier.menu import Menu 
 from typing import List
 
 
@@ -20,24 +21,36 @@ class RestaurantsService:
 
     @staticmethod
     def getRestaurant(id: str) -> Restaurant:
-        response = YelpApiService.getBusiness(id)
-        restaurant = YelpMapper.businesses_to_restaurants(response.json())
+        response = YelpApiService.get_business_by_id(id)
+        restaurant = YelpMapper.business_to_restaurant(response)
         return restaurant
 
     @staticmethod
-    def addArticleOnRestaurant(id_restaurant: str, nom : str, composition : str, type : str):
-        article = Article(nom , composition, type)
-        
-
-
-    @staticmethod
-    def addMenuOnRestaurant(id_restaurant: str, id_article1, id_article2, id_article3 ):
+    def getArticles() -> List[Article]:
         pass
 
     @staticmethod
-    def updateMenuOnRestaurant(id_restaurant: str, id_menu: str, menu):
+    def getMenus() -> List[Article]:
         pass
+    
+    @staticmethod
+    def addArticle(article : Article):
+        ''' Ajoute un article à la base de données des articles commun à tous '''
+        return API.dao.article_dao.add_article(article)
 
     @staticmethod
-    def deleteMenuOnRestaurant(id_restaurant: str, id_menu: str):
-        pass
+    def updateArticle(id_article : str, article : Article):
+        ''' Modifie un article à la base de données des articles commun à tous '''
+        return API.dao.article_dao.update_article(id_article, article)
+
+    @staticmethod
+    def addMenuOnRestaurant(id_restaurant: str, menu : Menu):
+        return API.dao.article_dao.add_menu(id_restaurant, menu)
+    
+    @staticmethod
+    def updateMenuOnRestaurant(id_restaurant: str, id_menu: int, menu: Menu):
+        return API.dao.menu_dao.update_menu(id_restaurant, id_menu, menu) 
+
+    @staticmethod
+    def deleteMenuOnRestaurant(id_restaurant: str, id_menu: int):
+        return API.dao.menu_dao.delete_menu(id_restaurant, id_menu)
