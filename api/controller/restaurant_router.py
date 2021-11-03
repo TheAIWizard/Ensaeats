@@ -81,6 +81,19 @@ async def put_article(id_article : int, nom : str = None, composition : str = No
         raise HTTPException(status_code=401, detail="User must be logged")
 
 
+@router.get("/menus/", tags=["Menus"])
+async def get_menus_by_id_restaurant(username: Optional[str] = Header(None), password: Optional[str] = Header(None), id_restaurant: str = ''):
+    try:
+        # user = UserService.authenticate_and_get_user(
+        #     username=username, password=password)
+        # print(user)
+        # # call your service here
+        return RestaurantsService.getMenus_by_id_restaurant(id_restaurant)
+
+    except UserNotAuthenticated:
+        raise HTTPException(status_code=401, detail="User must be logged")
+
+
 
 @router.post("/menus", tags = ['Menus'])
 async def post_menu(id_restaurant : str, nom : str, prix : str, id_article1: int, id_article2 : int, id_article3 : int, username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
@@ -113,7 +126,7 @@ async def put_menu(id_restaurant : str, id_menu : int, nom : str = None, prix : 
         # # call your service here
 
         # Je récupère le menu à vouloir modifier 
-        menu = MenuDao.get_menu_by_id(id_menu)
+        menu = MenuDao.find_menu_by_id_menu(id_menu)
 
         # Pour les éléments non modifiés je garde les valeurs de base 
         if nom is None : 

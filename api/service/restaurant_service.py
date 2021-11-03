@@ -33,9 +33,15 @@ class RestaurantsService:
         pass
 
     @staticmethod
-    def getMenus() -> List[Article]:
-        pass
+    def getMenus_by_id_restaurant(id_restaurant : str) -> List[Menu] :
+        return MenuDao.find_all_menus_by_id_restaurant(id_restaurant)
     
+    @staticmethod
+    def getMenus() :
+        pass
+        #return MenuDao.find_all_menus()
+    
+
     @staticmethod
     def addArticle(article : Article):
         ''' Ajoute un article à la base de données des articles commun à tous '''
