@@ -1,9 +1,16 @@
 from API.metier.article import Article
 
 class Menu(): 
-    def __init__(self, nom : str, prix : int, id_article1 : int, id_article2 : int, id_article3 : int): 
+    def __init__(self, nom : str, prix : int, article1 : Article, article2 : Article, article3 : Article): 
         self.nom = nom
-        self.id_article1 = id_article1
-        self.id_article2 = id_article2
-        self.id_article3 = id_article3
+        self.prix = prix 
+        self.article1 = article1
+        self.article2 = article2
+        self.article3 = article3
     
+    def recup_menu(self): 
+        ''' grâce aux id article on peut récupérer les compositions et type d'articles '''
+        menu = {"article1" : self.article1.article_desc(),"article2" : self.article2.article_desc(), "article3": self.article3.articledesc()}
+
+    def __str__(self):
+        pass

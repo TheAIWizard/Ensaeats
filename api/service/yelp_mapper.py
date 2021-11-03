@@ -46,7 +46,5 @@ class YelpMapper:
         pays = location["country"]
         ville = location["city"]
         adresse = Adresse(adresse, code_postal, ville, pays)
-
-        # Permet de récuperer l adresse en format str 
-        #adresse = localisation.adresse + ' ' + localisation.code_postal + ' ' + localisation.ville + ' ' + localisation.pays
+        
         return adresse
