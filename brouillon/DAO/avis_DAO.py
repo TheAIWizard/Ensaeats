@@ -7,7 +7,7 @@ from brouillon.DAO.db_connection import DBConnection
 
 class AvisDao(metaclass=Singleton):
 
-    def find_avis_by_id_restaurant(self, id_restau:int)-> List:
+    def find_avis_by_id_restaurant(self, id_restau : int)-> List:
         '''
         Avoir tous les avis d'un restaurant
         
@@ -28,20 +28,24 @@ class AvisDao(metaclass=Singleton):
         return avis_restau
 
 
-    def add_avis(self, avis : Avis) -> bool:
+    def add_avis(self, avis : Avis, id_restau : int, nom_auteur : str) -> bool: 
+        '''
+        Ajouter un avis sur un restaurant
+        
+        '''
         created = False
 
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
-                    "INSERT INTO ensaeats.avis (id_menu, value) VALUES "\
-                    "(%(id_menu)s, %(nom)s, %(prix)s)"\
-                    "RETURNING id_menu;"
-                , {"id_menu" : menu.id_menu
-                  , "name": menu.nom_menu
-                  , "prix": menu.prix_menu})
+                    "INSERT INTO ensaeats.avis (id_avis, avis, id_restaurant, nom_auteur) VALUES "\
+                    "(%(id_avis)s, %(avis)s, %(nom_auteur)s, %(id_restaurant)s)"\
+                    "RETURNING id_avis;"
+                , {"id_avis" : avis.id_avis
+                  , "avis": avis.avis
+                  , "nom_auteur" : avis.nom_auteur
+                  , "id_restaurant": id_restau})
                 res = cursor.fetchone()
         if res :
-            menu.id=res['id_menu']
             created = True
         return created

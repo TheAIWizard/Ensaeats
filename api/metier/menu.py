@@ -7,6 +7,8 @@ class Menu():
         self.article1 = article1
         self.article2 = article2
         self.article3 = article3
+        self.id_menu = 1 
+        # appel à add_menu -> recupere l'id 
     
     def recup_menu(self): 
         ''' grâce aux id article on peut récupérer les compositions et type d'articles '''

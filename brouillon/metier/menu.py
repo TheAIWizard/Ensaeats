@@ -8,7 +8,7 @@ class Menu:
         self.id_menu = id_menu
         self.nom_menu = nom_menu
         self.prix_menu = prix_menu
-        #tu as oublié le dessert
+       
         
     
 
