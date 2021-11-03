@@ -69,6 +69,34 @@ class MenuDao(metaclass=Singleton):
                 menus.append(menu)
         return menus
 
+    def find_menu_by_id_menu(self,id_menu:int) -> List[Menu]:
+        """
+        Get a menu with the given id_menu
+
+        :param id_menu: The menu id
+        :type id_menu: int
+        """
+        request = "SELECT * FROM ensaeats.menu "\
+                  "WHERE id_menu=%(id_menu)s;"
+
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    request,
+                    {"id_menu": id_menu}
+                )
+                res = cursor.fetchall()
+        menus = []
+        if res :
+            for row in res :
+                menu = Menu(
+                      id_menu = row["id_menu"]
+                    , nom_menu=row['nom']
+                    , prix_menu=row["prix"]
+                )
+                menus.append(menu)
+        return menus[0]
+
 
     def add_menu(self, menu : Menu) -> bool: # ajout id_restaurant
         created = False
@@ -159,19 +187,29 @@ class MenuDao(metaclass=Singleton):
         return deleted_menu,deleted_restaurant_menu,deleted_menu_article
 
     def update_menu(self, menu:Menu)-> bool:
-        updated = False
-
+        updated_menu,updated_restaurant_menu = False, False
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
                     "UPDATE ensaeats.menu SET" \
-                    " id_menu = %(id_menu)s"\
-                    ", nom = %(nom_menu)s"\
-                    ", prix = %(prix_menu)s;"
+                    " nom = %(nom_menu)s,"\
+                    " prix = %(prix_menu)s "\
+                    "WHERE id_menu=%(id_menu)s;"
                 , {"id_menu" : menu.id_menu
-                  , "nom": menu.nom_menu
-                  , "prix": menu.prix_menu})
+                  , "nom_menu": menu.nom_menu
+                  , "prix_menu": menu.prix_menu})
                 if cursor.rowcount :
-                    updated = True
-        return updated
+                    updated_menu = True
+        # modification du couple (id_menu, id_restaurant) dans la table table_restaurant_menu
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "UPDATE ensaeats.table_restaurant_menu SET" \
+                    " id_menu = %(id_menu)s "\
+                    "WHERE id_menu=%(id_menu)s;"
+                , {"id_menu" : menu.id_menu})
+                if cursor.rowcount :
+                    updated_restaurant_menu = True
+        return updated_menu,updated_restaurant_menu
 
+      
