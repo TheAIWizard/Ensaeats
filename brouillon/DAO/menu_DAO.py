@@ -2,7 +2,10 @@ from typing import List, Optional
 from brouillon.utils.singleton import Singleton
 from brouillon.DAO.db_connection import DBConnection
 from brouillon.metier.menu import Menu
-
+#find_menu_by_id_menu
+#creer l'id_menu, définir de manière unique hash(id_menu+id_restaurant)
+#get-article_by_id  
+#un article peut nepas être encore dans un menu
 class MenuDao(metaclass=Singleton):
     def find_all_menus(self, limit:int=0, offest:int=0) -> List[Menu]:
         """
@@ -67,7 +70,7 @@ class MenuDao(metaclass=Singleton):
         return menus
 
 
-    def add_menu(self, menu : Menu) -> bool:
+    def add_menu(self, menu : Menu) -> bool: # ajout id_restaurant
         created = False
 
         with DBConnection().connection as connection:
