@@ -69,7 +69,7 @@ class MenuDao(metaclass=Singleton):
                 menus.append(menu)
         return menus
 
-    def find_menu_by_id_menu(self,id_menu:int) -> List[Menu]:
+    def find_menu_by_id_menu(self,id_menu:int) -> Menu:
         """
         Get a menu with the given id_menu
 
