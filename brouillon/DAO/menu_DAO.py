@@ -186,7 +186,7 @@ class MenuDao(metaclass=Singleton):
             deleted_menu = True
         return deleted_menu,deleted_restaurant_menu,deleted_menu_article
 
-    def update_menu(self, menu:Menu)-> bool:
+    def update_menu(self, menu:Menu)-> bool: # id_retaurant,ancien identifiant, add_menu,delete_menu)
         updated_menu,updated_restaurant_menu = False, False
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :

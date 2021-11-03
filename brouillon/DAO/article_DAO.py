@@ -7,33 +7,31 @@ from brouillon.metier.article import Article
 #get-article_by_id  
 #un article peut nepas être encore dans un menu
 class ArticleDao(metaclass=Singleton):
-    def find_all_articles(self, limit:int=0, offest:int=0) -> List[Article]:
+    def find_menu_by_id_menu(self,id_article:int) -> Article:
         """
-        Get all menu in the db without any filter
+        Get an article with the given id_article
 
-        :param limit: how many menu are requested
-        :type limit: int
-        :param offest: the offset of the request
-        :type offest: int
+        :param id_menu: The menu id
+        :type id_menu: int
         """
-        request= "SELECT * FROM ensaeats.menu;"
-        if limit :
-            request+=f"LIMIT {limit}"
-        if offest :
-            request+=f"OFFSET {offest}"
+        request = "SELECT * FROM ensaeats.article "\
+                  "WHERE id_article=%(id_article)s;"
+
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
-                    request
+                    request,
+                    {"id_article": id_article}
                 )
                 res = cursor.fetchall()
-        menus = []
+        articles = []
         if res :
             for row in res :
-                menu = Menu(
+                article = Article(
                       id_menu = row["id_menu"]
                     , nom_menu=row['nom']
                     , prix_menu=row["prix"]
                 )
-                menus.append(menu)
-        return menus
+                articles.append(Article)
+        return articles[0]
+
