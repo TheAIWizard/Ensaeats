@@ -64,7 +64,7 @@ async def put_article(id_article : int, nom : str = None, composition : str = No
         # # call your service here
 
         # Je récupère l'article de la base de données selon l'identifiant de l'article à modifier
-        article = ArticleDao.get_article_by_id(id_article) 
+        article = ArticleDao.find_article_by_id_article(id_article) 
 
         if nom is None : # si le restaurateur n'a pas modifié le nom on garde le même 
             nom = article.nom
@@ -103,9 +103,9 @@ async def post_menu(id_restaurant : str, nom : str, prix : str, id_article1: int
         # # call your service here
 
          # Création des objets articles 
-        article1 = ArticleDao.get_article_by_id(id_article1)
-        article2 = ArticleDao.get_article_by_id(id_article2)
-        article3 = ArticleDao.get_article_by_id(id_article3)
+        article1 = ArticleDao.find_article_by_id_article(id_article1)
+        article2 = ArticleDao.find_article_by_id_article(id_article2)
+        article3 = ArticleDao.find_article_by_id_article(id_article3)
 
         # Création de l'objet Menu 
         menu = Menu(nom, prix, article1, article2, article3)
@@ -139,9 +139,9 @@ async def put_menu(id_restaurant : str, id_menu : int, nom : str = None, prix : 
             id_article3 = menu.article3
         
         # Création des objets articles 
-        article1 = ArticleDao.get_article_by_id(id_article1)
-        article2 = ArticleDao.get_article_by_id(id_article2)
-        article3 = ArticleDao.get_article_by_id(id_article3)
+        article1 = ArticleDao.find_article_by_id_article(id_article1)
+        article2 = ArticleDao.find_article_by_id_article(id_article2)
+        article3 = ArticleDao.find_article_by_id_article(id_article3)
 
         # Création du nouveau menu 
         menu = Menu(nom, prix, article1, article2, article3)

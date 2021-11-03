@@ -2,9 +2,6 @@ from typing import List, Optional
 from brouillon.utils.singleton import Singleton
 from brouillon.DAO.db_connection import DBConnection
 from API.metier.article import Article
-#find_menu_by_id_menu
-#creer l'id_menu, définir de manière unique hash(id_menu+id_restaurant)
-#get-article_by_id  
 
 class ArticleDao(metaclass=Singleton):
 
@@ -22,9 +19,7 @@ class ArticleDao(metaclass=Singleton):
         articles = []
         if res :
             for row in res :
-                article = Article(
-                      id_article = row["id_article"]
-                    , nom=row['nom']
+                article = Article(nom=row['nom']
                     , type_article=row["type_article"]
                     , composition=row["composition"]
                 )
