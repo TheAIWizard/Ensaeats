@@ -72,40 +72,93 @@ class MenuDao(metaclass=Singleton):
 
     def add_menu(self, menu : Menu) -> bool: # ajout id_restaurant
         created = False
-
+    #rajouter identification restaurateur
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
                     "INSERT INTO ensaeats.menu (id_menu, nom,"\
                     " prix) VALUES "\
-                    "(%(id_menu)s, %(nom)s, %(prix)s)"\
+                    "(%(id_menu)s, %(nom_menu)s, %(prix_menu)s)"\
                     "RETURNING id_menu;"
                 , {"id_menu" : menu.id_menu
-                  , "name": menu.nom_menu
-                  , "prix": menu.prix_menu})
+                  , "nom_menu": menu.nom_menu
+                  , "prix_menu": menu.prix_menu})
                 res = cursor.fetchone()
         if res :
             menu.id=res['id_menu']
             created = True
         return created
 
-    def delete_menu(self, menu : Menu) -> bool:
-        created = False
+    def add_menu_by_id_restaurant(self, menu : Menu, id_restaurant:int) -> bool:
+        created_menu,created_restaurant_menu = False,False
+    #rajouter identification restaurateur
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "INSERT INTO ensaeats.menu (id_menu, nom,"\
+                    " prix) VALUES "\
+                    "(%(id_menu)s, %(nom_menu)s, %(prix_menu)s)"\
+                    "RETURNING id_menu;"
+                , {"id_menu" : menu.id_menu
+                  , "nom_menu": menu.nom_menu
+                  , "prix_menu": menu.prix_menu})
+                res = cursor.fetchone()
+        if res :
+            created_menu = True
+        # ajout du couple (id_menu, id_restaurant) dans la table table_restaurant_menu
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "INSERT INTO ensaeats.table_restaurant_menu (0,id_menu,"\
+                    " id_restaurant) VALUES "\
+                    "(%(id_menu)s, %(id_restaurant)s)"\
+                    "RETURNING id_menu;"
+                , {"id_menu" : menu.id_menu
+                , "id_restaurant": id_restaurant})
+                res = cursor.fetchone()
+        if res :
+            created_restaurant_menu = True
+        return created_menu,created_restaurant_menu
 
+    def delete_menu(self, menu : Menu) -> bool:
+        deleted_menu,deleted_restaurant_menu,deleted_menu_article = False,False,False
+        #suppression du menu dans la table menu
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
                     "DELETE FROM ensaeats.menu "\
                     "WHERE id_menu=%(id_menu)s"\
+                    "RETURNING id_menu;"\
+                , {"id_menu" : menu.id_menu})
+                res = cursor.fetchone()
+        if res :
+            menu.id=res['id_menu']
+            deleted_menu = True
+        #suppression du menu dans la table table_restaurant_menu
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
                     "DELETE FROM ensaeats.table_restaurant_menu "\
-                    "WHERE id_menu=%(id_menu)s"
+                    "WHERE id_menu=%(id_menu)s"\
                     "RETURNING id_menu;"
                 , {"id_menu" : menu.id_menu})
                 res = cursor.fetchone()
         if res :
             menu.id=res['id_menu']
-            created = True
-        return created
+            deleted_restaurant_menu = True
+        #suppression de l'id_menu dans la table table_menu_article
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "DELETE FROM ensaeats.table_menu_article "\
+                    "WHERE id_menu=%(id_menu)s"\
+                    "RETURNING id_menu;"
+                , {"id_menu" : menu.id_menu})
+                res = cursor.fetchone()
+        if res :
+            menu.id=res['id_menu']
+            deleted_menu_article = True
+        return deleted_menu,deleted_restaurant_menu,deleted_menu_article
 
     def update_menu(self, menu:Menu)-> bool:
         updated = False

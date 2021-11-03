@@ -26,21 +26,31 @@ class RestaurantsService:
         return restaurant
 
     @staticmethod
-    def addArticle(nom : str, composition : str, type : str):
+    def getArticles() -> List[Article]:
+        pass
+
+    @staticmethod
+    def getMenus() -> List[Article]:
+        pass
+    
+    @staticmethod
+    def addArticle(article : Article):
         ''' Ajoute un article à la base de données des articles commun à tous '''
-        article = Article(nom , composition, type)
-        #return API.dao.article_DAO.add_article(article)
+        return API.dao.article_dao.add_article(article)
 
     @staticmethod
-    def addMenuOnRestaurant(id_restaurant: str, nom : str, prix : int, id_article1 : int, id_article2 : int , id_article3 : int):
-        
-        menu = Menu()
-        #return API.dao.article_DAO.add_menu(id_restaurant, menu)
+    def updateArticle(id_article : str, article : Article):
+        ''' Modifie un article à la base de données des articles commun à tous '''
+        return API.dao.article_dao.update_article(id_article, article)
 
     @staticmethod
-    def updateMenuOnRestaurant(id_restaurant: str, id_menu: str, menu):
-        pass
+    def addMenuOnRestaurant(id_restaurant: str, menu : Menu):
+        return API.dao.article_dao.add_menu(id_restaurant, menu)
+    
+    @staticmethod
+    def updateMenuOnRestaurant(id_restaurant: str, id_menu: int, menu: Menu):
+        return API.dao.menu_dao.update_menu(id_restaurant, id_menu, menu) 
 
     @staticmethod
-    def deleteMenuOnRestaurant(id_restaurant: str, id_menu: str):
-        pass
+    def deleteMenuOnRestaurant(id_restaurant: str, id_menu: int):
+        return API.dao.menu_dao.delete_menu(id_restaurant, id_menu)
