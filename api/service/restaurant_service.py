@@ -26,6 +26,14 @@ class RestaurantsService:
         return restaurant
 
     @staticmethod
+    def getArticle() -> List[Article]:
+        pass
+
+    @staticmethod
+    def getMenus() -> List[Article]:
+        pass
+    
+    @staticmethod
     def addArticle(nom : str, composition : str, type : str):
         ''' Ajoute un article à la base de données des articles commun à tous '''
         article = Article(nom , composition, type)
@@ -33,8 +41,7 @@ class RestaurantsService:
 
     @staticmethod
     def addMenuOnRestaurant(id_restaurant: str, nom : str, prix : int, id_article1 : int, id_article2 : int , id_article3 : int):
-        
-        menu = Menu()
+        menu = Menu(nom, prix, id_article1, id_article2, id_article3)
         #return API.dao.article_DAO.add_menu(id_restaurant, menu)
 
     @staticmethod

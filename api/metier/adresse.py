@@ -4,4 +4,7 @@ class Adresse():
         self.code_postal = code_postal
         self.ville = ville
         self.pays = pays
-        
+    
+    def __str__(self) -> str:
+        print(self.adresse + ' ' + self.code_postal + ' ' + self.ville + ' ' + self.pays)
+
