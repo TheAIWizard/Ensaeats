@@ -45,7 +45,7 @@ async def post_article(nom : str, composition : str, type: str, username: Option
         #     username=username, password=password)
         # print(user)
         # # call your service here
-        
+
         # Création de l'objet article
         article = Article(nom, composition, type)
 
@@ -139,3 +139,18 @@ async def put_menu(id_restaurant : str, id_menu : int, nom : str ='', prix : str
 
     except UserNotAuthenticated:
         raise HTTPException(status_code=401, detail="User must be logged")
+
+
+@router.delete("/menus", tags = ['DELETE'])
+async def delete_menu(id_restaurant : str, id_menu : int, username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+    try:
+        # user = UserService.authenticate_and_get_user(
+        #     username=username, password=password)
+        # print(user)
+        # # call your service here
+
+        return RestaurantsService.deleteMenuOnRestaurant(id_restaurant, id_menu)
+
+    except UserNotAuthenticated:
+        raise HTTPException(status_code=401, detail="User must be logged")
+

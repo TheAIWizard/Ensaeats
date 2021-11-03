@@ -48,9 +48,9 @@ class RestaurantsService:
         return API.dao.article_dao.add_menu(id_restaurant, menu)
     
     @staticmethod
-    def updateMenuOnRestaurant(id_restaurant: str, id_menu: str, menu: Menu):
-        return API.dao.menu_dao.update_dao(id_restaurant, id_menu, menu) 
+    def updateMenuOnRestaurant(id_restaurant: str, id_menu: int, menu: Menu):
+        return API.dao.menu_dao.update_menu(id_restaurant, id_menu, menu) 
 
     @staticmethod
-    def deleteMenuOnRestaurant(id_restaurant: str, id_menu: str):
-        pass
+    def deleteMenuOnRestaurant(id_restaurant: str, id_menu: int):
+        return API.dao.menu_dao.delete_menu(id_restaurant, id_menu)
