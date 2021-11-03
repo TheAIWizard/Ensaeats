@@ -1,7 +1,7 @@
 from typing import List, Optional
 from brouillon.utils.singleton import Singleton
 from brouillon.DAO.db_connection import DBConnection
-from brouillon.metier.menu import Menu
+from brouillon.metier.menu import Menu  
 
 class MenuDao(metaclass=Singleton):
     def find_all_menus(self, limit:int=0, offest:int=0) -> List[Menu]:
