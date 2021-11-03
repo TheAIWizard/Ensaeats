@@ -101,21 +101,19 @@ class MenuDao(metaclass=Singleton):
                   , "prix_menu": menu.prix_menu})
                 res = cursor.fetchone()
         if res :
-            menu.id=res['id_menu']
             created_menu = True
         # ajout du couple (id_menu, id_restaurant) dans la table table_restaurant_menu
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
-                    "INSERT INTO ensaeats.table_restaurant_menu(0,id_menu,"\
+                    "INSERT INTO ensaeats.table_restaurant_menu (0,id_menu,"\
                     " id_restaurant) VALUES "\
                     "(%(id_menu)s, %(id_restaurant)s)"\
                     "RETURNING id_menu;"
                 , {"id_menu" : menu.id_menu
                 , "id_restaurant": id_restaurant})
-                res1 = cursor.fetchone()
-        if res1 :
-            menu.id1=res1['id_menu']
+                res = cursor.fetchone()
+        if res :
             created_restaurant_menu = True
         return created_menu,created_restaurant_menu
 
