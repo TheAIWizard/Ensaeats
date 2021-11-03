@@ -28,7 +28,7 @@ class ArticleDao(metaclass=Singleton):
                     , type_article=row["type_article"]
                     , composition=row["composition"]
                 )
-                articles.append(Article)
+                articles.append(article)
         return articles[0]
 
     def add_article(article : Article) -> bool: 
