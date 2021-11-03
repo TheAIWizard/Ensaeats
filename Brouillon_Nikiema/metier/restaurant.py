@@ -29,11 +29,4 @@ class Restaurant :
     def ajout_avis(self):
         pass
 
-    def str(self):
-           
-        return "{} {} {} {} {} {} {}".format(str(self.id_restaurant),
-        str(self.nom_restaurant), str(self.statut_restaurant), str(self.specialite),
-        str(self.test_adresse.affiche()),str(self.test_avis.affiche()),str(self.test_menu.affiche()))
-
-    def affiche(self):
-        print(self.str())
+    
