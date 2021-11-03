@@ -81,7 +81,7 @@ async def put_article(id_article : int, nom : str = None, composition : str = No
         raise HTTPException(status_code=401, detail="User must be logged")
 
 
-@router.get("/menus/", tags=["Menus"])
+@router.get("/menus/{id_restaurant}", tags=["Menus"])
 async def get_menus_by_id_restaurant(id_restaurant: str , username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
     try:
         # user = UserService.authenticate_and_get_user(

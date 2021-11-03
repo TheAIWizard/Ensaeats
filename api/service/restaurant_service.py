@@ -4,9 +4,9 @@ from API.metier.restaurant import Restaurant
 from API.metier.article import Article
 from API.metier.menu import Menu 
 from API.dao.article_dao import ArticleDao
+from API.dao.menu_dao import MenuDao
 from typing import List
 
-from brouillon.DAO.menu_DAO import MenuDao
 
 
 class RestaurantsService:
