@@ -3,7 +3,10 @@ from API.service.yelp_mapper import YelpMapper
 from API.metier.restaurant import Restaurant
 from API.metier.article import Article
 from API.metier.menu import Menu 
+from API.dao.article_dao import ArticleDao
 from typing import List
+
+from brouillon.DAO.menu_DAO import MenuDao
 
 
 class RestaurantsService:
@@ -36,21 +39,23 @@ class RestaurantsService:
     @staticmethod
     def addArticle(article : Article):
         ''' Ajoute un article à la base de données des articles commun à tous '''
-        return API.dao.article_dao.add_article(article)
+        return ArticleDao.add_article(article)
 
     @staticmethod
     def updateArticle(id_article : str, article : Article):
         ''' Modifie un article à la base de données des articles commun à tous '''
-        return API.dao.article_dao.update_article(id_article, article)
+        return ArticleDao.update_article(id_article, article)
 
     @staticmethod
     def addMenuOnRestaurant(id_restaurant: str, menu : Menu):
-        return API.dao.article_dao.add_menu(id_restaurant, menu)
+        return MenuDao.add_menu(id_restaurant, menu)
     
     @staticmethod
     def updateMenuOnRestaurant(id_restaurant: str, id_menu: int, menu: Menu):
-        return API.dao.menu_dao.update_menu(id_restaurant, id_menu, menu) 
+        ''' Prend en entrée l'identifiant de l'ancien menu si jamais celui ci est différent de celui ajouté'''
+        return MenuDao.update_menu(id_restaurant, id_menu, menu) 
 
     @staticmethod
     def deleteMenuOnRestaurant(id_restaurant: str, id_menu: int):
-        return API.dao.menu_dao.delete_menu(id_restaurant, id_menu)
+        # prend un menu en entrée 
+        return MenuDao.update_menu(id_restaurant, id_menu)

@@ -91,7 +91,7 @@ class MenuDao(metaclass=Singleton):
 
     def add_menu_by_id_restaurant(self, menu : Menu, id_restaurant:int) -> bool:
         created_menu,created_restaurant_menu = False,False
-    #rajouter identification restaurateur
+        #rajouter identification restaurateur
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
@@ -109,31 +109,20 @@ class MenuDao(metaclass=Singleton):
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
-                    "INSERT INTO ensaeats.table_restaurant_menu (0,id_menu,"\
+                    "INSERT INTO ensaeats.table_restaurant_menu (id,id_menu,"\
                     " id_restaurant) VALUES "\
-                    "(%(id_menu)s, %(id_restaurant)s)"\
+                    "(0,%(id_menu)s, %(id_restaurant)s)"\
                     "RETURNING id_menu;"
                 , {"id_menu" : menu.id_menu
                 , "id_restaurant": id_restaurant})
                 res = cursor.fetchone()
         if res :
             created_restaurant_menu = True
+        
         return created_menu,created_restaurant_menu
 
     def delete_menu(self, menu : Menu) -> bool:
         deleted_menu,deleted_restaurant_menu,deleted_menu_article = False,False,False
-        #suppression du menu dans la table menu
-        with DBConnection().connection as connection:
-            with connection.cursor() as cursor :
-                cursor.execute(
-                    "DELETE FROM ensaeats.menu "\
-                    "WHERE id_menu=%(id_menu)s"\
-                    "RETURNING id_menu;"\
-                , {"id_menu" : menu.id_menu})
-                res = cursor.fetchone()
-        if res :
-            menu.id=res['id_menu']
-            deleted_menu = True
         #suppression du menu dans la table table_restaurant_menu
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
@@ -144,7 +133,6 @@ class MenuDao(metaclass=Singleton):
                 , {"id_menu" : menu.id_menu})
                 res = cursor.fetchone()
         if res :
-            menu.id=res['id_menu']
             deleted_restaurant_menu = True
         #suppression de l'id_menu dans la table table_menu_article
         with DBConnection().connection as connection:
@@ -156,8 +144,18 @@ class MenuDao(metaclass=Singleton):
                 , {"id_menu" : menu.id_menu})
                 res = cursor.fetchone()
         if res :
-            menu.id=res['id_menu']
             deleted_menu_article = True
+        #suppression du menu dans la table menu
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "DELETE FROM ensaeats.menu "\
+                    "WHERE id_menu=%(id_menu)s"\
+                    "RETURNING id_menu;"\
+                , {"id_menu" : menu.id_menu})
+                res = cursor.fetchone()
+        if res :
+            deleted_menu = True
         return deleted_menu,deleted_restaurant_menu,deleted_menu_article
 
     def update_menu(self, menu:Menu)-> bool:

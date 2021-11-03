@@ -9,7 +9,7 @@ prenom text,
 id_restaurant INT,
 FOREIGN KEY(id_restaurant) REFERENCES ensaeats.Restaurant(id_restaurant)
 );
-
+# nom_auteur à la place de prenom 
 
 CREATE TABLE ensaeats.Restaurateur (
 id_restaurateur SERIAL PRIMARY KEY,
