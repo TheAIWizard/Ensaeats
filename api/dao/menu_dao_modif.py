@@ -9,6 +9,37 @@ from API.metier.article import Article
 #un article peut nepas être encore dans un menu
 
 class MenuDao(metaclass=Singleton):
+    #on récupère les id_article pour pouvoir entrer les objets articles en attribut des classes menus
+    def find_all_id_article_by_id_menu(id_menu:int):
+        request = "SELECT id_article FROM ensaeats.table_menu_article "\
+                  "WHERE id_menu=%(id_menu)s;"
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    request,
+                    {"id_menu": id_menu})
+                res = cursor.fetchall()
+        id_articles = []
+        if res :
+            for row in res :
+                id_articles.append(row["id_article"])
+        return id_articles
+    #on récupère les id_article pour pouvoir entrer les objets articles en attribut des classes menus
+    def find_all_id_restaurant_by_id_(id_menu:int):
+        request = "SELECT id_article FROM ensaeats.table_menu_article "\
+                  "WHERE id_menu=%(id_menu)s;"
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    request,
+                    {"id_menu": id_menu})
+                res = cursor.fetchall()
+        id_articles = []
+        if res :
+            for row in res :
+                id_articles.append(row["id_article"])
+        return id_articles
+
 
     def find_all_menus(limit:int=0, offest:int=0) -> List[Menu]:
         """
