@@ -38,7 +38,7 @@ class AvisDao(metaclass=Singleton):
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
-                    "INSERT INTO ensaeats.avis (id_avis, avis, id_restaurant, nom_auteur) VALUES "\
+                    "INSERT INTO ensaeats.avis (id_avis, avis, nom_auteur, id_restaurant) VALUES "\
                     "(%(id_avis)s, %(avis)s, %(nom_auteur)s, %(id_restaurant)s)"\
                     "RETURNING id_avis;"
                 , {"id_avis" : avis.id_avis
