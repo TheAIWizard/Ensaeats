@@ -80,6 +80,20 @@ async def put_article(id_article : int, nom : str = None, composition : str = No
     except UserNotAuthenticated:
         raise HTTPException(status_code=401, detail="User must be logged")
 
+@router.delete("/articles/", tags = ['Articles'])
+async def delete_article(id_article : int, username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+    try:
+        # user = UserService.authenticate_and_get_user(
+        #     username=username, password=password)
+        # print(user)
+        # # call your service here
+        article = ArticleDao.find_article_by_id_article(id_article) 
+        return RestaurantsService.deleteArticle(id_article, article)
+
+    except UserNotAuthenticated:
+        raise HTTPException(status_code=401, detail="User must be logged")
+
+
 
 @router.get("/menus/{id_restaurant}", tags=["Menus"])
 async def get_menus_by_id_restaurant(id_restaurant: str , username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
@@ -92,6 +106,7 @@ async def get_menus_by_id_restaurant(id_restaurant: str , username: Optional[str
 
     except UserNotAuthenticated:
         raise HTTPException(status_code=401, detail="User must be logged")
+
 
 
 @router.post("/menus", tags = ['Menus'])

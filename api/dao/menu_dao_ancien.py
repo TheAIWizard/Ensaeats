@@ -1,35 +1,14 @@
 from typing import List, Optional
 from brouillon.utils.singleton import Singleton
 from brouillon.DAO.db_connection import DBConnection
-from API.dao.article_dao import ArticleDao 
-from API.metier.menu import Menu
-
+from brouillon.metier.menu import Menu
+from API.metier.article import Article
 #find_menu_by_id_menu
 #creer l'id_menu, définir de manière unique hash(id_menu+id_restaurant)
 #get-article_by_id  
 #un article peut nepas être encore dans un menu
 
 class MenuDao(metaclass=Singleton):
-
-    #on récupère les id_article pour pouvoir entrer les objets articles en attribut des classes menus
-    def find_all_id_article_by_id_menu(id_menu:int) -> List[int]:
-        request = "SELECT id_article FROM ensaeats.table_menu_article "\
-                  "WHERE id_menu=%(id_menu)s;"
-        with DBConnection().connection as connection:
-            with connection.cursor() as cursor :
-                cursor.execute(
-                    request,
-                    {"id_menu": id_menu})
-                res = cursor.fetchall()
-        id_articles = []
-        if res :
-            for row in res :
-                id_articles.append(row["id_article"])
-        return id_articles
-
-    #on en déduit la liste des objets articles pour un id_menu donné par la méthode "find_article_by_id_article" de la classe ArticleDao
-    def find_all_article_by_id_menu(id_menu:int):
-        return [ArticleDao.find_article_by_id_article(id_article) for id_article in MenuDao.find_all_id_article_by_id_menu(id_menu)]
 
     def find_all_menus(limit:int=0, offest:int=0) -> List[Menu]:
         """
@@ -54,14 +33,10 @@ class MenuDao(metaclass=Singleton):
         menus = []
         if res :
             for row in res :
-                id_menu = row["id_menu"]
-                liste_articles_menu=MenuDao.find_all_article_by_id_menu(id_menu)  
                 menu = Menu(
-                      nom=row['nom']
-                    , prix=row["prix"]
-                    , article1=liste_articles_menu[0]
-                    , article2=liste_articles_menu[1]
-                    , article3=liste_articles_menu[2]
+                      id_menu = row["id_menu"]
+                    , nom_menu=row['nom']
+                    , prix_menu=row["prix"]
                 )
                 menus.append(menu)
         return menus
@@ -89,14 +64,10 @@ class MenuDao(metaclass=Singleton):
         menus = []
         if res :
             for row in res :
-                id_menu = row["id_menu"]
-                liste_articles_menu=MenuDao.find_all_article_by_id_menu(id_menu)  
                 menu = Menu(
-                      nom=row['nom']
-                    , prix=row["prix"]
-                    , article1=liste_articles_menu[0]
-                    , article2=liste_articles_menu[1]
-                    , article3=liste_articles_menu[2]
+                      id_menu = row["id_menu"]
+                    , nom_menu=row['nom']
+                    , prix_menu=row["prix"]
                 )
                 menus.append(menu)
         return menus
@@ -121,14 +92,10 @@ class MenuDao(metaclass=Singleton):
         menus = []
         if res :
             for row in res :
-                id_menu = row["id_menu"]
-                liste_articles_menu=MenuDao.find_all_article_by_id_menu(id_menu)  
                 menu = Menu(
-                      nom=row['nom']
-                    , prix=row["prix"]
-                    , article1=liste_articles_menu[0]
-                    , article2=liste_articles_menu[1]
-                    , article3=liste_articles_menu[2]
+                      id_menu = row["id_menu"]
+                    , nom_menu=row['nom']
+                    , prix_menu=row["prix"]
                 )
                 menus.append(menu)
         return menus[0]
@@ -142,13 +109,14 @@ class MenuDao(metaclass=Singleton):
                 cursor.execute(
                     "INSERT INTO ensaeats.menu (id_menu, nom,"\
                     " prix) VALUES "\
-                    "(%(id_menu)s, %(nom)s, %(prix)s)"\
+                    "(%(id_menu)s, %(nom_menu)s, %(prix_menu)s)"\
                     "RETURNING id_menu;"
                 , {"id_menu" : menu.id_menu
-                  , "nom": menu.nom
-                  , "prix": menu.prix})
+                  , "nom_menu": menu.nom_menu
+                  , "prix_menu": menu.prix_menu})
                 res = cursor.fetchone()
         if res :
+            menu.id=res['id_menu']
             created = True
         return created
 
@@ -160,11 +128,11 @@ class MenuDao(metaclass=Singleton):
                 cursor.execute(
                     "INSERT INTO ensaeats.menu (id_menu, nom,"\
                     " prix) VALUES "\
-                    "(%(id_menu)s, %(nom)s, %(prix)s)"\
+                    "(%(id_menu)s, %(nom_menu)s, %(prix_menu)s)"\
                     "RETURNING id_menu;"
                 , {"id_menu" : menu.id_menu
-                  , "nom": menu.nom
-                  , "prix": menu.prix})
+                  , "nom_menu": menu.nom_menu
+                  , "prix_menu": menu.prix_menu})
                 res = cursor.fetchone()
         if res :
             created_menu = True
@@ -227,12 +195,12 @@ class MenuDao(metaclass=Singleton):
             with connection.cursor() as cursor :
                 cursor.execute(
                     "UPDATE ensaeats.menu SET" \
-                    " nom = %(nom)s,"\
-                    " prix = %(prix)s "\
+                    " nom = %(nom_menu)s,"\
+                    " prix = %(prix_menu)s "\
                     "WHERE id_menu=%(id_menu)s;"
                 , {"id_menu" : menu.id_menu
-                  , "nom": menu.nom
-                  , "prix": menu.prix})
+                  , "nom_menu": menu.nom_menu
+                  , "prix_menu": menu.prix_menu})
                 if cursor.rowcount :
                     updated_menu = True
         # modification du couple (id_menu, id_restaurant) dans la table table_restaurant_menu
