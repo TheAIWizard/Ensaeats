@@ -50,7 +50,7 @@ class RestaurateurDao:
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(
-                    "UPDATE restaurateur SET nom=%(nom)s, prenom=%(prenom)s, mot_de_passe=%(mot_de_passe)s;", {"nom": restaurateur_to_update.id, "Restaurateurname": restaurateur.prenom, "mot_de_passe": restaurateur.mot_de_passe})
+                    "UPDATE restaurateur SET nom=%(nom)s, prenom=%(prenom)s, mot_de_passe=%(mot_de_passe)s WHERE nom=%(ancien_nom)s, prenom=%(ancien_prenom)s, ;", {"nom": restaurateur_to_update.nom, "prenom": restaurateur_to_update.prenom, "mot_de_passe": restaurateur.mot_de_passe, "ancien_nom":restaurateur.nom, "ancien_prenom":restaurateur.prenom})
 
     @staticmethod
     def deleteRestaurateur(nom: str, prenom:str) -> Restaurateur:
