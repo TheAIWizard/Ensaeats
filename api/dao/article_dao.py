@@ -77,3 +77,30 @@ class ArticleDao(metaclass=Singleton):
         print("suppression dans table menu_article :"+str(deleted_menu_article),"suppression dans table article :"+str(deleted_article))
         #ajout de l'article dans la base de donnée
         return ArticleDao.add_article(article)
+
+    def delete_article(article : Article) -> bool: 
+        #on peut ajouter un article même s'il n'est pas encore dans un menu
+        deleted_article,deleted_menu_article = False, False
+        #supprimer son id_article de la table table_menu_article
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "DELETE FROM ensaeats.table_menu_article"\
+                    " WHERE id_article=%(id_article)s"\
+                    " RETURNING id_article;"
+                , {"id_article" : article.id_article})
+                res = cursor.fetchone()
+        if res :
+            deleted_menu_article = True
+        #supprimer son id_article de la table article
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "DELETE FROM ensaeats.article"\
+                    " WHERE id_article=%(id_article)s"\
+                    " RETURNING id_article;"
+                , {"id_article" : article.id_article})
+                res = cursor.fetchone()
+        if res :
+            deleted_article = True
+        return deleted_article,deleted_menu_article
