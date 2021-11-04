@@ -3,6 +3,7 @@ from brouillon.utils.singleton import Singleton
 from brouillon.DAO.db_connection import DBConnection
 from API.metier.article import Article
 from API.dao.menu_dao import MenuDao
+
 class ArticleDao:
 
     @staticmethod
@@ -56,19 +57,19 @@ class ArticleDao:
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
-                    "UPDATE ensaeats.article "\
-                    " SET nom = %(nom)s, "\
-                    "  type_article = %(type)s, "\
-                    "  composition = %(composition)s, "\
-                    "  WHERE id_article = %(id_article)s ;"
-
-                , {"id_article" : article.id_article})
-                res = cursor.fetchone()
-        if res :
-            update_article = True
+                    " UPDATE ensaeats.article" \
+                    " SET nom = %(nom)s, " \
+                    " type_article = %(type)s, "\
+                    " composition = %(composition)s "\
+                    "WHERE id_article = %(id_article)s ;"
+                    , {"nom" : article.nom
+                    , "type" : article.type
+                    , "composition" : article.composition
+                    , "id_article" : article.id_article})
+                
 
     @staticmethod
-    def delete_article(article : Article) -> bool: 
+    def delete_article(article : Article) -> Article : 
         #on peut ajouter un article même s'il n'est pas encore dans un menu
         deleted_article,deleted_menu_article = False, False
         #supprimer son id_article de la table table_menu_article

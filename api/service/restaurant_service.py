@@ -43,12 +43,12 @@ class RestaurantsService:
     
 
     @staticmethod
-    def addArticle(article : Article):
+    def addArticle(article : Article) -> Article :
         ''' Ajoute un article à la base de données des articles commun à tous '''
         return ArticleDao.add_article(article)
 
     @staticmethod
-    def updateArticle(id_article_ancien : str, article : Article):
+    def updateArticle(article : Article) -> Article:
         ''' Modifie un article à la base de données des articles commun à tous '''
         return ArticleDao.update_article(article)
 
