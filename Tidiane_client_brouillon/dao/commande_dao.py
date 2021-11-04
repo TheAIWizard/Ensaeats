@@ -1,4 +1,3 @@
-from typing import List, Optional
 from brouillon.utils.singleton import Singleton
 from brouillon.DAO.db_connection import DBConnection
 from brouillon.metier.commande import Commande
