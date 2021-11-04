@@ -33,3 +33,5 @@ for element in aux:
     file.write(str(element) + ",\n")
 file.write(";")
 file.close()
+
+""" ATTENTION ! business_id aléatoire sur YELP pour certains id au niveau des majuscules"""
