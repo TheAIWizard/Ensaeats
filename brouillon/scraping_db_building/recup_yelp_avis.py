@@ -23,7 +23,7 @@ id_restau,id_avis=0,200
 for restau in list_requests:
     if restau.json()['reviews'] != []:
         for review in list(pd.DataFrame(restau.json()['reviews'])['text']):
-            aux.append( (id_avis,review,list_business_id_hash[id_restau]))
+            aux.append( (id_avis,review,list_business_id[id_restau]))
             id_avis+=1
     id_restau+=1
         

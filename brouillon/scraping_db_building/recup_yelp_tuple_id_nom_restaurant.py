@@ -14,7 +14,7 @@ garder la même fonction de hachage nous permettra de convertir aisément les id
 
 #ajout colonne id haché: l'algo de hachage sha512 ressort le même hachage pour la même entrée sur Python
 df['id_hash']=df['id'].apply(lambda x: int(hashlib.sha512(x.encode("utf-8")).hexdigest(), 16) % (10 ** 8) )
-table_restaurant=df[['id_hash','name']]
+table_restaurant=df[['id','name']]
 
 
 result_restaurant=list(table_restaurant.to_records(index=False))
