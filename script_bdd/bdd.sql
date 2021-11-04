@@ -5,11 +5,10 @@ nom text );
 CREATE TABLE ensaeats.Avis (
 id_avis SERIAL PRIMARY KEY,
 avis text,
-prenom text,
+nom_auteur text,
 id_restaurant text,
 FOREIGN KEY(id_restaurant) REFERENCES ensaeats.Restaurant(id_restaurant)
 );
-# nom_auteur à la place de prenom 
 
 CREATE TABLE ensaeats.Restaurateur (
 id_restaurateur SERIAL PRIMARY KEY,

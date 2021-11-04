@@ -2,7 +2,7 @@ from typing import List, Optional
 from brouillon.utils.singleton import Singleton
 from brouillon.DAO.db_connection import DBConnection
 from API.metier.article import Article
-from API.dao.menu_dao import MenuDao
+
 class ArticleDao:
 
     @staticmethod
@@ -48,8 +48,8 @@ class ArticleDao:
         return created
     
     @staticmethod
-    def update_article(article:Article):
-        ''' Modification de l'article '''
+    def update_article(id_article_ancien, article:Article):
+        ''' Supprime la ligne avec l'id article ancien et ajouter l'article dans la base de données '''
         update_article = False 
 
         # Update dans la base de données des informations de l'article 
@@ -57,35 +57,60 @@ class ArticleDao:
             with connection.cursor() as cursor :
                 cursor.execute(
                     "UPDATE ensaeats.article "\
-                    " SET nom = %(nom)s, "\
+                    " SET id_article=%(id_article)s,"\
+                    "  nom = %(nom)s, "\
                     "  type_article = %(type)s, "\
                     "  composition = %(composition)s, "\
                     "  WHERE id_article = %(id_article)s ;"
 
-                , {"id_article" : article.id_article})
+                , {"id_article" : id_article_ancien})
                 res = cursor.fetchone()
         if res :
             update_article = True
+
+        #suppression de id_article_ancien dans la table table_menu_article
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "DELETE FROM ensaeats.table_menu_article "\
+                    " WHERE id_article=%(id_article)s"\
+                    " RETURNING id_article;"
+                , {"id_article" : id_article_ancien})
+                res = cursor.fetchone()
+        if res :
+            deleted_menu_article = True
+
+        #suppression de id_article_ancien dans la table article
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "DELETE FROM ensaeats.article"\
+                    " WHERE id_article=%(id_article)s"\
+                    " RETURNING id_article;"
+                , {"id_article" : id_article_ancien})
+                res = cursor.fetchone()
+        if res :
+            deleted_article = True
+        #vérification réussite suppression
+        print("suppression dans table menu_article :"+str(deleted_menu_article),"suppression dans table article :"+str(deleted_article))
+        #ajout de l'article dans la base de donnée
+        return ArticleDao.add_article(article)
 
     @staticmethod
     def delete_article(article : Article) -> bool: 
         #on peut ajouter un article même s'il n'est pas encore dans un menu
         deleted_article,deleted_menu_article = False, False
         #supprimer son id_article de la table table_menu_article
-
-        # Recuperer id des menus + supprimer menu + supprimer table menu article 
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
                     "DELETE FROM ensaeats.table_menu_article"\
                     " WHERE id_article=%(id_article)s"\
-                    " RETURNING id_menu;"
+                    " RETURNING id_article;"
                 , {"id_article" : article.id_article})
                 res = cursor.fetchone()
         if res :
             deleted_menu_article = True
-            MenuDao.delete_menu(MenuDao.find_menu_by_id_menu())
-
         #supprimer son id_article de la table article
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
