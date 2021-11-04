@@ -1,10 +1,10 @@
-from brouillon.utils.singleton import Singleton
+
 from brouillon.DAO.db_connection import DBConnection
 from brouillon.metier.commande import Commande
 
-class CommandeDAO(metaclass=Singleton):
+class CommandeDAO():
     inserted = False
-   
+    @staticmethod
     def add_commande(self, commande: Commande):
         """Ajout d'une commande dans la base de données
         """

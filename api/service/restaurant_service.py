@@ -4,9 +4,9 @@ from API.metier.restaurant import Restaurant
 from API.metier.article import Article
 from API.metier.menu import Menu 
 from API.dao.article_dao import ArticleDao
+from API.dao.menu_dao import MenuDao
 from typing import List
 
-from brouillon.DAO.menu_DAO import MenuDao
 
 
 class RestaurantsService:
@@ -33,18 +33,24 @@ class RestaurantsService:
         pass
 
     @staticmethod
-    def getMenus() -> List[Article]:
-        pass
+    def getMenus_by_id_restaurant(id_restaurant : str) -> List[Menu] :
+        return MenuDao.find_all_menus_by_id_restaurant(id_restaurant)
     
+    @staticmethod
+    def getMenus() :
+        pass
+        #return MenuDao.find_all_menus()
+    
+
     @staticmethod
     def addArticle(article : Article):
         ''' Ajoute un article à la base de données des articles commun à tous '''
         return ArticleDao.add_article(article)
 
     @staticmethod
-    def updateArticle(id_article : str, article : Article):
+    def updateArticle(id_article_ancien : str, article : Article):
         ''' Modifie un article à la base de données des articles commun à tous '''
-        return ArticleDao.update_article(id_article, article)
+        return ArticleDao.update_article(id_article_ancien, article)
 
     @staticmethod
     def addMenuOnRestaurant(id_restaurant: str, menu : Menu):

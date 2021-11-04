@@ -28,3 +28,5 @@ class Restaurant :
     
     def ajout_avis(self):
         pass
+
+    

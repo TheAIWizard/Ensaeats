@@ -5,10 +5,4 @@ class Article :
         self.nom_article=nom_article
         self.type_article=type_article
     
-    def str(self):
-           
-        return "{} {} {}".format(str(self.id_article), 
-        str(self.nom_article), str(self.type_article))
-
-    def affiche(self):
-        print(self.str()) 
+   

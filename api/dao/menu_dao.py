@@ -2,12 +2,15 @@ from typing import List, Optional
 from brouillon.utils.singleton import Singleton
 from brouillon.DAO.db_connection import DBConnection
 from brouillon.metier.menu import Menu
+from API.metier.article import Article
 #find_menu_by_id_menu
 #creer l'id_menu, définir de manière unique hash(id_menu+id_restaurant)
 #get-article_by_id  
 #un article peut nepas être encore dans un menu
+
 class MenuDao(metaclass=Singleton):
-    def find_all_menus(self, limit:int=0, offest:int=0) -> List[Menu]:
+
+    def find_all_menus(limit:int=0, offest:int=0) -> List[Menu]:
         """
         Get all menu in the db without any filter
 
@@ -40,7 +43,7 @@ class MenuDao(metaclass=Singleton):
 
     """ pour agréger : SELECT city, STRING_AGG(email,';') WITHIN GROUP (ORDER BY email) email_list FROM sales.customers GROUP BY city; """
 
-    def find_all_menus_by_id_restaurant(self,id_restaurant:int) -> List[Menu]:
+    def find_all_menus_by_id_restaurant(id_restaurant:int) -> List[Menu]:
         """
         Get all menu of a specific restaurant with the given id
 
@@ -69,7 +72,7 @@ class MenuDao(metaclass=Singleton):
                 menus.append(menu)
         return menus
 
-    def find_menu_by_id_menu(self,id_menu:int) -> Menu:
+    def find_menu_by_id_menu(id_menu:int) -> Menu:
         """
         Get a menu with the given id_menu
 
@@ -98,7 +101,7 @@ class MenuDao(metaclass=Singleton):
         return menus[0]
 
 
-    def add_menu(self, menu : Menu) -> bool: # ajout id_restaurant
+    def add_menu(menu : Menu) -> bool: # ajout id_restaurant
         created = False
     #rajouter identification restaurateur
         with DBConnection().connection as connection:
@@ -117,7 +120,7 @@ class MenuDao(metaclass=Singleton):
             created = True
         return created
 
-    def add_menu_by_id_restaurant(self, menu : Menu, id_restaurant:int) -> bool:
+    def add_menu_by_id_restaurant(menu : Menu, id_restaurant:int) -> bool:
         created_menu,created_restaurant_menu = False,False
         #rajouter identification restaurateur
         with DBConnection().connection as connection:
@@ -149,7 +152,7 @@ class MenuDao(metaclass=Singleton):
         
         return created_menu,created_restaurant_menu
 
-    def delete_menu(self, menu : Menu) -> bool:
+    def delete_menu(menu : Menu) -> bool:
         deleted_menu,deleted_restaurant_menu,deleted_menu_article = False,False,False
         #suppression du menu dans la table table_restaurant_menu
         with DBConnection().connection as connection:
@@ -186,7 +189,7 @@ class MenuDao(metaclass=Singleton):
             deleted_menu = True
         return deleted_menu,deleted_restaurant_menu,deleted_menu_article
 
-    def update_menu(self, menu:Menu)-> bool: # id_retaurant,ancien identifiant, add_menu,delete_menu)
+    def update_menu(menu:Menu)-> bool: # id_retaurant,ancien identifiant, add_menu,delete_menu)
         updated_menu,updated_restaurant_menu = False, False
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :

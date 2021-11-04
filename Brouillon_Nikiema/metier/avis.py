@@ -3,4 +3,12 @@ class Avis :
         self.id_avis=id_avis
         self.avis=avis
         self.nom_auteur=nom_auteur
+
+    def str(self):
+           
+        return "{} {} {}".format(str(self.id_avis), 
+        str(self.avis), str(self.nom_auteur))
+
+    def affiche(self):
+        print(self.str()) 
         

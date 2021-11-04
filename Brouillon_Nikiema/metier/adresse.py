@@ -14,5 +14,3 @@ attribute
         self.ville = ville
         self.pays = pays
         self.num_rue=num
-        
-    

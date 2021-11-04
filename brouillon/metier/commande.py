@@ -7,6 +7,7 @@ class Commande:
                  statut_commande: str,
                  liste_menu: list,
                  liste_quantite: list) -> None:
+        
         self.id_commande = id_commande
         self.date = date
         self.statut_commande = statut_commande

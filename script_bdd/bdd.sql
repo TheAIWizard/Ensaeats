@@ -1,12 +1,12 @@
 CREATE TABLE ensaeats.Restaurant (
-id_restaurant INT PRIMARY KEY ,
+id_restaurant text PRIMARY KEY ,
 nom text );
 
 CREATE TABLE ensaeats.Avis (
 id_avis SERIAL PRIMARY KEY,
 avis text,
 prenom text,
-id_restaurant INT,
+id_restaurant text,
 FOREIGN KEY(id_restaurant) REFERENCES ensaeats.Restaurant(id_restaurant)
 );
 # nom_auteur à la place de prenom 
@@ -15,7 +15,7 @@ CREATE TABLE ensaeats.Restaurateur (
 id_restaurateur SERIAL PRIMARY KEY,
 nom text,
 prenom text,
-id_restaurant INT,
+id_restaurant text,
 FOREIGN KEY (id_restaurant) REFERENCES ensaeats.Restaurant(id_restaurant)
 ) ;
 
@@ -24,7 +24,7 @@ CREATE TABLE ensaeats.Menu(
 id_menu SERIAL PRIMARY KEY,
 nom text,
 prix INT,
-id_restaurant INT,
+id_restaurant text,
 FOREIGN KEY (id_restaurant) REFERENCES ensaeats.Restaurant(id_restaurant)
 ) ;
 
