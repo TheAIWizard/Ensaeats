@@ -57,6 +57,14 @@ FOREIGN KEY (id_menu) REFERENCES ensaeats.Menu(id_menu),
 FOREIGN KEY (id_commande) REFERENCES ensaeats.Commande(id_commande)
 ) ;
 
+CREATE TABLE ensaeats.Table_menu_restaurant(
+id SERIAL PRIMARY KEY,
+id_menu INT,
+id_restaurant text,
+FOREIGN KEY (id_menu) REFERENCES ensaeats.Menu(id_menu),
+FOREIGN KEY (id_restaurant) REFERENCES ensaeats.Restaurant(id_restaurant)
+) ;
+
 CREATE TABLE ensaeats.Client(
 id_client SERIAL PRIMARY KEY,
 nom text,

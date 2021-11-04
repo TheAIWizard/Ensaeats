@@ -101,21 +101,12 @@ async def get_menus_by_id_restaurant(id_restaurant: str , username: Optional[str
 
 
 @router.post("/menus", tags = ['Menus'])
-async def post_menu(id_restaurant : str, nom : str, prix : str, id_article1: int, id_article2 : int, id_article3 : int, username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+async def post_menu(id_restaurant : str, menu : Menu, username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
     try:
         # user = UserService.authenticate_and_get_user(
         #     username=username, password=password)
         # print(user)
         # # call your service here
-
-         # Création des objets articles 
-        article1 = ArticleDao.find_article_by_id_article(id_article1)
-        article2 = ArticleDao.find_article_by_id_article(id_article2)
-        article3 = ArticleDao.find_article_by_id_article(id_article3)
-
-        # Création de l'objet Menu 
-        menu = Menu(nom, prix, article1, article2, article3)
-
         return RestaurantsService.addMenuOnRestaurant(id_restaurant, menu)
 
     except UserNotAuthenticated:
