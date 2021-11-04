@@ -53,8 +53,15 @@ class RestaurantsService:
         return ArticleDao.update_article(id_article_ancien, article)
 
     @staticmethod
+    def deleteArticle(id_article_ancien : str, article : Article):
+        ''' Modifie un article à la base de données des articles commun à tous '''
+        pass
+        #return ArticleDao.delete_article(id_article_ancien, article)
+
+
+    @staticmethod
     def addMenuOnRestaurant(id_restaurant: str, menu : Menu):
-        return MenuDao.add_menu(id_restaurant, menu)
+        return MenuDao.add_menu_by_id_restaurant(menu, id_restaurant)
     
     @staticmethod
     def updateMenuOnRestaurant(id_restaurant: str, id_menu: int, menu: Menu):

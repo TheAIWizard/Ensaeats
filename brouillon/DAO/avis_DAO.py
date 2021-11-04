@@ -3,7 +3,7 @@ from brouillon.metier.avis import Avis
 from brouillon.utils.singleton import Singleton
 from brouillon.DAO.db_connection import DBConnection
 
-
+ 
 
 class AvisDao(metaclass=Singleton):
 
@@ -16,7 +16,7 @@ class AvisDao(metaclass=Singleton):
             with connection.cursor() as cursor :
                 cursor.execute(
                     "SELECT * " \
-                    "\nFROM ensaeats.restaurant JOIN ensaeats.avis ON ensaeats.restaurant.id_restaurant = ensaeats.avis.id_restaurant  "\
+                    "\nFROM  ensaeats.avis   "\
                     "\nWHERE restaurant.id_restaurant = %(id_restaurant)s"
                     , {"id_restaurant": id_restau}
                 )
