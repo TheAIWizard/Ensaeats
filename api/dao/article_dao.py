@@ -36,9 +36,9 @@ class ArticleDao:
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
-                    "INSERT INTO ensaeats.article (id_article, nom,"\
+                    "INSERT INTO ensaeats.article (nom,"\
                     " type_article, composition) VALUES "\
-                    "(0, %(nom)s, %(type_article)s, %(composition)s)"\
+                    "(%(nom)s, %(type_article)s, %(composition)s)"\
                     "RETURNING id_article;"
                 , { "nom": article.nom
                   , "type_article": article.type
