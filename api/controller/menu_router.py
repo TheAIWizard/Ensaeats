@@ -11,7 +11,6 @@ from API.metier.menu import Menu
 
 router = APIRouter()
 
-
 @router.get("/menus/{id_restaurant}", tags=["Menus"])
 async def get_menus_by_id_restaurant(id_restaurant: str , username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
     try:
