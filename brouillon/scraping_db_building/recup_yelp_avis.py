@@ -23,7 +23,7 @@ id_restau,id_avis=0,200
 for restau in list_requests:
     if restau.json()['reviews'] != []:
         for review in list(pd.DataFrame(restau.json()['reviews'])['text']):
-            aux.append( (id_avis,review,list_business_id[id_restau]))
+            aux.append( (review,'Patrick',list_business_id[id_restau]))
             id_avis+=1
     id_restau+=1
         
@@ -33,3 +33,5 @@ for element in aux:
     file.write(str(element) + ",\n")
 file.write(";")
 file.close()
+
+""" ATTENTION ! business_id aléatoire sur YELP pour certains id au niveau des majuscules"""
