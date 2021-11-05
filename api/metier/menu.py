@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from api.metier.article import Article
+from API.metier.article import Article
 
 class Menu(BaseModel): 
     id_menu : int 
