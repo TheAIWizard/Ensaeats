@@ -42,7 +42,7 @@ class ArticleDao:
                 res = cursor.fetchone()
         if res :
             created = True
-            article.id_article = res
+            article.id_article = res['id_article']
         return created
     
     @staticmethod

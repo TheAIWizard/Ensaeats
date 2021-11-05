@@ -160,7 +160,7 @@ class MenuDao():
 
     @staticmethod
     def add_menu_by_id_restaurant(menu : Menu, id_restaurant:str) -> bool:
-        created_menu,created_restaurant_menu, created_menu_article = False,False,False
+        created_menu,created_restaurant_menu, created_menu_article_1, created_menu_article_2, created_menu_article_3 = False,False,False,False, False
         #rajouter identification restaurateur
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
@@ -173,28 +173,52 @@ class MenuDao():
                   , "prix": menu.prix})
                 res = cursor.fetchone()
         if res :
-            menu.id_menu = res 
+            menu.id_menu = res['id_menu']
             created_menu = True
 
         
         # ajout du couple (id_menu, id_article) dans la table table_article_menu
 
-        for id in MenuDao.find_all_id_article_by_id_menu(menu.id_menu) : 
-            with DBConnection().connection as connection:
-                with connection.cursor() as cursor :
-                    cursor.execute(
-                        "INSERT INTO ensaeats.table_menu_article (id_menu,"\
-                        " id_article) VALUES "\
-                        "(%(id_menu)s, %(id_article)s)"\
-                        "RETURNING id_menu;"
-                    , {"id_menu" : menu.id_menu
-                    , "id_article": id})
-                    res = cursor.fetchone()
-                if res :
-                    created_menu_article = True
-
-            return created_menu,created_restaurant_menu, created_menu_article
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "INSERT INTO ensaeats.table_menu_article (id_menu,"\
+                    " id_article) VALUES "\
+                    "(%(id_menu)s, %(id_article)s)"\
+                    "RETURNING id_menu;"
+                , {"id_menu" : menu.id_menu
+                , "id_article": menu.article1.id_article})
+                res = cursor.fetchone()
+            if res :
+                created_menu_article_1 = True
         
+
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "INSERT INTO ensaeats.table_menu_article (id_menu,"\
+                    " id_article) VALUES "\
+                    "(%(id_menu)s, %(id_article)s)"\
+                    "RETURNING id_menu;"
+                , {"id_menu" : menu.id_menu
+                , "id_article": menu.article2.id_article})
+                res = cursor.fetchone()
+            if res :
+                created_menu_article_2 = True
+
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "INSERT INTO ensaeats.table_menu_article (id_menu,"\
+                    " id_article) VALUES "\
+                    "(%(id_menu)s, %(id_article)s)"\
+                    "RETURNING id_menu;"
+                , {"id_menu" : menu.id_menu
+                , "id_article": menu.article3.id_article})
+                res = cursor.fetchone()
+            if res :
+                created_menu_article_3 = True
+
         
         # ajout du couple (id_menu, id_restaurant) dans la table table_restaurant_menu
         with DBConnection().connection as connection:
@@ -210,6 +234,8 @@ class MenuDao():
         if res :
             created_restaurant_menu = True 
 
+        return created_menu,created_restaurant_menu, created_menu_article_1, created_menu_article_2, created_menu_article_3
+        
   
     @staticmethod
     def delete_menu(menu : Menu) -> bool:
