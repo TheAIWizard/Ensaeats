@@ -2,13 +2,14 @@ from typing import List, Optional
 from brouillon.utils.singleton import Singleton
 from brouillon.DAO.db_connection import DBConnection
 from API.metier.article import Article
-from API.dao.menu_dao import MenuDao
+#from API.dao.menu_dao import MenuDao
 
 class ArticleDao:
 
     @staticmethod
     def find_article_by_id_article(id_article:int) -> Article:
         ''' Recupère l'article par l'identifiant '''
+
         request = "SELECT * FROM ensaeats.article "\
                   "WHERE id_article=%(id_article)s;"
         with DBConnection().connection as connection:
@@ -17,16 +18,11 @@ class ArticleDao:
                     request,
                     {"id_article": id_article}
                 )
-                res = cursor.fetchall()
+                res = cursor.fetchone()
         articles = []
-        if res :
-            for row in res :
-                article = Article(nom=row['nom']
-                    , type=row["type_article"]
-                    , composition=row["composition"]
-                )
-                articles.append(article)
-        return articles[0]
+        if res:
+            return Article(id_article=res["id_article"], nom=res["nom"], type=res["type_article"], composition=res["composition"])
+        
 
     @staticmethod
     def add_article(article : Article) -> bool: 
@@ -46,6 +42,7 @@ class ArticleDao:
                 res = cursor.fetchone()
         if res :
             created = True
+            article.id_article = res
         return created
     
     @staticmethod

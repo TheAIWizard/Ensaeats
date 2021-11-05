@@ -39,51 +39,6 @@ async def get_restaurant(username: Optional[str] = Header(None), password: Optio
 
 
 
-@router.post("/articles/", tags = ['Articles'])
-async def post_article(article : Article, username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
-    try:
-        # user = UserService.authenticate_and_get_user(
-        #     username=username, password=password)
-        # print(user)
-        # # call your service here
-
-        # Création de l'objet article
-
-        return RestaurantsService.addArticle(article)
-
-    except UserNotAuthenticated:
-        raise HTTPException(status_code=403, detail="User must be logged")
-
-
-@router.put("/articles/{id_article}", tags = ['Articles'])
-async def put_article(id_article : int, article:Article, username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
-    # l'idée serait de mettre en valeur par défaut la composition et le type de base de l'identifiant article
-    try:
-        # user = UserService.authenticate_and_get_user(
-        #     username=username, password=password)
-        # print(user)
-        # # call your service here
-        if id_article == article.id_article : 
-            return RestaurantsService.updateArticle(article = article)
-        else : 
-            raise HTTPException(stauts_code=401, detail = "Id has been changed")
-
-    except UserNotAuthenticated:
-        raise HTTPException(status_code=403, detail="User must be logged")
-
-@router.delete("/articles/", tags = ['Articles'])
-async def delete_article(id_article : int, username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
-    try:
-        # user = UserService.authenticate_and_get_user(
-        #     username=username, password=password)
-        # print(user)
-        # # call your service here
-        article = ArticleDao.find_article_by_id_article(id_article) 
-        return RestaurantsService.deleteArticle(article)
-
-    except UserNotAuthenticated:
-        raise HTTPException(status_code=403, detail="User must be logged")
-
 
 
 @router.get("/menus/{id_restaurant}", tags=["Menus"])
@@ -99,18 +54,6 @@ async def get_menus_by_id_restaurant(id_restaurant: str , username: Optional[str
         raise HTTPException(status_code=403, detail="User must be logged")
 
 
-
-@router.post("/menus", tags = ['Menus'])
-async def post_menu(id_restaurant : str, menu : Menu, username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
-    try:
-        # user = UserService.authenticate_and_get_user(
-        #     username=username, password=password)
-        # print(user)
-        # # call your service here
-        return RestaurantsService.addMenuOnRestaurant(id_restaurant, menu)
-
-    except UserNotAuthenticated:
-        raise HTTPException(status_code=403, detail="User must be logged")
 
 
 

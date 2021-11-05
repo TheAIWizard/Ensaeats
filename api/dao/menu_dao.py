@@ -1,7 +1,8 @@
 from typing import List, Optional
-from brouillon.utils.singleton import Singleton
+#from brouillon.utils.singleton import Singleton
 from brouillon.DAO.db_connection import DBConnection
 from API.metier.menu import Menu
+from API.dao.article_dao import ArticleDao
 
 #find_menu_by_id_menu
 #creer l'id_menu, définir de manière unique hash(id_menu+id_restaurant)
@@ -80,7 +81,7 @@ class MenuDao():
         """
         request = "SELECT * FROM ensaeats.menu "\
                   "JOIN ensaeats.table_restaurant_menu USING(id_menu) "\
-                  "WHERE id_restaurant=%(id_restaurant)s;"
+                  "WHERE table_restaurant_menu.id_restaurant=%(id_restaurant)s;"
 
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
@@ -95,7 +96,8 @@ class MenuDao():
                 id_menu = row["id_menu"]
                 liste_articles_menu=MenuDao.find_all_article_by_id_menu(id_menu)
                 menu = Menu(
-                      nom=row['nom']
+                    id_menu = row['id_menu']
+                    , nom=row['nom']
                     , prix=row["prix"]
                     , article1=liste_articles_menu[0]
                     , article2=liste_articles_menu[1]
@@ -171,23 +173,12 @@ class MenuDao():
                   , "prix": menu.prix})
                 res = cursor.fetchone()
         if res :
+            menu.id_menu = res 
             created_menu = True
 
-        # ajout du couple (id_menu, id_restaurant) dans la table table_restaurant_menu
-        with DBConnection().connection as connection:
-            with connection.cursor() as cursor :
-                cursor.execute(
-                    "INSERT INTO ensaeats.table_restaurant_menu (id_menu,"\
-                    " id_restaurant) VALUES "\
-                    "(%(id_menu)s, %(id_restaurant)s)"\
-                    "RETURNING id_menu;"
-                , {"id_menu" : menu.id_menu
-                , "id_restaurant": id_restaurant})
-                res = cursor.fetchone()
-        if res :
-            created_restaurant_menu = True
         
         # ajout du couple (id_menu, id_article) dans la table table_article_menu
+
         for id in MenuDao.find_all_id_article_by_id_menu(menu.id_menu) : 
             with DBConnection().connection as connection:
                 with connection.cursor() as cursor :
@@ -205,6 +196,21 @@ class MenuDao():
             return created_menu,created_restaurant_menu, created_menu_article
         
         
+        # ajout du couple (id_menu, id_restaurant) dans la table table_restaurant_menu
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "INSERT INTO ensaeats.table_restaurant_menu (id_menu,"\
+                    " id_restaurant) VALUES "\
+                    "(%(id_menu)s, %(id_restaurant)s)"\
+                    "RETURNING id_menu;"
+                , {"id_menu" : menu.id_menu
+                , "id_restaurant": id_restaurant})
+                res = cursor.fetchone()
+        if res :
+            created_restaurant_menu = True 
+
+  
     @staticmethod
     def delete_menu(menu : Menu) -> bool:
         deleted_menu,deleted_restaurant_menu,deleted_menu_article = False,False,False
@@ -244,7 +250,7 @@ class MenuDao():
         return deleted_menu,deleted_restaurant_menu,deleted_menu_article
 
     @staticmethod
-    def update_menu(menu:Menu)-> bool: # id_retaurant,ancien identifiant, add_menu,delete_menu)
+    def update_menu(menu:Menu)-> bool:
         updated_menu,updated_restaurant_menu = False, False
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :

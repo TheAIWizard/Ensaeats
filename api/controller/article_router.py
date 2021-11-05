@@ -11,9 +11,8 @@ from API.metier.menu import Menu
 
 router = APIRouter()
 
-
 @router.post("/articles/", tags = ['Articles'])
-async def post_article(nom : str, composition : str, type: str, username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+async def post_article(article : Article, username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
     try:
         # user = UserService.authenticate_and_get_user(
         #     username=username, password=password)
@@ -21,7 +20,6 @@ async def post_article(nom : str, composition : str, type: str, username: Option
         # # call your service here
 
         # Création de l'objet article
-        article = Article(nom, composition, type)
 
         return RestaurantsService.addArticle(article)
 
@@ -57,4 +55,3 @@ async def delete_article(id_article : int, username: Optional[str] = Header(None
 
     except UserNotAuthenticated:
         raise HTTPException(status_code=403, detail="User must be logged")
-

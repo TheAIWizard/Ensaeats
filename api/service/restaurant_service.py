@@ -41,7 +41,6 @@ class RestaurantsService:
         pass
         #return MenuDao.find_all_menus()
     
-
     @staticmethod
     def addArticle(article : Article) -> Article :
         ''' Ajoute un article à la base de données des articles commun à tous '''
@@ -57,9 +56,9 @@ class RestaurantsService:
         ''' Modifie un article à la base de données des articles commun à tous '''
         return ArticleDao.delete_article(article)
 
-
     @staticmethod
     def addMenuOnRestaurant(id_restaurant: str, menu : Menu):
+        ## Création des objets articles puis objet métier 
         return MenuDao.add_menu_by_id_restaurant(menu, id_restaurant)
     
     @staticmethod

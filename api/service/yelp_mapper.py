@@ -45,6 +45,4 @@ class YelpMapper:
         code_postal = location["zip_code"]
         pays = location["country"]
         ville = location["city"]
-        adresse = Adresse(adresse, code_postal, ville, pays)
-        
-        return adresse
+        return Adresse(adresse = adresse, code_postal = code_postal, ville = ville, pays = pays)
