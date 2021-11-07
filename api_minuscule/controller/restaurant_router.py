@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Header, HTTPException
-from API.metier.user import User
-from API.service.user_service import UserService
+from api_minuscule.metier.user import User
+from api_minuscule.service.user_service import UserService
 from typing import Optional
-from API.exception.user_not_authenticated_exception import UserNotAuthenticated
-from API.service.restaurant_service import RestaurantsService
+from api_minuscule.exception.user_not_authenticated_exception import UserNotAuthenticated
+from api_minuscule.service.restaurant_service import RestaurantsService
 from brouillon.DAO.menu_DAO import MenuDao
-from API.dao.article_dao import ArticleDao
-from API.metier.article import Article
-from API.metier.menu import Menu 
+from api_minuscule.dao.article_dao import ArticleDao
+from api_minuscule.metier.article import Article
+from api_minuscule.metier.menu import Menu 
 
 router = APIRouter()
 
