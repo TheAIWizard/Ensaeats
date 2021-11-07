@@ -1,4 +1,4 @@
-from API.metier.adresse import Adresse
+from api_minuscule.metier.adresse import Adresse
 from pydantic import BaseModel
 
 class Restaurant (BaseModel) :
