@@ -1,4 +1,4 @@
-class RestaurateurNotFoundException(Exception):
+class IdentifiantAlreadyExistsException(Exception):
     """Exception raised for errors when user not found
 
     Attributes:
@@ -6,5 +6,5 @@ class RestaurateurNotFoundException(Exception):
     """
 
     def __init__(self, identifiant:str):
-        self.message = "User "+identifiant+ " not found"
+        self.message = "Username "+identifiant+ " already exists"
         super().__init__(self.message)

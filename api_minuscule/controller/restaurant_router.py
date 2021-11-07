@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Header, HTTPException
 from api_minuscule.metier.user import User
-from api_minuscule.service.user_service import UserService
+from api_minuscule.service.restaurateur_service import RestaurateurService
 from typing import Optional
 from api_minuscule.exception.user_not_authenticated_exception import UserNotAuthenticated
 from api_minuscule.service.restaurant_service import RestaurantsService

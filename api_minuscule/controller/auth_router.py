@@ -1,20 +1,20 @@
 from fastapi import APIRouter
-from api_minuscule.metier.user import User
-from api_minuscule.service.user_service import UserService
+from api_minuscule.metier.restaurateur import Restaurateur
+from api_minuscule.service.restaurateur_service import RestaurateurService
 
 router = APIRouter()
 
 
-@router.post("/users/", tags=["Utilisateurs"])
-def create_user(user: User):
-    return UserService.createUser(user)
+@router.post("/restaurateurs/", tags=["Restaurateurs"])
+def create_restaurateur(restaurateur: Restaurateur):
+    return RestaurateurService.createRestaurateur(restaurateur)
 
 
-@router.put("/users/{user_id}", tags=["Utilisateurs"])
-def update_user(user_id: str, user: User):
-    return UserService.updateUser(user_id, user)
+@router.put("/restaurateurs/{restaurateur_id}", tags=["Restaurateur"])
+def update_restaurateur(restaurateur_id: str, restaurateur: Restaurateur):
+    return RestaurateurService.updateRestaurateur(restaurateur_id, restaurateur)
 
 
-@router.get("/users/{user_id}", tags=["Utilisateurs"])
-def get_user(user_id: str):
-    return UserService.getUser(user_id)
+@router.get("/restaurateurs/{restaurateur_id}", tags=["Restaurateurs"])
+def get_restaurateur(restaurateur_id: str):
+    return RestaurateurService.getRestaurateur(restaurateur_id)

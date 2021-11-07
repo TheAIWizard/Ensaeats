@@ -1,7 +1,6 @@
-from api.metier.restaurateur import Restaurateur
-from api.dao.configuration import DBConnection
-from api.exception.restaurateur_not_found_exception import RestaurateurNotFoundException
-
+from API.metier.restaurateur import Restaurateur
+from API.dao.configuration import DBConnection
+from API.exception.restaurateur_not_found_exception import RestaurateurNotFoundException
 
 class RestaurateurDao:
 
