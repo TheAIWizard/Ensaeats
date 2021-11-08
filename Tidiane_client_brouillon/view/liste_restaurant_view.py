@@ -7,11 +7,11 @@ from api.service.restaurant_service import RestaurantsService
 class RestaurantListeView(AbstractView):
     def __init__(self) -> None:
         ## Liste des restaurants
-        liste_restaurant = RestaurantsService.getRestaurants(AbstractView.session.localite,
+        self.liste_restaurant = RestaurantsService.getRestaurants(AbstractView.session.localite,
                         AbstractView.session.nom_restaurant, AbstractView.session.radius)
         
         ## Liste avec uniquement les noms
-        self.liste_nom_restaurant = [restaurant.nom for restaurant in liste_restaurant]
+        self.liste_nom_restaurant = [restaurant.nom for restaurant in self.liste_restaurant]
         
         ## Creation de la liste de choix
         choix_restaurant = self.liste_nom_restaurant
@@ -37,7 +37,7 @@ class RestaurantListeView(AbstractView):
             else: 
                 ## Recuperons le restaurant actif et renvoi la page restaurant view
                 index = self.liste_nom_restaurant.index(reponse["restaurant"])
-                AbstractView.session.restaurant_actif = liste_restaurant[index]
+                AbstractView.session.restaurant_actif = self.liste_restaurant[index]
                 from view.restaurant_view import RestaurantView
                 return RestaurantView()
             

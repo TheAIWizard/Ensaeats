@@ -11,10 +11,14 @@ class Session(AbstractView):
         """
         self.restaurant_actif : Restaurant = None 
         self.menu_actif : Menu = None
+        self.quantite = None
+        self.list_menu = []
+        self.list_quantite = []
         self.commande_active : Commande = None
         self.localite = None
         self.nom_restaurant = None
         self.radius = None
+        
         
         
         
