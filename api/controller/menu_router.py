@@ -39,3 +39,23 @@ async def post_menu(id_restaurant : str, menu : Menu, username: Optional[str] = 
 
     except UserNotAuthenticated:
         raise HTTPException(status_code=403, detail="User must be logged")
+
+
+@router.put("/menus", tags = ['Menus'])
+async def put_menu(id_restaurant : str, menu : Menu, username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+    try:
+        # user = UserService.authenticate_and_get_user(
+        #     username=username, password=password)
+        # print(user)
+        # # call your service here
+        # Faudrait créer une fonction pour voir si l'article existe pas déjà 
+        # s'il existe : on garde celui là
+        
+        RestaurantsService.addArticle(menu.article1)
+        RestaurantsService.addArticle(menu.article2)
+        RestaurantsService.addArticle(menu.article3),
+        return RestaurantsService.addMenuOnRestaurant(id_restaurant, menu)
+
+    except UserNotAuthenticated:
+        raise HTTPException(status_code=403, detail="User must be logged")
+
