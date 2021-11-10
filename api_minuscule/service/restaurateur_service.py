@@ -37,9 +37,9 @@ class RestaurateurService:
     
     
     @staticmethod
-    def authenticate_and_update_restaurateur(identifiant: str, password: str) -> Restaurateur:
-        if (RestaurateurDao.verifyPassword(identifiant, password)):
-            return RestaurateurDao.getRestaurateur(identifiant)
+    def authenticate_and_update_restaurateur(ancien_identifiant: str, ancien_password: str, identifiant: str, password: str) -> Restaurateur:
+        if (RestaurateurDao.verifyPassword(ancien_identifiant, ancien_password)):
+            return RestaurateurDao.updateRestaurateur(identifiant, password)
         else:
             raise RestaurateurNotAuthenticated(identifiant=identifiant)
     
