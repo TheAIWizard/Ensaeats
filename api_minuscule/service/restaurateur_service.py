@@ -34,3 +34,12 @@ class RestaurateurService:
             return RestaurateurDao.getRestaurateur(identifiant)
         else:
             raise RestaurateurNotAuthenticated(identifiant=identifiant)
+    
+    
+    @staticmethod
+    def authenticate_and_update_restaurateur(identifiant: str, password: str) -> Restaurateur:
+        if (RestaurateurDao.verifyPassword(identifiant, password)):
+            return RestaurateurDao.getRestaurateur(identifiant)
+        else:
+            raise RestaurateurNotAuthenticated(identifiant=identifiant)
+    

@@ -15,7 +15,7 @@ class RestaurateurDao:
                     "\nFROM ensaeats.restaurateur where restaurateur.identifiant=%(identifiant)s and restaurateur.mot_de_passe=%(mot_de_passe)s;"
                 )
                 res = cursor.fetchone()
-            if res["nom"] != None:
+            if res != None:
                 return True
             return False
 
@@ -65,11 +65,10 @@ class RestaurateurDao:
                     {"identifiant":identifiant}
                 )
                 res = cursor.fetchone()
-        print(res)
-        #if res["nom"] != None:
-            #return Restaurateur(nom=res["nom"], prenom=res["prenom"], identifiant=res["identifiant"], mot_de_passe=res["mot_de_passe"], id_restaurant=res["id_restaurant"])
-        #else:
-            #raise RestaurateurNotFoundException(identifiant)
+        if res != None:
+            return Restaurateur(nom=res["nom"], prenom=res["prenom"], identifiant=res["identifiant"], mot_de_passe=res["mot_de_passe"], id_restaurant=res["id_restaurant"])
+        else:
+            raise RestaurateurNotFoundException(identifiant)
 
     @staticmethod
     def createRestaurateur(restaurateur: Restaurateur) -> Restaurateur:
@@ -93,8 +92,17 @@ class RestaurateurDao:
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(
-                    "UPDATE enseates.restaurateur SET identifiant=%(identifiant)s, mot_de_passe=%(mot_de_passe)s WHERE identifiant=%(ancien_identifiant)s, mot_de_passe=%(ancien_mot_de_passe)s;", {"identifiant": restaurateur_to_update.identifiant, "mot_de_passe": restaurateur.mot_de_passe, "ancien_identifiant":restaurateur.identifiant, "ancien_mot_de_passe":restaurateur.mot_de_passe})
+                    "UPDATE ensaeats.restaurateur SET identifiant=%(identifiant)s, mot_de_passe=%(mot_de_passe)s WHERE identifiant=%(ancien_identifiant)s AND mot_de_passe=%(ancien_mot_de_passe)s;", {"identifiant": restaurateur.identifiant, "mot_de_passe": restaurateur.mot_de_passe, "ancien_identifiant":restaurateur_to_update.identifiant, "ancien_mot_de_passe":restaurateur_to_update.mot_de_passe})
 
+
+    @staticmethod
+    def updateRestaurateur(identifiant:str, restaurateur: Restaurateur) -> Restaurateur:
+        # le restaurateur peut changer n'importe quelle information qu'il souhaite sur son statut
+        restaurateur_to_update: Restaurateur = RestaurateurDao.getRestaurateur(identifiant)
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "UPDATE ensaeats.restaurateur SET identifiant=%(identifiant)s, mot_de_passe=%(mot_de_passe)s WHERE identifiant=%(ancien_identifiant)s AND mot_de_passe=%(ancien_mot_de_passe)s;", {"identifiant": restaurateur.identifiant, "mot_de_passe": restaurateur.mot_de_passe, "ancien_identifiant":restaurateur_to_update.identifiant, "ancien_mot_de_passe":restaurateur_to_update.mot_de_passe})
     @staticmethod
     def deleteRestaurateur(identifiant:str) -> Restaurateur:
         restaurateur_to_delete: Restaurateur = RestaurateurDao.getRestaurateur(identifiant)
