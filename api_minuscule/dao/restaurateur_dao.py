@@ -12,7 +12,7 @@ class RestaurateurDao:
             with connection.cursor() as cursor:
                 cursor.execute(
                     "SELECT * "
-                    "\nFROM restaurateur where restaurateur.identifiant=%(identifiant)s and restaurateur.mot_de_passe=%(mot_de_passe)s;"
+                    "\nFROM ensaeats.restaurateur where restaurateur.identifiant=%(identifiant)s and restaurateur.mot_de_passe=%(mot_de_passe)s;"
                 )
                 res = cursor.fetchone()
             if res["nom"] != None:
@@ -26,11 +26,12 @@ class RestaurateurDao:
             with connection.cursor() as cursor:
                 cursor.execute(
                     "SELECT * "
-                    "\nFROM restaurateur where restaurateur.id_restaurant=%(id_restaurant)s;"
+                    "\nFROM ensaeats.restaurateur WHERE restaurateur.id_restaurant=%(id_restaurant)s;",
+                    {"id_restaurant":id_restaurant}
                 )
                 res = cursor.fetchone()
-            if res["nom"] != None:
-                return False
+            #if res["nom"] != None:
+                #return False
             return True
         
 
@@ -42,11 +43,12 @@ class RestaurateurDao:
             with connection.cursor() as cursor:
                 cursor.execute(
                     "SELECT * "
-                    "\nFROM restaurateur where restaurateur.identifiant=%(identifiant)s;"
+                    "\nFROM ensaeats.restaurateur WHERE restaurateur.identifiant=%(identifiant)s;",
+                    {"identifiant":identifiant}
                 )
                 res = cursor.fetchone()
-            if res["nom"] != None:
-                return False
+            #if res["nom"] != None:
+                #return False
             return True
     
 
@@ -56,14 +58,16 @@ class RestaurateurDao:
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(
-                    "SELECT * "
-                    "\nFROM restaurateur where restaurateur.identifiant=%(identifiant)s;"
+                    "SELECT * "\
+                    "\nFROM ensaeats.restaurateur WHERE identifiant=%(identifiant)s;",
+                    {"identifiant":identifiant}
                 )
                 res = cursor.fetchone()
-        if res:
-            return Restaurateur(nom=res["nom"], prenom=res["prenom"], identifiant=res["identifiant"], mot_de_passe=res["mot_de_passe"], id_restaurant=res["id_restaurant"])
-        else:
-            raise RestaurateurNotFoundException(identifiant)
+        print(res)
+        #if res["nom"] != None:
+            #return Restaurateur(nom=res["nom"], prenom=res["prenom"], identifiant=res["identifiant"], mot_de_passe=res["mot_de_passe"], id_restaurant=res["id_restaurant"])
+        #else:
+            #raise RestaurateurNotFoundException(identifiant)
 
     @staticmethod
     def createRestaurateur(restaurateur: Restaurateur) -> Restaurateur:
@@ -75,7 +79,7 @@ class RestaurateurDao:
             with DBConnection().connection as connection:
                 with connection.cursor() as cursor:
                     cursor.execute(
-                        "INSERT INTO restaurateur (nom, prenom, identifiant, mot_de_passe, id_restaurant) VALUES "
+                        "INSERT INTO ensaeats.restaurateur (nom, prenom, identifiant, mot_de_passe, id_restaurant) VALUES "
                         "(%(nom)s, %(prenom)s, %(identifiant)s, %(mot_de_passe)s, %(id_restaurant)s));", {"nom": restaurateur.nom, "prenom": restaurateur.prenom, "identifiant": restaurateur.identifiant, "mot_de_passe": restaurateur.mot_de_passe, "id_restaurant": restaurateur.id_restaurant})
             return RestaurateurDao.getRestaurateur(restaurateur.identifiant)
 
@@ -86,7 +90,7 @@ class RestaurateurDao:
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(
-                    "UPDATE identifiant=%(identifiant)s, mot_de_passe=%(mot_de_passe)s WHERE identifiant=%(ancien_identifiant)s, mot_de_passe=%(ancien_mot_de_passe)s;", {"identifiant": restaurateur_to_update.identifiant, "mot_de_passe": restaurateur.mot_de_passe, "ancien_identifiant":restaurateur.identifiant, "ancien_mot_de_passe":restaurateur.mot_de_passe})
+                    "UPDATE enseates.restaurateur SET identifiant=%(identifiant)s, mot_de_passe=%(mot_de_passe)s WHERE identifiant=%(ancien_identifiant)s, mot_de_passe=%(ancien_mot_de_passe)s;", {"identifiant": restaurateur_to_update.identifiant, "mot_de_passe": restaurateur.mot_de_passe, "ancien_identifiant":restaurateur.identifiant, "ancien_mot_de_passe":restaurateur.mot_de_passe})
 
     @staticmethod
     def deleteRestaurateur(identifiant:str) -> Restaurateur:
@@ -94,6 +98,6 @@ class RestaurateurDao:
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(
-                    "Delete from restaurateur where identifiant=%(identifiant)s;", {"identifiant": restaurateur_to_delete.identifiant})
+                    "Delete from ensaeats.restaurateur where identifiant=%(identifiant)s;", {"identifiant": restaurateur_to_delete.identifiant})
 
 
