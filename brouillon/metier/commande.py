@@ -1,19 +1,17 @@
+from Brouillon_Nikiema.metier.menu import Menu 
+from pydantic import BaseModel
 from Brouillon_Nikiema.metier.adresse import Adresse
 class Commande:
     """Constructeur des commandes
     """
-    def __init__(self, id_commande: int,
-                 date : int,
-                 statut_commande: str,
-                 liste_menu: list,
-                 liste_quantite: list) -> None:
-        
-        self.id_commande = id_commande
-        self.date = date
-        self.statut_commande = statut_commande
-        self.liste_menu = liste_menu
-        self.list_quantite = liste_quantite
-        
+
+class Commande (BaseModel):
+    id_commande : int
+    date : str
+    #paiement : float
+    statut_commande : str
+    liste_menu : list
+    liste_quantite : list
         
     def prix_total(self):
         """Calcul du prix total

@@ -7,7 +7,7 @@ class Faire_commande:
     
     today = datetime.today().strftime('%Y-%m-%d')
     @staticmethod
-    def faire_commande(id_commande, liste_menu, liste_quantite, date= today, statut_commande = 'En cours'):
+    def faire_commande(liste_menu, liste_quantite, date= today, statut_commande = 'En cours', id_commande = 1):
         return Commande(id_commande, date, statut_commande, liste_menu, liste_quantite)
     
     @staticmethod

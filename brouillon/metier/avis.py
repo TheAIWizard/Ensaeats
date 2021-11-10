@@ -1,10 +1,8 @@
-
-class Avis:
-    """Constructeur des avis
-    """
-    def __init__(self, id_avis: int, avis: str) -> None:
-        self.id_avis = id_avis
-        self.avis = avis
+from pydantic.main import BaseModel
+class Avis (BaseModel):
+    id_avis : int
+    avis : str
+    nom_auteur : str
         
         
     def __str__(self) -> str:

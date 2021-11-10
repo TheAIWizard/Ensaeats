@@ -1,8 +1,8 @@
 from typing import List, Optional
 #from brouillon.utils.singleton import Singleton
 from brouillon.DAO.db_connection import DBConnection
-from API.metier.menu import Menu
-from API.dao.article_dao import ArticleDao
+from api.metier.menu import Menu
+from api.dao.article_dao import ArticleDao
 
 #find_menu_by_id_menu
 #creer l'id_menu, définir de manière unique hash(id_menu+id_restaurant)
