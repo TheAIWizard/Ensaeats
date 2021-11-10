@@ -1,6 +1,7 @@
 from api_minuscule.exception.restaurateur_not_authenticated_exception import RestaurateurNotAuthenticated
 from api_minuscule.exception.id_restaurant_already_exists_exception import RestaurantIDAlreadyExistsException
 from api_minuscule.exception.identifiant_already_exists_exception import IdentifiantAlreadyExistsException
+from api_minuscule.service.DAO_mapper import DAOMapper
 from api_minuscule.metier.restaurateur import Restaurateur
 from api_minuscule.dao.restaurateur_dao import RestaurateurDao
 

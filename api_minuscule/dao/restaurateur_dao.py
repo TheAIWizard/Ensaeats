@@ -21,6 +21,7 @@ class RestaurateurDao:
 
     @staticmethod
     def checkRestaurantIdUniqueness(id_restaurant: str) -> bool:
+        """ INUTILE AUSSI PEUT ÊTRE GéRéE PAR LE TRY"""
         """ vérifier qu'un id_restaurant n'existe pas déjà"""
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
@@ -80,7 +81,8 @@ class RestaurateurDao:
                 with connection.cursor() as cursor:
                     cursor.execute(
                         "INSERT INTO ensaeats.restaurateur (nom, prenom, identifiant, mot_de_passe, id_restaurant) VALUES "
-                        "(%(nom)s, %(prenom)s, %(identifiant)s, %(mot_de_passe)s, %(id_restaurant)s));", {"nom": restaurateur.nom, "prenom": restaurateur.prenom, "identifiant": restaurateur.identifiant, "mot_de_passe": restaurateur.mot_de_passe, "id_restaurant": restaurateur.id_restaurant})
+                        "(%(nom)s, %(prenom)s, %(identifiant)s, %(mot_de_passe)s, %(id_restaurant)s);", {"nom": restaurateur.nom, "prenom": restaurateur.prenom, "identifiant": restaurateur.identifiant, "mot_de_passe": restaurateur.mot_de_passe, "id_restaurant": restaurateur.id_restaurant})
+            print(restaurateur.nom)
             return RestaurateurDao.getRestaurateur(restaurateur.identifiant)
 
     @staticmethod
