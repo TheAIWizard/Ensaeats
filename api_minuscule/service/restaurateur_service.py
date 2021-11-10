@@ -9,11 +9,10 @@ from api_minuscule.dao.restaurateur_dao import RestaurateurDao
 class RestaurateurService:
     @staticmethod
     def createRestaurateur(restaurateur: Restaurateur) -> Restaurateur:
-        return RestaurateurDao.createRestaurateur(restaurateur)
-        #if (RestaurateurDao.checkRestaurantIdUniqueness(restaurateur.id_restaurant))&(RestaurateurDao.checkIdentifiantUniqueness(restaurateur.identifiant)):
-        #    return RestaurateurDao.createRestaurateur(restaurateur)
-        #else:
-           # raise RestaurantIDAlreadyExistsException(id_restaurant=restaurateur.id_restaurant) 
+        if (RestaurateurDao.checkRestaurantIdUniqueness(restaurateur.id_restaurant))&(RestaurateurDao.checkIdentifiantUniqueness(restaurateur.identifiant)):
+            return RestaurateurDao.createRestaurateur(restaurateur)
+        else:
+            raise RestaurantIDAlreadyExistsException(id_restaurant=restaurateur.id_restaurant) 
         
         
 

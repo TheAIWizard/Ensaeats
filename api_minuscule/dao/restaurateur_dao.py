@@ -21,7 +21,7 @@ class RestaurateurDao:
 
     @staticmethod
     def checkRestaurantIdUniqueness(id_restaurant: str) -> bool:
-        """ INUTILE AUSSI PEUT ÊTRE GéRéE PAR LE TRY"""
+        """ On aurait pu faire un try mais cette méthode est plus spécifique: faible couplage, forte cohésion"""
         """ vérifier qu'un id_restaurant n'existe pas déjà"""
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
@@ -31,8 +31,9 @@ class RestaurateurDao:
                     {"id_restaurant":id_restaurant}
                 )
                 res = cursor.fetchone()
-            #if res["nom"] != None:
-                #return False
+            print(type(res))
+            if res != None:
+                return False
             return True
         
 
@@ -48,8 +49,8 @@ class RestaurateurDao:
                     {"identifiant":identifiant}
                 )
                 res = cursor.fetchone()
-            #if res["nom"] != None:
-                #return False
+            if res != None:
+                return False
             return True
     
 
@@ -74,9 +75,9 @@ class RestaurateurDao:
     def createRestaurateur(restaurateur: Restaurateur) -> Restaurateur:
         #il faudrait hacher le mot de passe : hashlib.sha512(x.encode("utf-8")).hexdigest(), 16) : cet algo de hachage retourne le même hachage pour la même entrée
         #rien ne change en pratique, juste la colonne mot_de_passe qui n'est pas en clair, on compare les hash entre eux
-        try:
-            RestaurateurDao.getRestaurateur(restaurateur.identifiant)
-        except RestaurateurNotFoundException:
+        #try:
+            #RestaurateurDao.getRestaurateur(restaurateur.identifiant)
+        #except RestaurateurNotFoundException:
             with DBConnection().connection as connection:
                 with connection.cursor() as cursor:
                     cursor.execute(
