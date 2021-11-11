@@ -1,5 +1,4 @@
 import uvicorn
-
 from api_minuscule.app import app
 
 if __name__ == "__main__":
