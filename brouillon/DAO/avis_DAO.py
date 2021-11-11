@@ -7,9 +7,9 @@ from brouillon.DAO.db_connection import DBConnection
 
 class AvisDao(metaclass=Singleton):
 
-    def find_avis_by_id_restaurant(self, id_restau : int)-> List:
+    def find_avis_by_id_restaurant(self, id_restau : str)-> List:
         '''
-        Avoir tous les avis d'un restaurant
+        Get all the reviews of a restaurant thanks to its id
         
         '''
         with DBConnection().connection as connection:
@@ -28,9 +28,9 @@ class AvisDao(metaclass=Singleton):
         return avis_restau
 
 
-    def add_avis(self, avis : Avis, id_restau : int, nom_auteur : str) -> bool: 
+    def add_avis(self, avis : Avis, id_restau : str, nom_auteur : str) -> bool: 
         '''
-        Ajouter un avis sur un restaurant
+        Add a restaurant review 
         
         '''
         created = False
