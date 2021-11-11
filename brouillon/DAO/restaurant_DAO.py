@@ -9,7 +9,7 @@ class RestaurantDao(metaclass=Singleton):
 
     def find_id_restaurant_by_name(self, name : str)-> List:
         '''
-        Trouver l'identifiant d'un restaurant grâce à son nom
+        Get the id of a restaurant thanks to its name
         
         '''
         with DBConnection().connection as connection:
@@ -25,9 +25,9 @@ class RestaurantDao(metaclass=Singleton):
             return res["nom", "id_restaurant"]
 
 
-    def find_restaurant_by_id_restau(self, id_restaurant : int)-> List:
+    def find_restaurant_by_id_restau(self, id_restaurant : str)-> List:
         '''
-        Trouver le nom d'un restaurant grâce à son identifiant
+        Get the name of a restaurant thanks to its id
         
         '''
         with DBConnection().connection as connection:
