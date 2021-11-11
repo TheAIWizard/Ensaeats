@@ -12,7 +12,7 @@ class AvisView(AbstractView):
                 'choices': 'choisir liste avis'
             }
         ]
-        list_avis=[list.avis for list in self.list_avis]
+       
     
     def make_choice(self):
         reponse = prompt(self.questions)
@@ -23,8 +23,8 @@ class AvisView(AbstractView):
         
         elif reponse["Menu"] == 'choisir liste avis':
             ## Aller dans menus liste view
-            from view.avis import AvisView
-            return AvisView.list_avis
+            from Brouillon_Nikiema.metier.avis import Avis
+            return Avis.recup_avis
         else :
             
             pass

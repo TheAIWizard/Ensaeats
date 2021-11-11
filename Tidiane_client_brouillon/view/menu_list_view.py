@@ -56,8 +56,19 @@ class MenuListView(AbstractView):
             from Tidiane_client_brouillon.service.commande_service import Faire_commande
             AbstractView.session.commande_active = Faire_commande.faire_commande(AbstractView.session.list_menu, 
                                                             AbstractView.session.quantite_menu)
-            from Tidiane_client_brouillon.view.valide_commande_view import Valider
-            return Valider()
+            question2 = [{
+                'type': 'list',
+                'name': 'Menu',
+                'message': 'Que voulez vous faire',
+                'choices': ['Ajouter un autre menu', Separator(), 'Valider la commande']
+            }]
+            reponse2 = prompt(question2)
+            if reponse2['Menu'] == 'Ajouter un autre menu':
+                from Tidiane_client_brouillon.view.menu_list_view import MenuListView
+                return MenuListView()
+            else: 
+                from Tidiane_client_brouillon.view.valide_commande_view import Valider
+                return Valider()
             
             
         

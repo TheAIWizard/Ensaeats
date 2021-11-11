@@ -24,6 +24,15 @@ class Commande (BaseModel):
     
     def ajout_menu(self, menu):
         self.liste_menu.append(menu)
-        
     
+    ## Affichage du contenu de la commande
+    def __str__(self) -> str:
+        print("La commande contient :")
+        for menu,quantite in zip(self.list_menu, self.liste_quantite):
+            print("Menu: ", menu)
+            print("Quantite :", quantite)
+        
+        print("La somme à payer est : ", self.prix_total())
+            
+        
 
