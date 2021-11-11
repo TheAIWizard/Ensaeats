@@ -1,6 +1,6 @@
-from api_minuscule.metier.restaurateur import Restaurateur
+from Client.business.client import Client
 from api_minuscule.dao.configuration import DBConnection
-from api_minuscule.exception.restaurateur_not_found_exception import RestaurateurNotFoundException
+
 import hashlib
 
 """ Par rapport aux risques d'injections SQL: notre code est protégé contre les injections SQL. 
