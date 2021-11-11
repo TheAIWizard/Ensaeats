@@ -11,6 +11,11 @@ effectuant toutes les transformations nécessaires pour que les caractères dang
 
 class ClientDao:
 
+    def consulter_menu():
+        pass
+    def consulter_avis():
+        pass
+
     @staticmethod
     def verifyPassword(identifiant: str, mot_de_passe: str) -> bool:
         #on compare le hachage du mot de passe entré et stocké dans la base de données
