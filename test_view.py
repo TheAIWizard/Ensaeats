@@ -11,7 +11,7 @@ questions = [
                 'Accueil']
             }
         ]
-
+input("Appuyer sur entrer pour continuer")
 reponse = prompt(questions)
 
 print(reponse['Menu'])
