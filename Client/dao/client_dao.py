@@ -1,5 +1,5 @@
-from Client.business.client import Client
-from Client.exception.client_not_found_exception import ClientNotFoundException
+from client.business.client import Client
+from client.exception.client_not_found_exception import ClientNotFoundException
 from api_minuscule.dao.configuration import DBConnection
 
 
