@@ -6,5 +6,5 @@ class RestaurateurNotAuthenticated(Exception):
     """
 
     def __init__(self, identifiant:str):
-        self.message = "Cannot authenticate User "+identifiant+" not found"
+        self.message = "Cannot authenticate User "+identifiant+" not found. Check your username or password"
         super().__init__(self.message)
