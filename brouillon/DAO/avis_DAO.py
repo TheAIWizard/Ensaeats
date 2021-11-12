@@ -6,10 +6,10 @@ from brouillon.DAO.db_connection import DBConnection
  
 
 class AvisDao(metaclass=Singleton):
-
-    def find_avis_by_id_restaurant(self, id_restau : int)-> List:
+    @staticmethod
+    def find_avis_by_id_restaurant(id_restau : str)-> List:
         '''
-        Avoir tous les avis d'un restaurant
+        Get all the reviews of a restaurant thanks to its id
         
         '''
         with DBConnection().connection as connection:
@@ -17,20 +17,20 @@ class AvisDao(metaclass=Singleton):
                 cursor.execute(
                     "SELECT * " \
                     "\nFROM  ensaeats.avis   "\
-                    "\nWHERE restaurant.id_restaurant = %(id_restaurant)s"
+                    "\nWHERE id_restaurant = %(id_restaurant)s"
                     , {"id_restaurant": id_restau}
                 )
-                res = cursor.fetchone()
+                res = cursor.fetchall()
         avis_restau = []
         if res :
             for row in res : 
                 avis_restau.append(row["avis"])
         return avis_restau
 
-
-    def add_avis(self, avis : Avis, id_restau : int, nom_auteur : str) -> bool: 
+    @staticmethod
+    def add_avis(avis : Avis, id_restau : str) -> bool: 
         '''
-        Ajouter un avis sur un restaurant
+        Add a restaurant review 
         
         '''
         created = False
@@ -38,14 +38,16 @@ class AvisDao(metaclass=Singleton):
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
-                    "INSERT INTO ensaeats.avis (id_avis, avis, nom_auteur, id_restaurant) VALUES "\
-                    "(%(id_avis)s, %(avis)s, %(nom_auteur)s, %(id_restaurant)s)"\
-                    "RETURNING id_avis;"
-                , {"id_avis" : avis.id_avis
-                  , "avis": avis.avis
+                    "INSERT INTO ensaeats.avis (avis, nom_auteur, id_restaurant) VALUES "\
+                    "(%(avis)s, %(nom_auteur)s, %(id_restaurant)s)"\
+                    "RETURNING avis;"
+                , {#"id_avis" : avis.id_avis,
+                    "avis": avis.avis
                   , "nom_auteur" : avis.nom_auteur
                   , "id_restaurant": id_restau})
                 res = cursor.fetchone()
         if res :
             created = True
-        return created
+        return "Avis ajouté" if created else "Ajout d'avis échoué"
+
+    # avis_routeur, consulterAvis(avec identifiant), modifierAvis(avec identifiant), supprimerAvis() 

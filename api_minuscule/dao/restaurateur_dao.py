@@ -59,8 +59,6 @@ class RestaurateurDao:
                 return False
             return True
     
-
-
     @staticmethod
     def getRestaurateur(identifiant: str) -> Restaurateur:
         with DBConnection().connection as connection:
