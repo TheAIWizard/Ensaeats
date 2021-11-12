@@ -8,13 +8,12 @@
         self.type_article = type_article
         self.nom_article = nom_article """
         
-        
+from pydantic import BaseModel
+
 class Article(): 
-    def __init__(self, nom : str, composition : str, type : str):
-        self.nom = nom
-        self.composition = composition
-        self.type = type
-        self.id_article = 5687693
+    id_article : int
+    nom_article : str
+    type_article : str
     
     def article_desc(self):
         article = {"nom" : self.nom , "type" : self.type, "composition" : self.composition}

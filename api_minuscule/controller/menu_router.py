@@ -18,6 +18,7 @@ async def get_menus_by_id_restaurant(id_restaurant: str , identifiant: Optional[
         #     identifiant=identifiant, password=password)
         # print(restaurateur)
         # # call your service here
+
         return RestaurantsService.getMenus_by_id_restaurant(id_restaurant)
 
     except RestaurateurNotAuthenticated:

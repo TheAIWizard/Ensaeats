@@ -8,4 +8,5 @@ class Commande (BaseModel):
     statut_commande : str
     list_menu : list
     menu : Menu
- 
+
+  

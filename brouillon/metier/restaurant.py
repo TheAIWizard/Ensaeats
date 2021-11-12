@@ -1,18 +1,13 @@
-
-class Restaurant :
-    """Constructeur des restaurants
+from Brouillon_Nikiema.metier.adresse import Adresse
+from pydantic.main import BaseModel
+class Restaurant (BaseModel) :
+    id_restau : int
+    adresse : Adresse
+    nom_restau : str
+    statut_restau : str
+    specialite : str
     
-    """
     
-    def __init__(self, id_restau: int,
-                 nom_restau: str,
-                 statut_restau: str,
-                 specialite: str) -> None:
-        self.id_restau = id_restau
-        self.nom_restau = nom_restau
-        self.statut_restau = statut_restau
-        self.specialite = specialite
-        
     def ajout_menu(self, menu):
         pass
     

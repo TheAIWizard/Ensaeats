@@ -1,11 +1,11 @@
-from Tidiane_client_brouillon.view.abstract_view import AbstractView
 from brouillon.metier.commande import Commande
 from brouillon.metier.menu import Menu
 from brouillon.metier.commande import Commande
 from brouillon.metier.restaurant import Restaurant
+from brouillon.utils.singleton import Singleton
 
 
-class Session(AbstractView):
+class Session(metaclass=Singleton):
     def __init__(self) -> None:
         """[Defini les objets que l'on stocke en session]
         """

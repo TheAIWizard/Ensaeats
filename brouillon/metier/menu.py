@@ -1,14 +1,15 @@
 
-class Menu:
-    """Constructeur des menus
-    """
-    def __init__(self, id_menu,
-                 nom_menu,
-                 prix_menu) -> None:
-        self.id_menu = id_menu
-        self.nom_menu = nom_menu
-        self.prix_menu = prix_menu
-       
+from Brouillon_Nikiema.metier.article import Article
+from pydantic import BaseModel
+
+class Menu (BaseModel) :
+    id_menu : int
+    nom_menu : str
+    plat : Article
+    dessert : Article
+    boisson : Article
+    prix_menu : float
+
         
     
 

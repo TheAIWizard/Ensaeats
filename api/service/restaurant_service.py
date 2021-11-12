@@ -1,10 +1,10 @@
-from API.service.yelp_api_service import YelpApiService
-from API.service.yelp_mapper import YelpMapper
-from API.metier.restaurant import Restaurant
-from API.metier.article import Article
-from API.metier.menu import Menu 
-from API.dao.article_dao import ArticleDao
-from API.dao.menu_dao import MenuDao
+from api.service.yelp_api_service import YelpApiService
+from api.service.yelp_mapper import YelpMapper
+from api.metier.restaurant import Restaurant
+from api.metier.article import Article
+from api.metier.menu import Menu 
+from api.dao.article_dao import ArticleDao
+from api.dao.menu_dao import MenuDao
 from typing import List
 
 
