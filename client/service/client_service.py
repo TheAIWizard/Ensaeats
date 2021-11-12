@@ -1,16 +1,15 @@
-from Client.exception.client_not_authenticated_exception import ClientNotAuthenticated
+from client.exception.client_not_authenticated_exception import ClientNotAuthenticated
 #from Client.exception.id_Client_already_exists_exception import ClientIDAlreadyExistsException
 #from Client.exception.identifiant_already_exists_exception import IdentifiantAlreadyExistsException
 #from Client.exception.id_Client_already_exists_exception import ClientIDAlreadyExistsException
 #from Client.service.DAO_mapper import DAOMapper
-from Client.business.client import Client
-from Client.dao.client_dao import ClientDao
+from client.business.client import Client
+from client.dao.client_dao import ClientDao
 
 
 class ClientService:
     @staticmethod
     def createClient(client: Client) -> Client:
-        if (ClientDao.checkClientIdUniqueness(client.id_restaurant))&(ClientDao.checkIdentifiantUniqueness(client.identifiant)):
             return ClientDao.createClient(client)
         #else:
            # raise RestaurantIDAlreadyExistsException(id_restaurant=client.id_restaurant) 
@@ -39,11 +38,7 @@ class ClientService:
     @staticmethod
     def authenticate_and_create_client(identifiant: str, password: str, client:Client) -> Client:
         if (ClientDao.verifyPassword(identifiant, password)):
-            #on vérifie si un autre client n'a pas déjà le même id_restaurant
-            if (ClientDao.checkRestaurantIdUniqueness(client.id_restaurant)):
                 return ClientDao.createClient(client)
-            #else:
-                #return RestaurantIDAlreadyExistsException
         else:
             raise ClientNotAuthenticated(identifiant=identifiant)
     

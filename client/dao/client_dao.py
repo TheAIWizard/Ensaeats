@@ -11,11 +11,6 @@ effectuant toutes les transformations nécessaires pour que les caractères dang
 
 class ClientDao:
 
-    def consulter_menu():
-        pass
-    def consulter_avis():
-        pass
-
     @staticmethod
     def verifyPassword(identifiant: str, mot_de_passe: str) -> bool:
         #on compare le hachage du mot de passe entré et stocké dans la base de données
@@ -31,24 +26,6 @@ class ClientDao:
             if res != None:
                 return True
             return False
-
-    @staticmethod
-    def checkIdentifiantUniqueness(identifiant: str) -> bool:
-        """ vérifier que l'identifiant proposé par le client s'authetifiant n'est pas déjà utilisé"""
-        """ vérifier qu'un id_restaurant n'existe pas déjà"""
-        with DBConnection().connection as connection:
-            with connection.cursor() as cursor:
-                cursor.execute(
-                    "SELECT * "
-                    "\nFROM ensaeats.client WHERE identifiant=%(identifiant)s;",
-                    {"identifiant":identifiant}
-                )
-                res = cursor.fetchone()
-            if res != None:
-                return False
-            return True
-    
-
 
     @staticmethod
     def getClient(identifiant: str) -> Client:
@@ -115,4 +92,10 @@ class ClientDao:
                 cursor.execute("Delete from ensaeats.client where identifiant=%(identifiant)s;", {"identifiant": client_to_delete.identifiant})
         return "User "+identifiant+" deleted"
 
-   
+    @staticmethod
+    def consulter_menu():
+        pass
+
+    @staticmethod
+    def consulter_avis():
+        pass

@@ -5,6 +5,6 @@ class ClientNotFoundException(Exception):
         username -- username of the searched user
     """
 
-    def __init__(self, nom: str, prenom: str):
-        self.message = "User "+nom+" "+prenom + " not found"
+    def __init__(self, identifiant: str):
+        self.message = "User "+identifiant + " not found"
         super().__init__(self.message)

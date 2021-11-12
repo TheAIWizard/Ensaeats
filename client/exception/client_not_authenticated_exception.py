@@ -5,6 +5,6 @@ class ClientNotAuthenticated(Exception):
         username -- username of the searched user
     """
 
-    def __init__(self, nom: str, prenom: str):
-        self.message = "Cannot authenticate User "+nom+" "+prenom + " not found"
+    def __init__(self, identifiant: str):
+        self.message = "Cannot authenticate User "+identifiant+ " not found"
         super().__init__(self.message)
