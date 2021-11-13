@@ -7,5 +7,11 @@ class Avis(BaseModel):
 
         
         
-    #def __str__(self) -> str:
-       # print(self.avis)
+    def __str__(self) -> str:
+        output = self.avis
+        output += '\n'
+        output += 'Auteur: '
+        output += '\n'
+        output += self.nom_auteur
+
+        return output

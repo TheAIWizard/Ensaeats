@@ -23,7 +23,7 @@ class RestaurantListeView(AbstractView):
             {
                 'type': 'list',
                 'name': 'restaurant',
-                'message': 'Veuillez choisir un restaurant',
+                'message': 'Choix restaurant : ',
                 'choices': choix_restaurant
             }
         ]

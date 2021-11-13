@@ -8,7 +8,7 @@ class Faire_commande:
     today = datetime.today().strftime('%Y-%m-%d')
     @staticmethod
     def faire_commande(liste_menu, liste_quantite, date= today, statut_commande = 'En cours', id_commande = 1):
-        return Commande(id_commande, date, statut_commande, liste_menu, liste_quantite)
+        return Commande(id_commande = id_commande, date = date, statut_commande=statut_commande, liste_menu=liste_menu, liste_quantite = liste_quantite)
     
     @staticmethod
     def supprime_menu(commande: Commande, menu_sup):

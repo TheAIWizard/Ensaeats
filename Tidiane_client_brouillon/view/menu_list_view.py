@@ -16,22 +16,22 @@ class MenuListView(AbstractView):
         ## Liste des menus
         self.list_menu = RestaurantsService.getMenus_by_id_restaurant(id_restaurant)
         ## Liste des noms des menus
-        list_nom_menu = [menu.nom for menu in self.list_menu]
-        list_nom_menu.append(Separator())
-        list_nom_menu.append("Liste restaurant")
-        list_nom_menu.append(Separator())
-        list_nom_menu.append("Accueil")
+        self.list_nom_menu = [menu.nom for menu in self.list_menu]
+        self.list_nom_menu.append(Separator())
+        self.list_nom_menu.append("Liste restaurant")
+        self.list_nom_menu.append(Separator())
+        self.list_nom_menu.append("Accueil")
         self.questions = [
             {
                 'type': 'list',
                 'name' : 'Menu',
-                'message': 'Choisir un menu',
-                'choices': list_nom_menu
+                'message': 'Choix menu : ',
+                'choices': self.list_nom_menu
             }
         ]
         
     def display_info(self):
-        pass
+        print(AbstractView.session.commande_active)
         
     def make_choice(self):
         reponse = prompt(self.questions)
@@ -55,7 +55,7 @@ class MenuListView(AbstractView):
             ## Cree la commande en attente de validation avec le service faire commande
             from Tidiane_client_brouillon.service.commande_service import Faire_commande
             AbstractView.session.commande_active = Faire_commande.faire_commande(AbstractView.session.list_menu, 
-                                                            AbstractView.session.quantite_menu)
+                                                            AbstractView.session.list_quantite)
             question2 = [{
                 'type': 'list',
                 'name': 'Menu',

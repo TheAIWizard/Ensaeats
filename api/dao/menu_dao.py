@@ -60,7 +60,8 @@ class MenuDao():
                 id_menu = row["id_menu"]
                 liste_articles_menu=MenuDao.find_all_article_by_id_menu(id_menu)  
                 menu = Menu(
-                      nom=row['nom']
+                    id_menu = row["id_menu"],
+                    nom=row['nom']
                     , prix=row["prix"]
                     , article1=liste_articles_menu[0]
                     , article2=liste_articles_menu[1]

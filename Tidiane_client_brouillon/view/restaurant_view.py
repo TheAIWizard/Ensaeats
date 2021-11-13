@@ -8,7 +8,7 @@ class RestaurantView(AbstractView):
             {
                 'type': 'list',
                 'name': 'Menu',
-                'message': 'Choisir un option',
+                'message': 'Choix option :',
                 'choices': ['Consulter Menus',
                 Separator(),
                 'Consulter les avis',
