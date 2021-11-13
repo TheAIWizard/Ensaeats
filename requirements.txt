@@ -6,3 +6,4 @@ requests
 fastapi
 pydantic
 uvicorn
+PyInquirer
