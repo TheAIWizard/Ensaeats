@@ -19,3 +19,7 @@ class CommandeDAO():
                 if res :
                     inserted = True
                 return inserted
+    
+        ## Tenir compte du lien avec le client (Table_client_commande)
+       
+    

@@ -12,7 +12,7 @@ class RestaurantView(AbstractView):
                 'choices': ['Consulter Menus',
                 Separator(),
                 'Consulter les avis',
-                Separator(),
+                Separator(), ## Ajouter : consulter les commandes
                 'Accueil']
             }
         ]
