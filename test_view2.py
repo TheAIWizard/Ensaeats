@@ -1,10 +1,11 @@
 from Tidiane_client_brouillon.view.welcom_view import WelcomeView
+from Tidiane_client_brouillon.view.authentification_views import AuthentificationView
 
 # C'est le script qui va être le point d'entrée de notre application.
 
 if __name__ == '__main__':
     # on démarre sur l'écran accueil
-    current_vue = WelcomeView()
+    current_vue = AuthentificationView()
 
     # tant qu'on a un écran à afficher, on continue
     while current_vue:
