@@ -28,7 +28,7 @@ class AvisDao(metaclass=Singleton):
         return avis_restau
 
     @staticmethod
-    def add_avis(avis : Avis, id_restau : str) -> bool: 
+    def add_avis(avis : Avis) -> bool: 
         '''
         Add a restaurant review 
         
@@ -38,13 +38,14 @@ class AvisDao(metaclass=Singleton):
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
-                    "INSERT INTO ensaeats.avis (avis, nom_auteur, id_restaurant) VALUES "\
-                    "(%(avis)s, %(nom_auteur)s, %(id_restaurant)s)"\
+                    "INSERT INTO ensaeats.avis (avis, identifiant_auteur, id_restaurant) VALUES "\
+                    "(%(avis)s, %(identifiant_auteur)s, %(id_restaurant)s)"\
                     "RETURNING avis;"
                 , {#"id_avis" : avis.id_avis,
                     "avis": avis.avis
-                  , "nom_auteur" : avis.nom_auteur
-                  , "id_restaurant": id_restau})
+                  , "identifiant_auteur" : avis.identifiant_auteur
+                  , "date" : avis.date
+                  , "id_restaurant": avis.id_restaurant})
                 res = cursor.fetchone()
         if res :
             created = True
