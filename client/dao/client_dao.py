@@ -1,6 +1,6 @@
 from client.business.client import Client
 from client.exception.client_not_found_exception import ClientNotFoundException
-from api_minuscule.dao.configuration import DBConnection
+from client.dao.db_connection import DBConnection
 
 
 import hashlib

@@ -17,4 +17,5 @@ avis=Avis(avis="Sah quel plaisir ce restaurant, Une tuerie !", identifiant_auteu
 #print(ClientService.consulter_avis("NL0ROvACBWrwYv1BZxBWtQ"))
 #print(ClientService.ajouter_avis(avis))
 print(ClientService.consulter_menu("LTy9AUgMnLn8YS21KfFZ8g"))
+#print(ClientService.getClient('KingAlex35'))
 print(dt_string)
