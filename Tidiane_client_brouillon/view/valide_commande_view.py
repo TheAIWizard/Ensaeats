@@ -11,7 +11,7 @@ class Valider(AbstractView):
         self.question = [{
             'type': 'list',
             'name' : 'Menu',
-            'message': 'Que voulez vous faire',
+            'message': 'Fenetre : ',
             'choices': list_choix
         }]
        
@@ -23,15 +23,18 @@ class Valider(AbstractView):
         choix = prompt(self.question)
         ## Si choix valider : appel commande insert dao
         if choix["Menu"] == 'Valider la commande':
-            CommandeDAO.add_commande(AbstractView.session.commande_active)
-            print("Commande effectuée") # Print provisoire
+            id_commande = CommandeDAO.add_commande(commande = AbstractView.session.commande_active)
+            CommandeDAO.lien_commande_menus(AbstractView.session.commande_active, id_commande= id_commande)
+            CommandeDAO.lien_commande_client(AbstractView.session.id_client, id_commande)
+            if id_commande: print("Commande effectuée")
             retour = input("Appuyer sur Entrer pour retourner à l'Accueil !")
             from Tidiane_client_brouillon.view.welcom_view import WelcomeView
             return WelcomeView()
-            ## Renvoyer vers une page qui confirme l'insertion et demande s'il veut quitter ou pas
+            
         if choix["Menu"] == 'Modifier la commande':
             ## Page de modification de la commande
-            pass
+            from Tidiane_client_brouillon.view.modif_commande import Modif_commande
+            return Modif_commande()
         if choix['Menu'] == 'Annuler':
             ## Suprimer les informations en session
             AbstractView.session.list_menu = []

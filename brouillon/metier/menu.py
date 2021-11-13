@@ -4,11 +4,11 @@ from pydantic import BaseModel
 
 class Menu (BaseModel) :
     id_menu : int
-    nom_menu : str
+    nom : str
     plat : Article
     dessert : Article
     boisson : Article
-    prix_menu : float
+    prix : float
 
         
     

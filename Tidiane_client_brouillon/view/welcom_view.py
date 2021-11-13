@@ -11,7 +11,7 @@ class WelcomeView(AbstractView):
     def make_choice(self):
         self.localite = input("Entrer la localité: ")
         self.nom_restaurant = input("Entrer le nom du restaurant: ")
-        self.radius = input("Trouver restaurant dans quel rayon (km) par rapport à votre localite: ")
+        self.radius = input("Trouver restaurant dans quel rayon (m) par rapport à votre localite: ")
         
         AbstractView.session.localite = self.localite
         AbstractView.session.radius = self.radius
