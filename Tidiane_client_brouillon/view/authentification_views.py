@@ -15,9 +15,9 @@ class AuthentificationView(AbstractView):
         self.identifiant = input("Entrez votre identifiant client: ")
         self.mot_de_passe = input("Entrez votre mot de passe:")
         self.client = ClientService.getClient(self.identifiant)
-        try:
-            self.client=ClientService.authenticate_and_get_client(identifiant=self.identifiant, password=self.mot_de_passe)
-        except Exception:
-            AbstractView.session.client = self.client
+        #try:
+            #self.client=ClientService.authenticate_and_get_client(identifiant=self.identifiant, password=self.mot_de_passe)
+        #except Exception:
+         #AbstractView.session.client = self.client
         
         return WelcomeView()

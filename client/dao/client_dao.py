@@ -84,4 +84,10 @@ class ClientDao:
         #retourner les modifications qui vont apparaître sur l'interface de fast-api
         return ClientDao.getClient(identifiant) if identifiant else ClientDao.getClient(ancien_identifiant)
 
-    
+    @staticmethod
+    def deleteClient(identifiant:str) -> Client:
+        client_to_delete: Client = ClientDao.getClient(identifiant)
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute("Delete from ensaeats.client where identifiant=%(identifiant)s;", {"identifiant": client_to_delete.identifiant})
+        return "User "+identifiant+" deleted"
