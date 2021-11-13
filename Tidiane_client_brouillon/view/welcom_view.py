@@ -16,7 +16,7 @@ class WelcomeView(AbstractView):
         AbstractView.session.localite = self.localite
         AbstractView.session.radius = self.radius
         AbstractView.session.nom_restaurant = self.nom_restaurant
-        
+       
         return RestaurantListeView()
 
 

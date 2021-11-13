@@ -16,17 +16,17 @@ class MenuListView(AbstractView):
         ## Liste des menus
         self.list_menu = RestaurantsService.getMenus_by_id_restaurant(id_restaurant)
         ## Liste des noms des menus
-        list_nom_menu = [menu.nom for menu in self.list_menu]
-        list_nom_menu.append(Separator())
-        list_nom_menu.append("Liste restaurant")
-        list_nom_menu.append(Separator())
-        list_nom_menu.append("Accueil")
+        self.list_nom_menu = [menu.nom for menu in self.list_menu]
+        self.list_nom_menu.append(Separator())
+        self.list_nom_menu.append("Liste restaurant")
+        self.list_nom_menu.append(Separator())
+        self.list_nom_menu.append("Accueil")
         self.questions = [
             {
                 'type': 'list',
                 'name' : 'Menu',
                 'message': 'Choisir un menu',
-                'choices': list_nom_menu
+                'choices': self.list_nom_menu
             }
         ]
         
