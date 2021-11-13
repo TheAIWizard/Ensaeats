@@ -15,7 +15,8 @@ class AuthentificationView(AbstractView):
     def make_choice(self):
         #si on ne mets pas cette ligne inutile avant, ça ne fonctionne pas
         #sinon problème d'accès aux paramètres de .env pour db_connection
-        self.debug=ClientService.consulter_menu("LTy9AUgMnLn8YS21KfFZ8g")
+        #self.debug=ClientService.consulter_menu("LTy9AUgMnLn8YS21KfFZ8g")
+        #en fait, il fallait le bon db_connection
         self.sign_in= input("Avez-vous déjà un compte ? (oui|non): ")
         if self.sign_in=='oui':
             self.identifiant = input("Entrez votre identifiant client: ")
