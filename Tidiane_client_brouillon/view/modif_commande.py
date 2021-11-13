@@ -32,7 +32,7 @@ class Modif_commande(AbstractView):
             return MenuListView()
         
         ## Modifier la quantité d'un menu
-        if choix["Menu"]== "Modifier la quantité d'un menu":
+        if choix["Menu"] == "Modifier la quantité d'un menu":
             commande = AbstractView.session.commande_active
             list_nom_menu = [menu.nom for menu in commande.liste_menu]
             list_nom_menu.append(Separator())
@@ -59,6 +59,33 @@ class Modif_commande(AbstractView):
                 from Tidiane_client_brouillon.view.modif_commande import Modif_commande
                 return Modif_commande()
         
-        if choix["Menu"]== 'Retirer un menu':
+        elif choix["Menu"]== 'Retirer un menu':
             ## Retirer menu
-            pass
+            commande = AbstractView.session.commande_active
+            list_nom_menu = [menu.nom for menu in commande.liste_menu]
+            list_nom_menu.append(Separator())
+            list_nom_menu.append("Annuler")
+            question = [{
+            'type': 'list',
+            'name' : 'Menu',
+            'message': 'Choisir un menu',
+            'choices': list_nom_menu
+            }]
+            menu_retire = prompt(question)
+            if menu_retire['Menu'] == 'Annuler':
+                from Tidiane_client_brouillon.view.modif_commande import Modif_commande
+                return Modif_commande()
+            else:
+                idex_select = list_nom_menu.index(menu_retire['Menu'])
+                menu_sup = commande.liste_menu[idex_select]
+                from Tidiane_client_brouillon.service.commande_service import Faire_commande
+                AbstractView.session.commande_active = Faire_commande.supprime_menu(commande, menu_sup)
+                print("Menu supprimer avec succès !")
+                input("Appuyer sur enter pour continuer")
+                from Tidiane_client_brouillon.view.modif_commande import Modif_commande
+                return Modif_commande()
+            
+        else: 
+            ## Page validation
+            from Tidiane_client_brouillon.view.valide_commande_view import Valider
+            return Valider()

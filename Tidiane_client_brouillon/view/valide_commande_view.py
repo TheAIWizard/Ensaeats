@@ -31,7 +31,8 @@ class Valider(AbstractView):
             ## Renvoyer vers une page qui confirme l'insertion et demande s'il veut quitter ou pas
         if choix["Menu"] == 'Modifier la commande':
             ## Page de modification de la commande
-            pass
+            from Tidiane_client_brouillon.view.modif_commande import Modif_commande
+            return Modif_commande()
         if choix['Menu'] == 'Annuler':
             ## Suprimer les informations en session
             AbstractView.session.list_menu = []
