@@ -38,7 +38,7 @@ class ClientDao:
                 )
                 res = cursor.fetchone()
         if res != None:
-            return Client(nom=res["nom"], prenom=res["prenom"], adresse=res["adresse"], identifiant=res["identifiant"], mot_de_passe=res["mot_de_passe"], telephone=res["telephone"])
+            return Client(id_client = res["id_client"],nom=res["nom"], prenom=res["prenom"], adresse=res["adresse"], identifiant=res["identifiant"], mot_de_passe=res["mot_de_passe"], telephone=res["telephone"])
         else:
             raise ClientNotFoundException(identifiant)
 

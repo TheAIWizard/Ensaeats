@@ -14,19 +14,19 @@ class Faire_commande:
     def supprime_menu(commande: Commande, menu_sup):
         index_sup = commande.liste_menu.index(menu_sup)
         commande.liste_menu.remove(menu_sup)
-        del commande.list_quantite[index_sup]
+        del commande.liste_quantite[index_sup]
         return commande
     
     @staticmethod
     def ajout_menu(commande: Commande, menu, quantite):
         commande.liste_menu.append(menu)
-        commande.list_quantite.append(quantite)
+        commande.liste_quantite.append(quantite)
         return commande
     
     @staticmethod
     def ajout_quantite_menu(commande: Commande, menu_choisi, nouvelle_quant):
         index_menu = commande.liste_menu.index(menu_choisi)
-        commande.list_quantite[index_menu] = nouvelle_quant
+        commande.liste_quantite[index_menu] = nouvelle_quant
         return commande       
         
     @staticmethod 

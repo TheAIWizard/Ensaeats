@@ -39,7 +39,7 @@ class CommandeDAO():
         ## Tenir compte du lien avec le client (Table_client_commande)
        
     def lien_commande_client(id_client, id_commande):
-        requete = "INSERT INTO table_client_commande (id_commande, id_client) VALUES"\
+        requete = "INSERT INTO ensaeats.table_client_commande (id_commande, id_client) VALUES"\
             "({}, {})".format(id_commande, id_client)
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :

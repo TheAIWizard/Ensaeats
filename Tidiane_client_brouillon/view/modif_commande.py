@@ -10,7 +10,7 @@ from Tidiane_client_brouillon.view.abstract_view import AbstractView
 class Modif_commande(AbstractView):
     def __init__(self) -> None:
         list_choix = ["Ajouter menu", Separator(), "Modifier la quantité d'un menu", Separator(),
-                      "Retirer un menu", Separator(), 'Valider']
+                      "Retirer un menu", Separator(), 'Annuler']
         self.question = [{
             'type': 'list',
             'name' : 'Menu',
@@ -51,7 +51,7 @@ class Modif_commande(AbstractView):
                 index = list_nom_menu.index(menu_quantite_modif['Menu'])
                 menu_cible = commande.liste_menu[index]
                 print("La quantite associe à ce menu est : ", commande.liste_quantite[index])
-                new_quantite = input("Nouvelle quantite: ")
+                new_quantite = int(input("Nouvelle quantite: "))
                 from Tidiane_client_brouillon.service.commande_service import Faire_commande
                 AbstractView.session.commande_active = Faire_commande.ajout_quantite_menu(commande, menu_cible, new_quantite)
                 print("Modification effectuée")

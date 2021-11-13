@@ -13,8 +13,8 @@ class Commande (BaseModel):
         """Calcul du prix total
         """
         prix_total = 0
-        for menu in self.liste_menu:
-            prix_total += menu.prix
+        for menu,quantite in zip(self.liste_menu, self.liste_quantite):
+            prix_total += menu.prix*quantite
             
         return prix_total
     

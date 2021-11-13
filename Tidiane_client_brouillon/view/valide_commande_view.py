@@ -7,7 +7,7 @@ from Tidiane_client_brouillon.view.abstract_view import AbstractView
 
 class Valider(AbstractView):
     def __init__(self) -> None:
-        list_choix = ["Valider la commande", "Modifier la commande", "Annuler"]
+        list_choix = ["Valider la commande",Separator(), "Modifier la commande",Separator(), "Annuler"]
         self.question = [{
             'type': 'list',
             'name' : 'Menu',
