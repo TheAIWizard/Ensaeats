@@ -57,7 +57,7 @@ class ClientDao:
                     cursor.execute(
                         "INSERT INTO ensaeats.client (nom, prenom, adresse, identifiant, mot_de_passe, telephone) VALUES "
                         "(%(nom)s, %(prenom)s, %(adresse)s,%(identifiant)s, %(mot_de_passe)s, %(telephone)s);", {"nom": client.nom, "prenom": client.prenom, "adresse":client.adresse, "identifiant": client.identifiant, "mot_de_passe": hash_mot_de_passe, "telephone": client.telephone})
-            print(hash_mot_de_passe)
+            #print(hash_mot_de_passe)
             return ClientDao.getClient(client.identifiant)
 
     @staticmethod

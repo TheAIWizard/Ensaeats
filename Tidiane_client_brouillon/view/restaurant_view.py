@@ -1,6 +1,8 @@
 from PyInquirer import prompt, Separator
 
 from Tidiane_client_brouillon.view.abstract_view import AbstractView
+from Tidiane_client_brouillon.dao.avis_DAO import AvisDao
+from brouillon.metier.avis import Avis
 
 class RestaurantView(AbstractView):
     def __init__(self) -> None:
@@ -35,6 +37,10 @@ class RestaurantView(AbstractView):
             return MenuListView()
         else :
             ## Aller dans avis liste view
-            pass
+            id_restaurant = AbstractView.session.restaurant_actif.id_restaurant
+            AbstractView.session.listeAvis = AvisDao.find_avis_by_id_restaurant(id_restaurant)
+            from Tidiane_client_brouillon.view.avisView import AvisView
+            return AvisView()
+            
     
     

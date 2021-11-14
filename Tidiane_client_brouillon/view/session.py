@@ -30,6 +30,6 @@ class Session(metaclass=Singleton):
         self.create_mot_de_passe = None
         self.create_telephone = None
         
-        
+        self.listeAvis = []
         
         
