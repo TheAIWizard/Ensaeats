@@ -1,10 +1,10 @@
 from PyInquirer import prompt, Separator
 
-from Tidiane_client_brouillon.view.abstract_view import AbstractView
+from client.view.abstract_view import AbstractView
 
 from api.service.restaurant_service import RestaurantsService
 
-from Tidiane_client_brouillon.view.select_param import selection
+from client.view.select_param import selection
 
 
 class RestaurantListeView(AbstractView):
@@ -34,13 +34,13 @@ class RestaurantListeView(AbstractView):
     def make_choice(self):
         reponse = prompt(self.questions)
         if reponse["restaurant"] == "Retour Accueil":
-            from Tidiane_client_brouillon.view.welcom_view import WelcomeView
+            from client.view.welcom_view import WelcomeView
             return WelcomeView()
         else: 
             ## Recuperons le restaurant actif et renvoi la page restaurant view
             index = self.liste_nom_restaurant.index(reponse["restaurant"])
             AbstractView.session.restaurant_actif = self.liste_restaurant[index]
-            from Tidiane_client_brouillon.view.restaurant_view import RestaurantView
+            from client.view.restaurant_view import RestaurantView
             return RestaurantView()
             
             

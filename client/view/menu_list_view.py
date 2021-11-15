@@ -1,8 +1,8 @@
 from PyInquirer import prompt, Separator
 from pydantic.errors import ListError
-from Tidiane_client_brouillon.view.liste_restaurant_view import RestaurantListeView
+from client.view.liste_restaurant_view import RestaurantListeView
 
-from Tidiane_client_brouillon.view.abstract_view import AbstractView
+from client.view.abstract_view import AbstractView
 
 from api.service.restaurant_service import RestaurantsService
 from brouillon.metier.commande import Commande

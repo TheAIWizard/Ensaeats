@@ -1,8 +1,8 @@
 from PyInquirer import prompt
 from pydantic.main import ModelMetaclass
 
-from Tidiane_client_brouillon.view.abstract_view import AbstractView
-from Tidiane_client_brouillon.view.welcom_view import WelcomeView
+from client.view.abstract_view import AbstractView
+from client.view.welcom_view import WelcomeView
 from client.service.client_service import ClientService
 from client.business.client import Client
 from client.exception.client_not_authenticated_exception import ClientNotAuthenticated

@@ -1,7 +1,7 @@
 from PyInquirer import prompt
 
-from Tidiane_client_brouillon.view.abstract_view import AbstractView
-from Tidiane_client_brouillon.view.liste_restaurant_view import RestaurantListeView
+from client.view.abstract_view import AbstractView
+from client.view.liste_restaurant_view import RestaurantListeView
 
 class WelcomeView(AbstractView):
     

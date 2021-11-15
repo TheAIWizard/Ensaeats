@@ -1,4 +1,4 @@
-from Tidiane_client_brouillon.view.abstract_view import AbstractView
+from client.view.abstract_view import AbstractView
 from PyInquirer import prompt, Separator
 from client.business.avis import Avis
 from client.business.client import Client
@@ -15,7 +15,6 @@ class AvisView(AbstractView):
             'choices': list_choix
         }]
 
-    #ClientService.consulter_avis(id_restaurant=)
     def display_info(self):
         for avis in AbstractView.session.listeAvis:
             print(avis)
@@ -28,7 +27,8 @@ class AvisView(AbstractView):
         if reponse['Menu'] == 'Ajouter un avis':
             ## Ajoute ton avis sur le restaurant
             avis_txt = input('Donner votre avis : ')
-            avis_user = Avis(avis = avis_txt, identifiant_auteur = AbstractView.session.client.prenom, date= datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+            avis_user = Avis(avis = avis_txt, identifiant_auteur = AbstractView.session.client.prenom, 
+            date= datetime.now().strftime("%d/%m/%Y %H:%M:%S"), id_restaurant=AbstractView.session.restaurant_actif.id_restaurant)
             ## Ajout avis dans la base de données
             result =  ClientService.ajouter_avis(avis_user)
             print(result)

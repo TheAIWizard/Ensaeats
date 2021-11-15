@@ -1,9 +1,9 @@
 from PyInquirer import prompt, Separator
 from pydantic.errors import ListError
-from Tidiane_client_brouillon.view.liste_restaurant_view import RestaurantListeView
+from client.view.liste_restaurant_view import RestaurantListeView
 from Tidiane_client_brouillon.dao.commande_dao import CommandeDAO
 from brouillon.metier.commande import Commande
-from Tidiane_client_brouillon.view.abstract_view import AbstractView
+from client.view.abstract_view import AbstractView
 
 class Valider(AbstractView):
     def __init__(self) -> None:

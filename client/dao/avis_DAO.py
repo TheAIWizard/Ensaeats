@@ -1,7 +1,7 @@
 from typing import List
-from brouillon.metier.avis import Avis
-from brouillon.utils.singleton import Singleton
-from brouillon.DAO.db_connection import DBConnection
+from client.business.avis import Avis
+from api_minuscule.utils.singleton import Singleton
+from api_minuscule.dao.db_connection import DBConnection
 
  
 
@@ -38,8 +38,8 @@ class AvisDao(metaclass=Singleton):
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
-                    "INSERT INTO ensaeats.avis (avis, identifiant_auteur, id_restaurant) VALUES "\
-                    "(%(avis)s, %(identifiant_auteur)s, %(id_restaurant)s)"\
+                    "INSERT INTO ensaeats.avis (avis, identifiant_auteur, date, id_restaurant) VALUES "\
+                    "(%(avis)s, %(identifiant_auteur)s,%(date)s, %(id_restaurant)s)"\
                     "RETURNING avis;"
                 , {#"id_avis" : avis.id_avis,
                     "avis": avis.avis
