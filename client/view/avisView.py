@@ -28,7 +28,7 @@ class AvisView(AbstractView):
         if reponse['Menu'] == 'Ajouter un avis':
             ## Ajoute ton avis sur le restaurant
             avis_txt = input('Donner votre avis : ')
-            avis_user = Avis(avis = avis_txt, identifiant_auteur = AbstractView.session.client.prenom), date= datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+            avis_user = Avis(avis = avis_txt, identifiant_auteur = AbstractView.session.client.prenom, date= datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
             ## Ajout avis dans la base de données
             result =  ClientService.ajouter_avis(avis_user)
             print(result)

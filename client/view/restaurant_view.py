@@ -1,6 +1,7 @@
 from PyInquirer import prompt, Separator
 
-from Tidiane_client_brouillon.view.abstract_view import AbstractView
+from client.view.abstract_view import AbstractView
+from client.service.client_service import ClientService
 
 class RestaurantView(AbstractView):
     def __init__(self) -> None:
@@ -26,15 +27,19 @@ class RestaurantView(AbstractView):
         reponse = prompt(self.questions)
         if reponse["Menu"] == 'Accueil':
             ## Aller à l'accueil
-            from Tidiane_client_brouillon.view.welcom_view import WelcomeView
+            from client.view.welcom_view import WelcomeView
             return WelcomeView()
         
         elif reponse["Menu"] == 'Consulter Menus':
             ## Aller dans menus liste view
-            from Tidiane_client_brouillon.view.menu_list_view import MenuListView
+            from client.view.menu_list_view import MenuListView
             return MenuListView()
         else :
             ## Aller dans avis liste view
-            pass
+            id_restaurant = AbstractView.session.restaurant_actif.id_restaurant
+            AbstractView.session.listeAvis = ClientService.consulter_avis(id_restaurant)
+            from client.view.avisView import AvisView
+            return AvisView()
+
     
     
