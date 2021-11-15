@@ -50,7 +50,7 @@ async def update_menu(id_menu : int, menu : Menu, identifiant: Optional[str] = H
         # print(restaurateur)
         # # call your service here
         if id_menu == menu.id_menu : 
-            return RestaurantsService.updateMenuOnRestaurant(id_menu, menu)
+            return RestaurantsService.updateMenuOnRestaurant(menu)
         else : 
             raise HTTPException(stauts_code=401, detail = "Id has been changed")
 

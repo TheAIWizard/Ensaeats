@@ -61,10 +61,10 @@ class RestaurantsService:
         return MenuDao.add_menu_by_id_restaurant(menu, id_restaurant)
     
     @staticmethod
-    def updateMenuOnRestaurant(id_menu: int, menu: Menu):
-        return MenuDao.update_menu(id_menu, menu) 
+    def updateMenuOnRestaurant(menu: Menu):
+        return MenuDao.update_menu(menu) 
 
     @staticmethod
-    def deleteMenuOnRestaurant(id_restaurant: str, id_menu: int):
+    def deleteMenuOnRestaurant(id_menu: int):
         # prend un menu en entrée 
-        return MenuDao.update_menu(id_restaurant, id_menu)
+        return MenuDao.delete_menu(menu)
