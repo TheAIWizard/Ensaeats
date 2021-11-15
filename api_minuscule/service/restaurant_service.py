@@ -58,13 +58,11 @@ class RestaurantsService:
 
     @staticmethod
     def addMenuOnRestaurant(id_restaurant: str, menu : Menu):
-        ## Création des objets articles puis objet métier 
         return MenuDao.add_menu_by_id_restaurant(menu, id_restaurant)
     
     @staticmethod
-    def updateMenuOnRestaurant(id_restaurant: str, id_menu: int, menu: Menu):
-        ''' Prend en entrée l'identifiant de l'ancien menu si jamais celui ci est différent de celui ajouté'''
-        return MenuDao.update_menu(id_restaurant, id_menu, menu) 
+    def updateMenuOnRestaurant(id_menu: int, menu: Menu):
+        return MenuDao.update_menu(id_menu, menu) 
 
     @staticmethod
     def deleteMenuOnRestaurant(id_restaurant: str, id_menu: int):

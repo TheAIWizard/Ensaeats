@@ -290,11 +290,28 @@ class MenuDao():
                   , "prix": menu.prix})
                 if cursor.rowcount :
                     updated_menu = True
-        # modification du couple (id_menu, id_restaurant) dans la table table_restaurant_menu
+
+        # voir si les id article coincident avec les id dans la base de données
+        # si ils ne coincident pas -> on regarde si l'id article existe + on supprime
+        # le lien entre l'ancien id et menu et on ajoute le lien
+        # si l'article n'existe pas on le crée add_article
+        # si il a modifié des informations de l'article déjà existant -> update_article
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
-                    "UPDATE ensaeats.table_restaurant_menu SET" \
+                    "SELECT ensaeats.table_menu_article SET" \
+                    " id_menu = %(id_menu)s "\
+                    "WHERE id_menu=%(id_menu)s;"
+                , {"id_menu" : menu.id_menu})
+            if cursor.rowcount : 
+                # voir si les identifiants des articles ont changé 
+                pass
+
+        # modification du couple (id_menu, id_article) dans la table table_menu_article
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "UPDATE ensaeats.table_menu_article SET" \
                     " id_menu = %(id_menu)s "\
                     "WHERE id_menu=%(id_menu)s;"
                 , {"id_menu" : menu.id_menu})

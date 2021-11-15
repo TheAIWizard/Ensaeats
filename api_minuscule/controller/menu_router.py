@@ -35,8 +35,25 @@ async def post_menu(id_restaurant : str, menu : Menu, identifiant: Optional[str]
         # # call your service here
         RestaurantsService.addArticle(menu.article1)
         RestaurantsService.addArticle(menu.article2)
-        RestaurantsService.addArticle(menu.article3),
+        RestaurantsService.addArticle(menu.article3)
         return RestaurantsService.addMenuOnRestaurant(id_restaurant, menu)
 
     except RestaurateurNotAuthenticated:
         raise HTTPException(status_code=403, detail="Restaurateur must be logged")
+
+
+@router.put("/menus/{id_menu}", tags = ['Menus'])
+async def update_menu(id_menu : int, menu : Menu, identifiant: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+    try:
+        # restaurateur = RestaurateurService.authenticate_and_get_restaurateur(
+        #     restaurateurname=identifiant, password=password)
+        # print(restaurateur)
+        # # call your service here
+        if id_menu == menu.id_menu : 
+            return RestaurantsService.updateMenuOnRestaurant(id_menu, menu)
+        else : 
+            raise HTTPException(stauts_code=401, detail = "Id has been changed")
+
+    except RestaurateurNotAuthenticated:
+        raise HTTPException(status_code=403, detail="Restaurateur must be logged")
+

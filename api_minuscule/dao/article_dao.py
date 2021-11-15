@@ -26,7 +26,6 @@ class ArticleDao:
 
     @staticmethod
     def add_article(article : Article) -> bool: 
-        #on peut ajouter un article même s'il n'est pas encore dans un menu
         created = False
         #rajouter identification restaurateur
         with DBConnection().connection as connection:
