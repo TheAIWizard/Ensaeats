@@ -1,17 +1,20 @@
-from PyInquirer import prompt, Separator
-questions = [
-            {
-                'type': 'list',
-                'name': 'Menu',
-                'message': 'Choisir un option',
-                'choices': ['Consulter Menus',
-                Separator(),
-                'Consulter les avis',
-                Separator(),
-                'Accueil']
-            }
-        ]
-input("Appuyer sur entrer pour continuer")
-reponse = prompt(questions)
+from Tidiane_client_brouillon.view.authentification_view import AuthentificationView
 
-print(reponse['Menu'])
+# C'est le script qui va être le point d'entrée de notre application.
+
+if __name__ == '__main__':
+    # on démarre sur l'écran accueil
+    current_vue = AuthentificationView()
+    
+
+    # tant qu'on a un écran à afficher, on continue
+    while current_vue:
+        # on affiche une bordure pour séparer les vue
+        with open('Tidiane_client_brouillon/view/assets/banner.txt', 'r', encoding="utf-8") as asset:
+            print(asset.read())
+        # les infos à afficher
+        current_vue.display_info()
+        # le choix que doit saisir l'utilisateur
+        current_vue = current_vue.make_choice()
+
+    

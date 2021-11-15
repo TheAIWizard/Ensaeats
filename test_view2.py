@@ -1,3 +1,4 @@
+from Tidiane_client_brouillon.view.authentification_view import AuthentificationView
 from Tidiane_client_brouillon.view.welcom_view import WelcomeView
 
 # C'est le script qui va être le point d'entrée de notre application.
@@ -15,5 +16,7 @@ if __name__ == '__main__':
         current_vue.display_info()
         # le choix que doit saisir l'utilisateur
         current_vue = current_vue.make_choice()
+
+
 
     

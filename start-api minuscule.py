@@ -14,6 +14,9 @@ if __name__ == "__main__":
 
 
 """ exemple post
+
+RESTAURATEUR
+
 {
   "nom": "Delacroix",
   "prenom": "Martin",
@@ -29,4 +32,16 @@ if __name__ == "__main__":
   "mot_de_passe": "TheSmith",
   "id_restaurant": "kFHkpnV7JI_P--xORaIazw"
 }
+
+CLIENT
+
+{
+  "nom": "Martin",
+  "prenom": "Alex",
+  "adresse": "4 rue de la soif",
+  "identifiant": "KingAlex35",
+  "mot_de_passe": "KingAlex35",
+  "telephone": "07.25.98.15.37"
+}
+
  """

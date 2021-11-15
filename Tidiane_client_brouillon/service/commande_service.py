@@ -8,25 +8,25 @@ class Faire_commande:
     today = datetime.today().strftime('%Y-%m-%d')
     @staticmethod
     def faire_commande(liste_menu, liste_quantite, date= today, statut_commande = 'En cours', id_commande = 1):
-        return Commande(id_commande, date, statut_commande, liste_menu, liste_quantite)
+        return Commande(id_commande = id_commande, date = date, statut_commande=statut_commande, liste_menu=liste_menu, liste_quantite = liste_quantite)
     
     @staticmethod
     def supprime_menu(commande: Commande, menu_sup):
         index_sup = commande.liste_menu.index(menu_sup)
         commande.liste_menu.remove(menu_sup)
-        del commande.list_quantite[index_sup]
+        del commande.liste_quantite[index_sup]
         return commande
     
     @staticmethod
     def ajout_menu(commande: Commande, menu, quantite):
         commande.liste_menu.append(menu)
-        commande.list_quantite.append(quantite)
+        commande.liste_quantite.append(quantite)
         return commande
     
     @staticmethod
     def ajout_quantite_menu(commande: Commande, menu_choisi, nouvelle_quant):
         index_menu = commande.liste_menu.index(menu_choisi)
-        commande.list_quantite[index_menu] = nouvelle_quant
+        commande.liste_quantite[index_menu] = nouvelle_quant
         return commande       
         
     @staticmethod 
