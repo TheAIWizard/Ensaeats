@@ -65,6 +65,6 @@ class RestaurantsService:
         return MenuDao.update_menu(menu) 
 
     @staticmethod
-    def deleteMenuOnRestaurant(id_menu: int):
+    def deleteMenuOnRestaurant(menu: Menu):
         # prend un menu en entrée 
         return MenuDao.delete_menu(menu)
