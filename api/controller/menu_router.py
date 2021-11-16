@@ -28,7 +28,7 @@ async def get_menus_by_id_restaurant(id_restaurant: str , identifiant: Optional[
 @router.post("/menus", tags = ['Menus'])
 async def post_menu(id_restaurant : str, menu : Menu, identifiant: Optional[str] = Header(None), password: Optional[str] = Header(None)):
     try:
-        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(restaurateurname=identifiant, password=password)
+        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant, password=password)
         print(restaurateur)
         
         try :
@@ -49,15 +49,18 @@ async def post_menu(id_restaurant : str, menu : Menu, identifiant: Optional[str]
 @router.put("/menus/{id_menu}", tags = ['Menus'])
 async def update_menu(id_menu : int, menu : Menu, identifiant: Optional[str] = Header(None), password: Optional[str] = Header(None)):
     try:
-        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(restaurateurname=identifiant, password=password)
+        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant, password=password)
         print(restaurateur)
-        
-        # # call your service here
-        if id_menu == menu.id_menu : 
-            return RestaurantsService.updateMenuOnRestaurant(menu)
-        else : 
-            raise HTTPException(stauts_code=401, detail = "Id has been changed")
-
+        try : 
+            if restaurateur.id_restaurant == MenuDao.get_id_restaurant_by_menu(menu) :
+                # # call your service here
+                if id_menu == menu.id_menu : 
+                    return RestaurantsService.updateMenuOnRestaurant(menu)
+                else : 
+                    raise HTTPException(status_code=401, detail = "Id has been changed")
+        except RestaurateurNotAuthenticated:
+            raise HTTPException(status_code=403, detail= "You don't own this restaurant") 
+                        
     except RestaurateurNotAuthenticated:
         raise HTTPException(status_code=403, detail="Restaurateur must be logged")
 

@@ -12,9 +12,9 @@ from api.metier.menu import Menu
 router = APIRouter()
 
 @router.post("/articles/", tags = ['Articles'])
-async def post_article(article : Article, restaurateurname: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+async def post_article(article : Article, identifiant: Optional[str] = Header(None), password: Optional[str] = Header(None)):
     try:
-        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(restaurateurname=restaurateurname, password=password)
+        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant, password=password)
         print(restaurateur)
         # # call your service here
 
@@ -27,10 +27,10 @@ async def post_article(article : Article, restaurateurname: Optional[str] = Head
 
 
 @router.put("/articles/{id_article}", tags = ['Articles'])
-async def put_article(id_article : int, article:Article, restaurateurname: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+async def put_article(id_article : int, article:Article, identifiant: Optional[str] = Header(None), password: Optional[str] = Header(None)):
     # l'idée serait de mettre en valeur par défaut la composition et le type de base de l'identifiant article
     try:
-        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(restaurateurname=restaurateurname, password=password)
+        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant, password=password)
         print(restaurateur)
         # # call your service here
         if id_article == article.id_article : 
@@ -42,9 +42,9 @@ async def put_article(id_article : int, article:Article, restaurateurname: Optio
         raise HTTPException(status_code=403, detail="Restaurateur must be logged")
 
 @router.delete("/articles/", tags = ['Articles'])
-async def delete_article(id_article : int, restaurateurname: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+async def delete_article(id_article : int, identifiant: Optional[str] = Header(None), password: Optional[str] = Header(None)):
     try:
-        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(restaurateurname=restaurateurname, password=password)
+        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant, password=password)
         print(Restaurateur)
         # # call your service here
         article = ArticleDao.find_article_by_id_article(id_article) 

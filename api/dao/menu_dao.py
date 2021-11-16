@@ -28,6 +28,18 @@ class MenuDao():
                 id_articles.append(row["id_article"])
         return id_articles
 
+    @staticmethod 
+    def get_id_restaurant_by_menu(menu : Menu) -> str: 
+        with DBConnection().connection as connection : 
+            with connection.cursor() as cursor : 
+                cursor.execute(
+                    "SELECT id_restaurant FROM ensaeats.table_restaurant_menu"\
+                    " WHERE id_menu = %(id_menu)s ;",
+                    {"id_menu" : menu.id_menu})
+                res = cursor.fetchone()
+        if res : 
+            return res
+        
     @staticmethod
     #on en déduit la liste des objets articles pour un id_menu donné par la méthode "find_article_by_id_article" de la classe ArticleDao
     def find_all_article_by_id_menu(id_menu:int):
