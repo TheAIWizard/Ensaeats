@@ -31,12 +31,17 @@ async def post_menu(id_restaurant : str, menu : Menu, identifiant: Optional[str]
         restaurateur = RestaurateurService.authenticate_and_get_restaurateur(restaurateurname=identifiant, password=password)
         print(restaurateur)
         
-        # # call your service here
-        RestaurantsService.addArticle(menu.article1)
-        RestaurantsService.addArticle(menu.article2)
-        RestaurantsService.addArticle(menu.article3)
-        return RestaurantsService.addMenuOnRestaurant(id_restaurant, menu)
+        try :
+            if id_restaurant == restaurateur.id_restaurant :
+            # # call your service here
+                RestaurantsService.addArticle(menu.article1)
+                RestaurantsService.addArticle(menu.article2)
+                RestaurantsService.addArticle(menu.article3)
+                return RestaurantsService.addMenuOnRestaurant(id_restaurant, menu)
 
+        except RestaurateurNotAuthenticated:
+            raise HTTPException(status_code=403, detail= "You don't own this restaurant") 
+            
     except RestaurateurNotAuthenticated:
         raise HTTPException(status_code=403, detail="Restaurateur must be logged")
 
