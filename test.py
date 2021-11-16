@@ -1,5 +1,5 @@
-from Brouillon_Nikiema.Restaurant_service import RestaurantsService
+from api.service.restaurateur_service import RestaurateurService
 
-from brouillon.DAO.restaurant_DAO import RestaurantDao
 
-RestaurantsService.getRestaurants(location='Bruz',term="restaurant")
+
+print(RestaurateurService.authenticate_and_get_restaurateur('valmoulin2','valmoulin').id_restaurant)

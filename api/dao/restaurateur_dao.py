@@ -1,5 +1,5 @@
 from api.metier.restaurateur import Restaurateur
-from api.dao.configuration import DBConnection
+from api.dao.db_connection import DBConnection
 from api.exception.restaurateur_not_found_exception import RestaurateurNotFoundException
 import hashlib
 
