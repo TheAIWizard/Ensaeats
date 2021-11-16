@@ -3,11 +3,11 @@ from api.app import app
 
 if __name__ == "__main__":
     #sur la VM
-    #uvicorn.run(app, host="0.0.0.0", port=5000)
+    uvicorn.run(app, host="0.0.0.0", port=5000)
     #si vous avez comme erreur que le port 5000 est déjà utilisé, relancer le terminal sinon tentez uvicorn.run(app, host="0.0.0.0", port=5000).shutdown() avant relance
     
     #sur son ordinateur personnel
-    uvicorn.run(app, host="0.0.0.0", port=70)
+    #uvicorn.run(app, host="0.0.0.0", port=80)
 
 
 

@@ -33,18 +33,18 @@ class AvisView(AbstractView):
             result =  ClientService.ajouter_avis(avis_user)
             print(result)
             input("Appuyer sur entrer pour retourner")
-            from Tidiane_client_brouillon.view.restaurant_view import RestaurantView
+            from client.view.restaurant_view import RestaurantView
             return RestaurantView()
 
         elif reponse['Menu'] == 'Voir les menus':
             ## Voir menus
-            from Tidiane_client_brouillon.view.menu_list_view import MenuListView
+            from client.view.menu_list_view import MenuListView
             return MenuListView()
         elif reponse['Menu'] == 'Liste des restaurants':
-            from Tidiane_client_brouillon.view.liste_restaurant_view import RestaurantListeView
+            from client.view.liste_restaurant_view import RestaurantListeView
             return RestaurantListeView()
         else: 
             ## Retour à l'accueil
-            from Tidiane_client_brouillon.view.welcom_view import WelcomeView
+            from client.view.welcom_view import WelcomeView
             return WelcomeView()    
             
