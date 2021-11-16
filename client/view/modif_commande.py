@@ -3,7 +3,7 @@ from pydantic.errors import ListError
 from api.metier.menu import Menu
 from client.view.liste_restaurant_view import RestaurantListeView
 from Tidiane_client_brouillon.dao.commande_dao import CommandeDAO
-from brouillon.metier.commande import Commande
+from api.metier.commande import Commande
 from client.view.abstract_view import AbstractView
 
 

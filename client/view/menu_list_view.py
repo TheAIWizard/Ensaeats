@@ -5,7 +5,7 @@ from client.view.liste_restaurant_view import RestaurantListeView
 from client.view.abstract_view import AbstractView
 
 from api.service.restaurant_service import RestaurantsService
-from brouillon.metier.commande import Commande
+from api.metier.commande import Commande
 
 
 
