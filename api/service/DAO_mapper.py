@@ -1,4 +1,4 @@
-from api_minuscule.metier.restaurant import Restaurant
+from api.metier.restaurant import Restaurant
 from typing import List
 """ INUTIIILLLEEE"""
 class DAOMapper:

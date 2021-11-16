@@ -1,4 +1,4 @@
-from api_minuscule.service.restaurant_service import RestaurantsService
+from api.service.restaurant_service import RestaurantsService
 
 def selection(para_localite, para_nomRestaurant, para_radius):
     list = []

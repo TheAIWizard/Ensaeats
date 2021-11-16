@@ -1,7 +1,7 @@
 from typing import List
 from client.business.avis import Avis
-from api_minuscule.utils.singleton import Singleton
-from api_minuscule.dao.db_connection import DBConnection
+from api.utils.singleton import Singleton
+from api.dao.db_connection import DBConnection
 
  
 

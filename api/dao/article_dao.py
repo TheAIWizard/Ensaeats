@@ -2,7 +2,7 @@ from typing import List, Optional
 from brouillon.utils.singleton import Singleton
 from brouillon.DAO.db_connection import DBConnection
 from api.metier.article import Article
-#from API.dao.menu_dao import MenuDao
+#from api_minuscule.dao.menu_dao import MenuDao
 
 class ArticleDao:
 
@@ -26,7 +26,6 @@ class ArticleDao:
 
     @staticmethod
     def add_article(article : Article) -> bool: 
-        #on peut ajouter un article même s'il n'est pas encore dans un menu
         created = False
         #rajouter identification restaurateur
         with DBConnection().connection as connection:

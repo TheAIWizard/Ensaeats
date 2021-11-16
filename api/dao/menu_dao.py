@@ -60,8 +60,7 @@ class MenuDao():
                 id_menu = row["id_menu"]
                 liste_articles_menu=MenuDao.find_all_article_by_id_menu(id_menu)  
                 menu = Menu(
-                    id_menu = row["id_menu"],
-                    nom=row['nom']
+                      nom=row['nom']
                     , prix=row["prix"]
                     , article1=liste_articles_menu[0]
                     , article2=liste_articles_menu[1]
@@ -241,6 +240,7 @@ class MenuDao():
     @staticmethod
     def delete_menu(menu : Menu) -> bool:
         deleted_menu,deleted_restaurant_menu,deleted_menu_article = False,False,False
+        
         #suppression du menu dans la table table_restaurant_menu
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
@@ -252,6 +252,7 @@ class MenuDao():
                 res = cursor.fetchone()
         if res :
             deleted_restaurant_menu = True
+            
         #suppression de l'id_menu dans la table table_menu_article
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
@@ -263,6 +264,7 @@ class MenuDao():
                 res = cursor.fetchone()
         if res :
             deleted_menu_article = True
+            
         #suppression du menu dans la table menu
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
@@ -278,7 +280,8 @@ class MenuDao():
 
     @staticmethod
     def update_menu(menu:Menu)-> bool:
-        updated_menu,updated_restaurant_menu = False, False
+        
+        updated_menu = False
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
@@ -291,16 +294,91 @@ class MenuDao():
                   , "prix": menu.prix})
                 if cursor.rowcount :
                     updated_menu = True
-        # modification du couple (id_menu, id_restaurant) dans la table table_restaurant_menu
+
+
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
-                    "UPDATE ensaeats.table_restaurant_menu SET" \
-                    " id_menu = %(id_menu)s "\
+                    "SELECT id_article FROM ensaeats.table_menu_article " \
                     "WHERE id_menu=%(id_menu)s;"
                 , {"id_menu" : menu.id_menu})
-                if cursor.rowcount :
-                    updated_restaurant_menu = True
-        return updated_menu,updated_restaurant_menu
+                res = cursor.fetchone()
+                
+        if res : 
+            # voir si les identifiants des articles ont changé 
+            if menu.article1.id_article not in res : 
+                update_article1 = False
+                ArticleDao.add_article(article = menu.article1)
+                with DBConnection().connection as connection:
+                    with connection.cursor() as cursor :
+                        cursor.execute(
+                            "DELETE FROM ensaeats.table_menu_article " 
+                            "WHERE id_menu=%(id_menu)s AND id_article = %(id_article)s;"
+                                , {"id_menu" : menu.id_menu, 
+                                "id_article" : menu.article1.id_article})
+                            
+                with DBConnection().connection as connection:
+                    with connection.cursor() as cursor :
+                        cursor.execute(
+                            "INSERT INTO ensaeats.table_menu_article (id_menu,"\
+                                " id_article) VALUES "\
+                                "(%(id_menu)s, %(id_article)s)"\
+                                "RETURNING id_menu;"
+                                , {"id_menu" : menu.id_menu,
+                                   "id_article": menu.article1.id_article})
+                    res = cursor.fetchone()
+                if res :
+                    update_article1 = True            
+                            
+            if menu.article2.id_article not in res : 
+                update_article2 = False
+                ArticleDao.add_article(article = menu.article2)
+                with DBConnection().connection as connection:
+                    with connection.cursor() as cursor :
+                        cursor.execute(
+                            "DELETE FROM ensaeats.table_menu_article " 
+                            "WHERE id_menu=%(id_menu)s AND id_article = %(id_article)s;"
+                            , {"id_menu" : menu.id_menu, 
+                            "id_article" : menu.article2.id_article})
+                        
+                with DBConnection().connection as connection:
+                    with connection.cursor() as cursor :
+                        cursor.execute(
+                            "INSERT INTO ensaeats.table_menu_article (id_menu,"\
+                                " id_article) VALUES "\
+                                    "(%(id_menu)s, %(id_article)s)"\
+                                        "RETURNING id_menu;"
+                                        , {"id_menu" : menu.id_menu,
+                                        "id_article": menu.article2.id_article})
+                        res = cursor.fetchone()
+                    if res :
+                        update_article2 = True        
+
+                
+            if menu.article3.id_article in res : 
+                update_article3 = False
+                ArticleDao.add_article(article = menu.article3)
+                with DBConnection().connection as connection:
+                    with connection.cursor() as cursor :
+                        cursor.execute(
+                            "DELETE FROM ensaeats.table_menu_article " 
+                                "WHERE id_menu=%(id_menu)s AND id_article = %(id_article)s;"
+                                , {"id_menu" : menu.id_menu, 
+                                "id_article" : menu.article3.id_article})
+                
+                with DBConnection().connection as connection:
+                    with connection.cursor() as cursor :       
+                        cursor.execute(
+                            "INSERT INTO ensaeats.table_menu_article (id_menu,"\
+                                " id_article) VALUES "\
+                                "(%(id_menu)s, %(id_article)s)"\
+                                        "RETURNING id_menu;"
+                                          , {"id_menu" : menu.id_menu,
+                                        "id_article": menu.article3.id_article})
+                        res = cursor.fetchone()
+                    if res :
+                        update_article3 = True    
+
+                    
 
       

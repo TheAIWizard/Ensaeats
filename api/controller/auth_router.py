@@ -1,20 +1,25 @@
-from fastapi import APIRouter
-from API.metier.user import User
-from API.service.user_service import UserService
+from fastapi import APIRouter, Header
+from typing import Optional
+from api.metier.restaurateur import Restaurateur
+from api.service.restaurateur_service import RestaurateurService
 
 router = APIRouter()
 
 
-@router.post("/users/", tags=["Utilisateurs"])
-def create_user(user: User):
-    return UserService.createUser(user)
+@router.post("/restaurateurs/", tags=["Restaurateurs"])
+async def create_restaurateur(restaurateur: Restaurateur):
+    return RestaurateurService.createRestaurateur(restaurateur)
 
 
-@router.put("/users/{user_id}", tags=["Utilisateurs"])
-def update_user(user_id: str, user: User):
-    return UserService.updateUser(user_id, user)
+@router.put("/restaurateurs/{ancien_restaurateur_id}", tags=["Restaurateur"])
+async def update_restaurateur(ancien_restaurateur_id: str, ancien_mot_de_passe:str, restaurateur_id: Optional[str] = Header(None), mot_de_passe:Optional[str] = Header(None)):
+    return RestaurateurService.authenticate_and_update_restaurateur(ancien_restaurateur_id, ancien_mot_de_passe, restaurateur_id, mot_de_passe)
 
 
-@router.get("/users/{user_id}", tags=["Utilisateurs"])
-def get_user(user_id: str):
-    return UserService.getUser(user_id)
+@router.get("/restaurateurs/{restaurateur_id}", tags=["Restaurateurs"])
+async def get_restaurateur(restaurateur_id: str, password:str):
+    return RestaurateurService.authenticate_and_get_restaurateur(restaurateur_id, password)
+
+@router.delete("/restaurateurs/{restaurateur_id}", tags=["Restaurateurs"])
+async def delete_restaurateur(restaurateur_id: str, password:str):
+    return RestaurateurService.authenticate_and_delete_restaurateur(restaurateur_id, password)

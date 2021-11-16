@@ -1,6 +1,6 @@
 from PyInquirer import prompt, Separator
 from pydantic.errors import ListError
-from api_minuscule.metier.menu import Menu
+from api.metier.menu import Menu
 from client.view.liste_restaurant_view import RestaurantListeView
 from Tidiane_client_brouillon.dao.commande_dao import CommandeDAO
 from brouillon.metier.commande import Commande

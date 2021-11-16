@@ -6,7 +6,7 @@ from client.exception.client_not_authenticated_exception import ClientNotAuthent
 from client.business.client import Client
 from client.business.avis import Avis
 from client.dao.client_dao import ClientDao
-from api_minuscule.dao.menu_dao import MenuDao
+from api.dao.menu_dao import MenuDao
 from client.dao.avis_DAO import AvisDao
 
 class ClientService:

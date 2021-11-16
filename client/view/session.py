@@ -1,8 +1,8 @@
 from brouillon.metier.commande import Commande
-from api_minuscule.metier.menu import Menu
+from api.metier.menu import Menu
 from brouillon.metier.commande import Commande
-from api_minuscule.metier.restaurant import Restaurant
-from api_minuscule.utils.singleton import Singleton
+from api.metier.restaurant import Restaurant
+from api.utils.singleton import Singleton
 
 
 class Session(metaclass=Singleton):
