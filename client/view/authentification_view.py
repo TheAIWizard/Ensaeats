@@ -60,6 +60,8 @@ class AuthentificationView(AbstractView):
                 return WelcomeView()
             except Exception:
                 return AuthentificationView()
+      
+            
             
         
         

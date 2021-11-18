@@ -1,7 +1,9 @@
 from PyInquirer import prompt, Separator
+from client.business.client import Client
 
 from client.view.abstract_view import AbstractView
 from client.service.client_service import ClientService
+from api.metier.avis import Avis
 
 class RestaurantView(AbstractView):
     def __init__(self) -> None:
@@ -9,7 +11,7 @@ class RestaurantView(AbstractView):
             {
                 'type': 'list',
                 'name': 'Menu',
-                'message': 'Choisir un option',
+                'message': 'Choix option :',
                 'choices': ['Consulter Menus',
                 Separator(),
                 'Consulter les avis',
@@ -40,6 +42,6 @@ class RestaurantView(AbstractView):
             AbstractView.session.listeAvis = ClientService.consulter_avis(id_restaurant)
             from client.view.avisView import AvisView
             return AvisView()
-
+            
     
     

@@ -1,4 +1,5 @@
 from PyInquirer import prompt
+from PyInquirer.separator import Separator
 
 from client.view.abstract_view import AbstractView
 from client.view.liste_restaurant_view import RestaurantListeView
@@ -9,16 +10,27 @@ class WelcomeView(AbstractView):
         pass
      
     def make_choice(self):
-        self.localite = input("Entrer la localité: ")
-        self.nom_restaurant = input("Entrer le nom du restaurant: ")
-        self.radius = input("Trouver restaurant dans quel rayon (m) par rapport à votre localite: ")
-        
-        AbstractView.session.localite = self.localite
-        AbstractView.session.radius = self.radius
-        AbstractView.session.nom_restaurant = self.nom_restaurant
-        
-        return RestaurantListeView()
+        question = [{
+            'type': 'list',
+            'name': 'Menu',
+            'message': "Entrer dans l'application \n",
+            'choices': ['Oui', Separator(), 'Non']
+        }]
+        reponse = prompt(question)
 
+        if reponse['Menu'] == 'Oui':
+            self.localite = input("Entrer la localité: ")
+            self.nom_restaurant = input("Entrer le nom du restaurant: ")
+            self.radius = input("Trouver restaurant dans quel rayon (m) par rapport à votre localite: ")
+            
+            AbstractView.session.localite = self.localite
+            AbstractView.session.radius = self.radius
+            AbstractView.session.nom_restaurant = self.nom_restaurant
+        
+            return RestaurantListeView()
+        else:
+            return None
+            
 
 
 
