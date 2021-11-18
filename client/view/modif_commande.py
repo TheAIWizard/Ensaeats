@@ -78,12 +78,27 @@ class Modif_commande(AbstractView):
             else:
                 idex_select = list_nom_menu.index(menu_retire['Menu'])
                 menu_sup = commande.liste_menu[idex_select]
-                from client.service.commande_service import Faire_commande
-                AbstractView.session.commande_active = Faire_commande.supprime_menu(commande, menu_sup)
-                print("Menu supprimer avec succès !")
-                input("Appuyer sur enter pour continuer")
-                from client.view.modif_commande import Modif_commande
-                return Modif_commande()
+                
+                
+                supprim_question = [{
+                    'type': 'list',
+                    'name': 'Supp',
+                    'message': 'Voulez vous vraiment supprimez ce menu',
+                    'choices': ['Oui', Separator(), 'Non']
+                }]
+
+                supprim_reponse = prompt(supprim_question)
+
+                if supprim_reponse['Supp'] == 'Oui': 
+                    from client.service.commande_service import Faire_commande
+                    AbstractView.session.commande_active = Faire_commande.supprime_menu(commande, menu_sup)
+                    print("Menu supprimer avec succès !")
+                    input("Appuyer sur enter pour continuer")
+                    from client.view.modif_commande import Modif_commande
+                    return Modif_commande()
+                else:
+                    from client.view.modif_commande import Modif_commande
+                    return Modif_commande()
             
         else: 
             ## Page validation

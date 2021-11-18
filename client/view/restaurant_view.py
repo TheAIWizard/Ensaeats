@@ -15,14 +15,17 @@ class RestaurantView(AbstractView):
                 'choices': ['Consulter Menus',
                 Separator(),
                 'Consulter les avis',
-                Separator(), ## Ajouter : consulter les commandes
+                Separator(),
+                'Liste des restaurants',
+                Separator(), 
                 'Accueil']
             }
         ]
         
     
     def display_info(self):
-        pass
+        print("Restaurant", AbstractView.session.restaurant_actif.nom)
+        print('\n')
     
     
     def make_choice(self):
@@ -36,10 +39,15 @@ class RestaurantView(AbstractView):
             ## Aller dans menus liste view
             from client.view.menu_list_view import MenuListView
             return MenuListView()
+        
+        elif reponse['Menu'] == "Liste des restaurants":
+            from client.view.liste_restaurant_view import RestaurantListeView
+            return RestaurantListeView()
         else :
             ## Aller dans avis liste view
             id_restaurant = AbstractView.session.restaurant_actif.id_restaurant
             AbstractView.session.listeAvis = ClientService.consulter_avis(id_restaurant)
+                     
             from client.view.avisView import AvisView
             return AvisView()
             

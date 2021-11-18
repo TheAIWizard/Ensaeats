@@ -16,7 +16,9 @@ class Valider(AbstractView):
         }]
        
     def display_info(self):
+        print("-----------------------------------------")
         print(AbstractView.session.commande_active)
+        print("-----------------------------------------")
     
     
     def make_choice(self):        

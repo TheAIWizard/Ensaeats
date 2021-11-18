@@ -12,20 +12,28 @@ class AvisDao(metaclass=Singleton):
         Get all the reviews of a restaurant thanks to its id
         
         '''
-        with DBConnection().connection as connection:
-            with connection.cursor() as cursor :
-                cursor.execute(
-                    "SELECT * " \
-                    "\nFROM  ensaeats.avis   "\
-                    "\nWHERE id_restaurant = %(id_restaurant)s"
-                    , {"id_restaurant": id_restau}
-                )
-                res = cursor.fetchall()
-        avis_restau = []
-        if res :
-            for row in res : 
-                avis_restau.append(row["avis"])
-        return avis_restau
+        try:
+            with DBConnection().connection as connection:
+                with connection.cursor() as cursor :
+                    cursor.execute(
+                        "SELECT * " \
+                        "\nFROM  ensaeats.avis   "\
+                        "\nWHERE id_restaurant = %(id_restaurant)s"
+                        , {"id_restaurant": id_restau}
+                    )
+                    res = cursor.fetchall()
+            avis_restau = []
+            if res :
+                for row in res : 
+                    if row['date'] : ## Pour eviter les erreurs du aux dates non renseignées
+                        date = row['date']
+                    else: date = '19/11/2021'
+
+                    avis_restau.append(Avis(avis = row["avis"], identifiant_auteur = row['identifiant_auteur'],
+                    date = date, id_restaurant = row['id_restaurant']))
+                return avis_restau
+        except:
+            return []
 
     @staticmethod
     def add_avis(avis : Avis) -> bool: 

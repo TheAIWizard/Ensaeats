@@ -1,6 +1,5 @@
-
-from brouillon.DAO.db_connection import DBConnection
-from brouillon.metier.commande import Commande
+from api.dao.db_connection import DBConnection
+from api.metier.commande import Commande
 
 class CommandeDAO():
     inserted = False

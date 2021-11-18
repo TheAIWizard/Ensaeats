@@ -16,19 +16,31 @@ class WelcomeView(AbstractView):
             'message': "Entrer dans l'application \n",
             'choices': ['Oui', Separator(), 'Non']
         }]
+
+        print("Bienvenu ", AbstractView.session.client.prenom)
+        print("\n")
         reponse = prompt(question)
 
         if reponse['Menu'] == 'Oui':
-            self.localite = input("Entrer la localité: ")
-            self.nom_restaurant = input("Entrer le nom du restaurant: ")
-            self.radius = input("Trouver restaurant dans quel rayon (m) par rapport à votre localite: ")
+            print("Rechercher un restaurant selon différents critères")
+            
+            self.localite = input("Entrer la localité (Obligatoire):  ")
+            
+            self.nom_restaurant = input("Entrer le nom du restaurant (Facultatif):   ")
+            
+            self.radius = input("Trouver restaurant dans quel rayon (m) par rapport à votre localite"\
+                "(Facultatif):  ")
             
             AbstractView.session.localite = self.localite
             AbstractView.session.radius = self.radius
             AbstractView.session.nom_restaurant = self.nom_restaurant
         
-            return RestaurantListeView()
+            if self.localite != '':
+                return RestaurantListeView()
+            else: 
+                return WelcomeView()
         else:
+            ## Sortir de l'application
             return None
             
 

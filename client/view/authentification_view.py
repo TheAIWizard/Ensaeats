@@ -13,9 +13,7 @@ class AuthentificationView(AbstractView):
         pass
      
     def make_choice(self):
-        #si on ne mets pas cette ligne inutile avant, ça ne fonctionne pas
-        #sinon problème d'accès aux paramètres de .env pour db_connection
-        self.debug=ClientService.consulter_menu("LTy9AUgMnLn8YS21KfFZ8g")
+             
         question = [{
             'type': 'list',
             'name': 'Menu',
@@ -24,8 +22,8 @@ class AuthentificationView(AbstractView):
         }]
         reponse = prompt(question)
         if reponse['Menu']=='Oui':
-            self.identifiant = input("Entrez votre identifiant client: ")
-            self.mot_de_passe = input("Entrez votre mot de passe:")
+            self.identifiant = input("Entrez votre identifiant client:   ")
+            self.mot_de_passe = input("Entrez votre mot de passe:   ")
             #sans erreur d'authentification, on passe à la view suivante
             try:
                 self.client=ClientService.authenticate_and_get_client(identifiant=self.identifiant, password=self.mot_de_passe)

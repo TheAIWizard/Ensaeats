@@ -1,9 +1,10 @@
 from client.business.client import Client
 from client.view.abstract_view import AbstractView
 from PyInquirer import prompt, Separator
-from brouillon.metier.avis import Avis
+from api.metier.avis import Avis
 from client.dao.avis_DAO import AvisDao
 from client.service.client_service import ClientService
+from datetime  import datetime
 
 class AvisView(AbstractView):
     def __init__(self) -> None:
@@ -16,8 +17,14 @@ class AvisView(AbstractView):
         }]
 
     def display_info(self):
-        for avis in AbstractView.session.listeAvis:
-            print(avis)
+        if AbstractView.session.listeAvis: 
+            for avis in AbstractView.session.listeAvis:
+                print(avis)
+                print("-----------------------------------------")
+            print("\n")
+        else:
+            print("Aucun avis")
+            print("-----------------------------------------")
             print("\n")
     
 
@@ -27,7 +34,11 @@ class AvisView(AbstractView):
         if reponse['Menu'] == 'Ajouter un avis':
             ## Ajoute ton avis sur le restaurant
             avis_txt = input('Donner votre avis : ')
-            avis_user = Avis(avis = avis_txt, nom_auteur = AbstractView.session.client.prenom)
+
+            today = datetime.today().strftime('%Y-%m-%d') 
+
+            avis_user = Avis(avis = avis_txt, identifiant_auteur = AbstractView.session.identifiant,
+             id_restaurant = AbstractView.session.restaurant_actif.id_restaurant, date = today)
             ## Ajout avis dans la base de données
             result =  ClientService.ajouter_avis(avis_user)
             print(result)

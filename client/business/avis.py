@@ -9,5 +9,8 @@ class Avis(BaseModel):
 
         
         
-    #def __str__(self) -> str:
-       # print(self.avis)
+    def __str__(self) -> str:
+       output = self.avis
+       output += '. '
+       output += self.date
+       return output
