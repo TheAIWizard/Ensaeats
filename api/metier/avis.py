@@ -1,6 +1,11 @@
 from pydantic import BaseModel
 
 class Avis(BaseModel):
+    """
+    avis : str
+
+    identifiant
+    """
     #id_avis : int
     avis : str
     identifiant_auteur : str
