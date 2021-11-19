@@ -2,14 +2,13 @@ from typing import List, Optional
 from brouillon.utils.singleton import Singleton
 from brouillon.DAO.db_connection import DBConnection
 from api.metier.article import Article
-#from api_minuscule.dao.menu_dao import MenuDao
+import api.dao.menu_dao as MenuDao 
 
 class ArticleDao:
-
     @staticmethod
     def find_article_by_id_article(id_article:int) -> Article:
         ''' Recupère l'article par l'identifiant '''
-
+        
         request = "SELECT * FROM ensaeats.article "\
                   "WHERE id_article=%(id_article)s;"
         with DBConnection().connection as connection:
@@ -57,13 +56,27 @@ class ArticleDao:
                     " SET nom = %(nom)s, " \
                     " type_article = %(type)s, "\
                     " composition = %(composition)s "\
-                    "WHERE id_article = %(id_article)s ;"
+                    "WHERE id_article = %(id_article)s "\
+                    "RETURNING id_article ; "
                     , {"nom" : article.nom
                     , "type" : article.type
                     , "composition" : article.composition
-                    , "id_article" : article.id_article})
+                    , "id_article" : article.id_article})   
+                res = cursor.fetchone()
+            if res : 
+                return res
+            
                 
-
+    @staticmethod 
+    def get_articles() -> List[Article] : 
+        with DBConnection().connection as connection : 
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    "SELECT * FROM ensaeats.article" )
+                res = cursor.fetchall 
+        if res : 
+            return res 
+           
     @staticmethod
     def delete_article(article : Article) -> Article : 
         #on peut ajouter un article même s'il n'est pas encore dans un menu
@@ -81,7 +94,7 @@ class ArticleDao:
                 res = cursor.fetchone()
         if res :
             deleted_menu_article = True
-            MenuDao.delete_menu(MenuDao.find_menu_by_id_menu())
+            MenuDao.MenuDao.delete_menu(MenuDao.find_menu_by_id_menu())
 
         #supprimer son id_article de la table article
         with DBConnection().connection as connection:

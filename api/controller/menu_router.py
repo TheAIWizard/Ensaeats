@@ -21,7 +21,7 @@ async def get_menus_by_id_restaurant(id_restaurant: str , identifiant: Optional[
         return RestaurantsService.getMenus_by_id_restaurant(id_restaurant)
 
     except RestaurateurNotAuthenticated:
-        raise HTTPException(status_code=403, detail="Restaurateur must be logged")
+        raise HTTPException(status_code=403, detail="Vous devez être connecté en tant que restaurateur")
 
 
 
@@ -40,10 +40,10 @@ async def post_menu(id_restaurant : str, menu : Menu, identifiant: Optional[str]
                 return RestaurantsService.addMenuOnRestaurant(id_restaurant, menu)
 
         except RestaurateurNotAuthenticated:
-            raise HTTPException(status_code=403, detail= "You don't own this restaurant") 
+            raise HTTPException(status_code=403, detail= "Vous n'êtes pas le propriétaire de ce restaurant") 
             
     except RestaurateurNotAuthenticated:
-        raise HTTPException(status_code=403, detail="Restaurateur must be logged")
+        raise HTTPException(status_code=403, detail="Vous devez être connecté en tant que restaurateur")
 
 
 @router.put("/menus/{id_menu}", tags = ['Menus'])
@@ -57,10 +57,11 @@ async def update_menu(id_menu : int, menu : Menu, identifiant: Optional[str] = H
                 if id_menu == menu.id_menu : 
                     return RestaurantsService.updateMenuOnRestaurant(menu)
                 else : 
-                    raise HTTPException(status_code=401, detail = "Id has been changed")
+                    raise HTTPException(status_code=401, detail = "Vous ne pouvez pas changer l'identifiant du menu")
+            
         except RestaurateurNotAuthenticated:
-            raise HTTPException(status_code=403, detail= "You don't own this restaurant") 
+            raise HTTPException(status_code=403, detail= "Vous n'êtes pas le propriétaire de ce restaurant") 
                         
     except RestaurateurNotAuthenticated:
-        raise HTTPException(status_code=403, detail="Restaurateur must be logged")
+        raise HTTPException(status_code=403, detail="Vous devez être connecté en tant que restaurateur")
 

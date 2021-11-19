@@ -11,7 +11,7 @@ async def create_client(client: Client):
     return ClientService.createClient(client)
 
 
-@router.put("/clients/{ancien_client_id}", tags=["Client"])
+@router.put("/clients/{ancien_client_id}", tags=["Clients"])
 async def update_client(ancien_client_id: str, ancien_mot_de_passe:str, client_id: Optional[str] = Header(None), mot_de_passe:Optional[str] = Header(None)):
     return ClientService.authenticate_and_update_client(ancien_client_id, ancien_mot_de_passe, client_id, mot_de_passe)
 

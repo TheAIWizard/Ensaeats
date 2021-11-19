@@ -13,11 +13,7 @@ class ClientService:
     @staticmethod
     def createClient(client: Client) -> Client:
             return ClientDao.createClient(client)
-        #else:
-           # raise RestaurantIDAlreadyExistsException(id_restaurant=client.id_restaurant) 
         
-        
-
     @staticmethod
     def getClient(identifiant: str) -> Client:
         return ClientDao.getClient(identifiant)

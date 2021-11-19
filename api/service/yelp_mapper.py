@@ -35,7 +35,7 @@ class YelpMapper:
 
 
     @staticmethod
-    def yelp_location_to_location(location : dict) -> str :
+    def yelp_location_to_location(location : dict) -> Adresse :
         ''' Transforme en objet Adresse  '''
 
         if location["address1"] is None : 

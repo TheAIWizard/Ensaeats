@@ -8,6 +8,7 @@ from brouillon.DAO.menu_DAO import MenuDao
 from api.dao.article_dao import ArticleDao
 from api.metier.article import Article
 from api.metier.menu import Menu 
+from api.service.client_service import ClientService
 
 router = APIRouter()
 
@@ -15,40 +16,38 @@ router = APIRouter()
 @router.get("/restaurants/", tags=["Restaurants"])
 def get_restaurants(username: Optional[str] = Header(None), password: Optional[str] = Header(None), localisation:str="Bruz", term : str = "", radius : int = 2000):
     try:
-        #user = UserService.authenticate_and_get_user(username=username, password=password)
-        #print(user)
+        client = ClientService.authenticate_and_get_user(username=username, password=password)
+        print(client)
         # # call your service here
         return RestaurantsService.getRestaurants(localisation, term, radius)
 
     except UserNotAuthenticated:
-        raise HTTPException(status_code=401, detail="User must be logged")
+        raise HTTPException(status_code=401, detail="Vous devez vous connecter ou créer un compte en tant que client")
 
 
 @router.get("/restaurant/{id_restaurant}", tags=["Restaurants"])
 async def get_restaurant(username: Optional[str] = Header(None), password: Optional[str] = Header(None), id_restaurant: str = ''):
     try:
-        #user = UserService.authenticate_and_get_user(username=username, password=password)
-        #print(user)
+        client = ClientService.authenticate_and_get_user(username=username, password=password)
+        print(client)
         # # call your service here
         return RestaurantsService.getRestaurant(id_restaurant)
 
     except UserNotAuthenticated:
-        raise HTTPException(status_code=401, detail="User must be logged")
-
-
+        raise HTTPException(status_code=401, detail="Vous devez vous connecter ou créer un compte en tant que client")
 
 
 
 @router.get("/menus/{id_restaurant}", tags=["Menus"])
 async def get_menus_by_id_restaurant(id_restaurant: str , username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
     try:
-        #user = UserService.authenticate_and_get_user(username=username, password=password)
-        #print(user)
+        client = ClientService.authenticate_and_get_user(username=username, password=password)
+        print(client)
         # # call your service here
         return RestaurantsService.getMenus_by_id_restaurant(id_restaurant)
 
     except UserNotAuthenticated:
-        raise HTTPException(status_code=403, detail="User must be logged")
+        raise HTTPException(status_code=403, detail="Vous devez vous connecter ou créer un compte en tant que client")
 
 
 

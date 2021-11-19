@@ -16,10 +16,6 @@ class RestaurantsService:
         response = YelpApiService.get_businesses(location, term, radius) # recupere les infos de l'API de yelp
         restaurants = []
         restaurants=YelpMapper.businesses_to_restaurants(response) # recupere une liste d'objets restaurant
-        # info_restaurants = []
-        # for restaurant in restaurants : 
-        #     res = [restaurant.id_restaurant, restaurant.nom, restaurant.adresse, restaurant.statut]
-        #     info_restaurants.append(res)
         return restaurants
 
     @staticmethod
@@ -29,17 +25,8 @@ class RestaurantsService:
         return restaurant
 
     @staticmethod
-    def getArticles() -> List[Article]:
-        pass
-
-    @staticmethod
     def getMenus_by_id_restaurant(id_restaurant : str) -> List[Menu] :
         return MenuDao.find_all_menus_by_id_restaurant(id_restaurant)
-    
-    @staticmethod
-    def getMenus() :
-        pass
-        #return MenuDao.find_all_menus()
     
     @staticmethod
     def addArticle(article : Article) -> Article :
