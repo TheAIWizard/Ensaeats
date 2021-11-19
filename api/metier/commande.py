@@ -4,6 +4,18 @@ from typing import List, Optional
 from api.metier.adresse import Adresse
 
 class Commande (BaseModel):
+
+    """
+    La classe commande permet de faire une commande
+
+    Attribute
+    ---------
+    id_commande : int
+
+    date : str
+
+    statut_commande : str
+    """
     id_commande : int
     date : str
     statut_commande : str
