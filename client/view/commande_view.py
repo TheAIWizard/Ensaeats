@@ -1,16 +1,16 @@
 from PyInquirer import prompt, Separator
 from pydantic.errors import ListError
-from Brouillon_Nikiema.metier.menu import Menu
+from api.metier.menu import Menu
 from client.view.liste_restaurant_view import RestaurantListeView
 from client.dao.commande_dao import CommandeDAO
-from brouillon.metier.commande import Commande
+from api.metier.commande import Commande
 from client.view.abstract_view import AbstractView
 
 
 class Modif_commande(AbstractView):
     def __init__(self) -> None:
         list_choix = ["Ajouter menu", Separator(), "Modifier la quantité d'un menu", Separator(),
-                      "Retirer un menu", Separator(), 'Annuler']
+                      "Retirer un menu", Separator(), 'Valider', Separator(), 'Annuler']
         self.question = [{
             'type': 'list',
             'name' : 'Menu',
@@ -20,7 +20,9 @@ class Modif_commande(AbstractView):
     
     def display_info(self):
         ## Afficher le contenu de la commande
+        print("-----------------------------------------")
         print(AbstractView.session.commande_active)
+        print("-----------------------------------------")
     
     
     
@@ -45,7 +47,7 @@ class Modif_commande(AbstractView):
             }]
             menu_quantite_modif = prompt(question)
             if menu_quantite_modif['Menu'] == 'Annuler':
-                from client.view.modif_commande import Modif_commande
+                from client.view.commande_view import Modif_commande
                 return Modif_commande()
             else : 
                 index = list_nom_menu.index(menu_quantite_modif['Menu'])
@@ -56,7 +58,7 @@ class Modif_commande(AbstractView):
                 AbstractView.session.commande_active = Faire_commande.ajout_quantite_menu(commande, menu_cible, new_quantite)
                 print("Modification effectuée")
                 input("Appuyer sur entrer pour continuer")
-                from client.view.modif_commande import Modif_commande
+                from client.view.commande_view import Modif_commande
                 return Modif_commande()
         
         elif choix["Menu"]== 'Retirer un menu':
@@ -73,13 +75,12 @@ class Modif_commande(AbstractView):
             }]
             menu_retire = prompt(question)
             if menu_retire['Menu'] == 'Annuler':
-                from client.view.modif_commande import Modif_commande
+                from client.view.commande_view import Modif_commande
                 return Modif_commande()
             else:
                 idex_select = list_nom_menu.index(menu_retire['Menu'])
                 menu_sup = commande.liste_menu[idex_select]
-                
-                
+                          
                 supprim_question = [{
                     'type': 'list',
                     'name': 'Supp',
@@ -94,13 +95,22 @@ class Modif_commande(AbstractView):
                     AbstractView.session.commande_active = Faire_commande.supprime_menu(commande, menu_sup)
                     print("Menu supprimer avec succès !")
                     input("Appuyer sur enter pour continuer")
-                    from client.view.modif_commande import Modif_commande
+                    from client.view.commande_view import Modif_commande
                     return Modif_commande()
                 else:
-                    from client.view.modif_commande import Modif_commande
+                    from client.view.commande_view import Modif_commande
                     return Modif_commande()
-            
-        else: 
-            ## Page validation
+          
+        elif choix['Menu'] == 'Valider':
+            ## Valider la commande
             from client.view.valide_commande_view import Valider
-            return Valider()
+            return Valider() 
+        else: 
+            ## Annuler
+            ## Effacer les informations en session sur la commande
+            AbstractView.session.commande_active = None
+            AbstractView.session.list_menu = []
+            AbstractView.session.list_quantite = []
+            AbstractView.session.menu_actif = None
+            from client.view.menu_list_view import MenuListView
+            return MenuListView()

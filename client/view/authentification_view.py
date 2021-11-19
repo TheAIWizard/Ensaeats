@@ -47,12 +47,13 @@ class AuthentificationView(AbstractView):
             try:
                 self.nouveau_client=ClientService.createClient(self.nouveau_client)
 
-                AbstractView.session.nouveau_client = self.nouveau_client
+                #AbstractView.session.nouveau_client = self.nouveau_client
+                AbstractView.session.client = self.nouveau_client
                 AbstractView.session.id_client = self.nouveau_client.id_client
                 AbstractView.session.nom = self.nom
                 AbstractView.session.prenom = self.prenom
                 AbstractView.session.adresse = self.adresse
-                AbstractView.session.create_identifiant = self.create_identifiant
+                AbstractView.session.identifiant = self.create_identifiant
                 AbstractView.session.create_mot_de_passe = self.create_mot_de_passe
                 AbstractView.session.create_telephone = self.telephone
                 return WelcomeView()

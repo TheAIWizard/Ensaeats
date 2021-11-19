@@ -1,5 +1,5 @@
 
-from brouillon.metier.commande import Commande
+from api.metier.commande import Commande
 from client.dao.commande_dao import CommandeDAO
 from datetime  import datetime
 

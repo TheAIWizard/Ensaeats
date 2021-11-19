@@ -2,8 +2,6 @@ from client.view.authentification_view import AuthentificationView
 
 # C'est le script qui va être le point d'entrée de notre application.
 
-
-
 if __name__ == '__main__':
     # on démarre sur l'écran accueil
     current_vue = AuthentificationView()
@@ -17,7 +15,6 @@ if __name__ == '__main__':
         current_vue.display_info()
         # le choix que doit saisir l'utilisateur
         current_vue = current_vue.make_choice()
-
 
     
 

@@ -1,6 +1,6 @@
-from Brouillon_Nikiema.metier.menu import Menu 
+from api.metier.menu import Menu 
 from pydantic import BaseModel
-from Brouillon_Nikiema.metier.adresse import Adresse
+from api.metier.adresse import Adresse
 
 class Commande (BaseModel):
     id_commande : int
@@ -24,12 +24,13 @@ class Commande (BaseModel):
     ## Affichage du contenu de la commande
     def __str__(self) -> str:
         output = ''
-        output += "La commande contient :"
+        output += "La Commande contient :"
         output += '\n'
         for menu,quantite in zip(self.liste_menu, self.liste_quantite):
-            output += 'Menu : ' + str(menu.nom)
+            output += menu.__str__()
             output += '\n'
             output += 'Quantite : ' + str(quantite)
+            output += '\n'
             output += '\n'
         
         output += "La somme à payer est : " + str(self.prix_total())
