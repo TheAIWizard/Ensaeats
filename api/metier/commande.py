@@ -1,13 +1,14 @@
-from Brouillon_Nikiema.metier.menu import Menu 
+from api.metier.menu import Menu 
 from pydantic import BaseModel
-from Brouillon_Nikiema.metier.adresse import Adresse
+from typing import List, Optional
+from api.metier.adresse import Adresse
 
 class Commande (BaseModel):
     id_commande : int
     date : str
     statut_commande : str
-    liste_menu : list
-    liste_quantite : list
+    liste_menu : List[Menu]
+    liste_quantite : List[int]
         
     def prix_total(self):
         """Calcul du prix total

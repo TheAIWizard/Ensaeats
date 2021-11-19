@@ -14,8 +14,6 @@ class RestaurateurService:
             return RestaurateurDao.createRestaurateur(restaurateur)
         else:
             raise RestaurantIDAlreadyExistsException(id_restaurant=restaurateur.id_restaurant) 
-        
-        
 
     @staticmethod
     def getRestaurateur(identifiant: str) -> Restaurateur:

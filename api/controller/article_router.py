@@ -23,7 +23,7 @@ async def post_article(article : Article, identifiant: Optional[str] = Header(No
         return RestaurantsService.addArticle(article)
 
     except RestaurateurNotAuthenticated:
-        raise HTTPException(status_code=403, detail="Restaurateur must be logged")
+        raise HTTPException(status_code=403, detail="Le restaurateur doit être connecté")
 
 
 @router.put("/articles/{id_article}", tags = ['Articles'])

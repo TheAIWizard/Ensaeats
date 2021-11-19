@@ -2,7 +2,7 @@ from typing import List, Optional
 #from brouillon.utils.singleton import Singleton
 from brouillon.DAO.db_connection import DBConnection
 from api.metier.menu import Menu
-from api.dao.article_dao import ArticleDao
+import api.dao.article_dao as ArticleDao
 
 #find_menu_by_id_menu
 #creer l'id_menu, définir de manière unique hash(id_menu+id_restaurant)
@@ -38,12 +38,25 @@ class MenuDao():
                     {"id_menu" : menu.id_menu})
                 res = cursor.fetchone()
         if res : 
-            return res
+            return res['id_restaurant']
+    
+    @staticmethod 
+    def get_id_restaurant_by_id_menu(id_menu : int) -> str: 
+        with DBConnection().connection as connection : 
+            with connection.cursor() as cursor : 
+                cursor.execute(
+                    "SELECT id_restaurant FROM ensaeats.table_restaurant_menu"\
+                    " WHERE id_menu = %(id_menu)s ;",
+                    {"id_menu" : id_menu})
+                res = cursor.fetchone()
+        if res : 
+            return res['id_restaurant']
+        
         
     @staticmethod
     #on en déduit la liste des objets articles pour un id_menu donné par la méthode "find_article_by_id_article" de la classe ArticleDao
     def find_all_article_by_id_menu(id_menu:int):
-        return [ArticleDao.find_article_by_id_article(id_article) for id_article in MenuDao.find_all_id_article_by_id_menu(id_menu)]
+        return [ArticleDao.ArticleDao.find_article_by_id_article(id_article) for id_article in MenuDao.find_all_id_article_by_id_menu(id_menu)]
 
     @staticmethod
     def find_all_menus(limit:int=0, offest:int=0) -> List[Menu]:
@@ -291,7 +304,7 @@ class MenuDao():
         return deleted_menu,deleted_restaurant_menu,deleted_menu_article
 
     @staticmethod
-    def update_menu(menu:Menu)-> bool:
+    def update_menu(menu:Menu)-> Menu :
         
         updated_menu = False
         with DBConnection().connection as connection:
@@ -320,7 +333,7 @@ class MenuDao():
             # voir si les identifiants des articles ont changé 
             if menu.article1.id_article not in res : 
                 update_article1 = False
-                ArticleDao.add_article(article = menu.article1)
+                ArticleDao.ArticleDao.add_article(article = menu.article1)
                 with DBConnection().connection as connection:
                     with connection.cursor() as cursor :
                         cursor.execute(
@@ -338,13 +351,13 @@ class MenuDao():
                                 "RETURNING id_menu;"
                                 , {"id_menu" : menu.id_menu,
                                    "id_article": menu.article1.id_article})
-                    res = cursor.fetchone()
+                        res = cursor.fetchone()
                 if res :
                     update_article1 = True            
                             
             if menu.article2.id_article not in res : 
                 update_article2 = False
-                ArticleDao.add_article(article = menu.article2)
+                ArticleDao.ArticleDao.add_article(article = menu.article2)
                 with DBConnection().connection as connection:
                     with connection.cursor() as cursor :
                         cursor.execute(
@@ -367,9 +380,9 @@ class MenuDao():
                         update_article2 = True        
 
                 
-            if menu.article3.id_article in res : 
+            if menu.article3.id_article not in res : 
                 update_article3 = False
-                ArticleDao.add_article(article = menu.article3)
+                ArticleDao.ArticleDao.add_article(article = menu.article3)
                 with DBConnection().connection as connection:
                     with connection.cursor() as cursor :
                         cursor.execute(

@@ -1,6 +1,7 @@
-
 from brouillon.metier.commande import Commande
-from Tidiane_client_brouillon.dao.commande_dao import CommandeDAO
+from api.dao.commande_dao import CommandeDAO
+from api.metier.client import Client
+from api.metier.restaurant import Restaurant
 from datetime  import datetime
 
 class Faire_commande:
@@ -37,3 +38,8 @@ class Faire_commande:
             commande ([Commande]): [Commande faite par l'utilisateur]
         """
         CommandeDAO.add_commande(commande)
+        
+    
+    @staticmethod 
+    def obtenir_commandes(client : Client) : 
+        return CommandeDAO.obtenir_commandes(client)
