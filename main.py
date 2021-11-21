@@ -13,7 +13,7 @@ app.include_router(restaurant_router.router)
 app.include_router(article_router.router)
 app.include_router(menu_router.router)
 app.include_router(client_router.router)
-app.include_router(commande_router.router)
+app.include_router(commande_router.router) 
 
 @app.get("/")
 def read_root():

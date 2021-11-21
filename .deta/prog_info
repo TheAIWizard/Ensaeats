@@ -1,0 +1,1 @@
+{"id":"23c99835-3924-48b7-8f23-5543203c77dc","space":13619,"runtime":"python3.9","name":"ensaeats","path":"ottr44","project":"a0wrm90d","account":"144798365827","region":"eu-central-1","deps":["bs4","pandas","python-dotenv","requests","fastapi","pydantic","uvicorn","PyInquirer","psycopg2-binary"],"envs":null,"public":true,"log_level":"debug","cron":""}
