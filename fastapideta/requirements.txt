@@ -1,9 +1,0 @@
-bs4
-pandas
-python-dotenv
-requests
-fastapi
-pydantic
-uvicorn
-PyInquirer
-psycopg2
