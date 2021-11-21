@@ -1,0 +1,23 @@
+Project key: a0wrm90d_2hJ4TfjVfHiDQHpKx1mufLDgN2KxoRhy
+Project ID: a0wrm90d
+
+Powershell: iwr https://get.deta.dev/cli.ps1 -useb | iex ou curl -fsSL https://get.deta.dev/cli.sh | sh
+/c/Users/natha/.deta/bin/deta --help
+
+
+
+
+#résultat
+PS C:\Users\natha\Desktop\ensaeats-2\ensaeats> cd fastapideta
+PS C:\Users\natha\Desktop\ensaeats-2\ensaeats\fastapideta> deta new
+Successfully created a new micro
+{
+        "name": "fastapideta",
+        "id": "be5f5640-cafe-4b8c-991a-05b31badd21a",
+        "project": "a0wrm90d",
+        "runtime": "python3.9",
+        "endpoint": "https://xjyujv.deta.dev",
+        "region": "eu-central-1",
+        "visor": "enabled",
+        "http_auth": "disabled"
+}
