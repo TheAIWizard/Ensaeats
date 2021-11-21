@@ -17,7 +17,7 @@ class WelcomeView(AbstractView):
             'choices': ['Oui', Separator(), 'Non']
         }]
 
-        print("Bienvenu ", AbstractView.session.client.prenom)
+        print("Bienvenue ", AbstractView.session.client.prenom)
         print("\n")
         reponse = prompt(question)
 

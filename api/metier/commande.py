@@ -61,12 +61,13 @@ class Commande (BaseModel):
     ## Affichage du contenu de la commande
     def __str__(self) -> str:
         output = ''
-        output += "La commande contient :"
+        output += "La Commande contient :"
         output += '\n'
         for menu,quantite in zip(self.liste_menu, self.liste_quantite):
-            output += 'Menu : ' + str(menu.nom)
+            output += menu.__str__()
             output += '\n'
             output += 'Quantite : ' + str(quantite)
+            output += '\n'
             output += '\n'
         
         output += "La somme à payer est : " + str(self.prix_total())
