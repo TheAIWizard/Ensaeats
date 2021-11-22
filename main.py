@@ -15,8 +15,6 @@ app.include_router(menu_router.router)
 app.include_router(client_router.router)
 app.include_router(commande_router.router) 
 
-<<<<<<< HEAD
-=======
 """ @app.get("/")
 def read_root():
     return {"Hello": "World"}
@@ -25,4 +23,3 @@ def read_root():
 @app.get("/items/{item_id}")
 def read_item(item_id: int):
     return {"item_id": item_id} """
->>>>>>> 0fa2f06ebb86cab9e2ea98d0eafad822dc37ff52
