@@ -36,10 +36,10 @@ async def put_article(id_article : int, article:Article, identifiant: Optional[s
         if id_article == article.id_article : 
             return RestaurantsService.updateArticle(article = article)
         else : 
-            raise HTTPException(stauts_code=401, detail = "Id has been changed")
+            raise HTTPException(status_code=401, detail = "Vous n'avez pas le droit de changer l'identifiant de l'article")
 
     except RestaurateurNotAuthenticated:
-        raise HTTPException(status_code=403, detail="Restaurateur must be logged")
+        raise HTTPException(status_code=403, detail="Vous devez être connecter en tant que restaurateur ")
 
 @router.delete("/articles/", tags = ['Articles'])
 async def delete_article(id_article : int, identifiant: Optional[str] = Header(None), password: Optional[str] = Header(None)):

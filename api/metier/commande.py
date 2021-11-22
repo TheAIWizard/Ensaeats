@@ -39,16 +39,22 @@ class Commande (BaseModel):
     date : str
     statut_commande : str
     liste_menu : List[Menu]
-    liste_quantite : List[int]
+    #liste_quantite : List[int]
         
     def prix_total(self):
         """
         Cette méthode sert donner le prix total d'une commande en fonction des prix des articles
 
         """
+        #prix_total = 0
+        #for menu,quantite in zip(self.liste_menu, self.liste_quantite):
+            #prix_total += menu.prix*quantite
+            
+        #return prix_total
+    
         prix_total = 0
-        for menu,quantite in zip(self.liste_menu, self.liste_quantite):
-            prix_total += menu.prix*quantite
+        for menu in self.liste_menu:
+            prix_total += menu.prix
             
         return prix_total
     

@@ -4,7 +4,7 @@ from api.metier.client import Client
 from api.metier.restaurant import Restaurant
 from datetime  import datetime
 
-class Faire_commande:
+class CommandeService:
     
     today = datetime.today().strftime('%Y-%m-%d')
     @staticmethod

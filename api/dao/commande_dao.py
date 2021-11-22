@@ -24,15 +24,16 @@ class CommandeDAO():
                 if res :
                     return res['id_commande']
                 
+        commande.id_commande = res['id_commande']         
     
     ## Lien entre commande et menus
-    def lien_commande_menus(commande: Commande, id_commande):
-        list_id_menus = [menu.id_menu for menu in commande.liste_menu]
+    def lien_commande_menus(commande: Commande):
+        #list_id_menus = [menu.id_menu for menu in commande.liste_menu]
 
         ## Insertion dans la table commande_menu
-        for id_menu in list_id_menus:
+        for menu in commande.liste_menu:
             requete = "INSERT INTO ensaeats.table_menu_commande (id_menu, id_commande) VALUES ({}, {}) "\
-            "RETURNING id".format(id_menu, id_commande)
+            "RETURNING id".format(menu.id_menu, commande.id_commande)
             with DBConnection().connection as connection:
                 with connection.cursor() as cursor :
                     cursor.execute(requete)
@@ -86,7 +87,8 @@ class CommandeDAO():
             with connection.cursor() as cursor :
                 cursor.execute(
                     "SELECT id_commande FROM ensaeats.table_client_commande"\
-                    " WHERE id_client = %(id_client)s ;"
+                    "JOIN ensaeats.commande BY id_commande"\
+                    " WHERE ensaeats.table_client_commande.id_client = %(id_client)s ;"
                 , {"id_client" : client.id_client})
                 res = cursor.fetchall()
                 
@@ -100,11 +102,7 @@ class CommandeDAO():
                             " WHERE id_commande = %(id_commande)s;"
                         , {"id_commande" : r["id_commande"]})
                         res = cursor.fetchone()
-                        commande = Commande(id_commande = res['id_commande'] , 
-                                            date = res['date'] , 
-                                            statut_commande = res['statut_commande'], 
-                                            liste_menu= CommandeDAO.obtenir_menus_par_id_commande(r["id_commande"]),
-                                            liste_quantite = res['liste_quantite'])
+                commande = Commande(id_commande = res['id_commande'] , date = res['date'] , statut_commande = res['statut_commande'], liste_menu= CommandeDAO.obtenir_menus_par_id_commande(r["id_commande"]),liste_quantite = CommandeDAO.obtenir_quantite_par_id_commande['liste_quantite'])
                 commandes.append(commande)
         else : 
             return 'Le client ne possède pas de commandes'
