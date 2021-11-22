@@ -6,4 +6,5 @@ fastapi
 pydantic
 uvicorn
 PyInquirer
-psycopg2
+psycopg2-binary
+#psycopg2
