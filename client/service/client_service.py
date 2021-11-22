@@ -31,29 +31,29 @@ class ClientService:
         return ClientDao.deleteClient(client_id)
 
     @staticmethod
-    def authenticate_and_get_client(identifiant: str, password: str) -> Client:
-        if (ClientDao.verifyPassword(identifiant, password)):
+    def authenticate_and_get_client(identifiant: str, mot_de_passe: str) -> Client:
+        if (ClientDao.verifyPassword(identifiant, mot_de_passe)):
             return ClientDao.getClient(identifiant)
         else:
             raise ClientNotAuthenticated(identifiant=identifiant)
 
     @staticmethod
-    def authenticate_and_create_client(identifiant: str, password: str, client:Client) -> Client:
-        if (ClientDao.verifyPassword(identifiant, password)):
+    def authenticate_and_create_client(identifiant: str, mot_de_passe: str, client:Client) -> Client:
+        if (ClientDao.verifyPassword(identifiant, mot_de_passe)):
                 return ClientDao.createClient(client)
         else:
             raise ClientNotAuthenticated(identifiant=identifiant)
     
     @staticmethod
-    def authenticate_and_update_client(ancien_identifiant: str, ancien_password: str, identifiant: str, password: str) -> Client:
+    def authenticate_and_update_client(ancien_identifiant: str, ancien_password: str, identifiant: str, mot_de_passe: str) -> Client:
         if (ClientDao.verifyPassword(ancien_identifiant, ancien_password)):
-            return ClientDao.updateClient(ancien_identifiant, ancien_password, identifiant, password)
+            return ClientDao.updateClient(ancien_identifiant, ancien_password, identifiant, mot_de_passe)
         else:
             raise ClientNotAuthenticated(identifiant=ancien_identifiant)
     
     @staticmethod
-    def authenticate_and_delete_client(identifiant: str, password: str) -> Client:
-        if (ClientDao.verifyPassword(identifiant, password)):
+    def authenticate_and_delete_client(identifiant: str, mot_de_passe: str) -> Client:
+        if (ClientDao.verifyPassword(identifiant, mot_de_passe)):
             return ClientDao.deleteClient(identifiant)
         else:
             raise ClientNotAuthenticated(identifiant=identifiant)
