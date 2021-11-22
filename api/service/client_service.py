@@ -27,8 +27,8 @@ class ClientService:
         return ClientDao.deleteClient(client_id)
 
     @staticmethod
-    def authenticate_and_get_client(identifiant: str, password: str) -> Client:
-        if (ClientDao.verifyPassword(identifiant, password)):
+    def authenticate_and_get_client(identifiant: str, mot_de_passe: str) -> Client:
+        if (ClientDao.verifyPassword(identifiant, mot_de_passe)):
             return ClientDao.getClient(identifiant)
         else:
             raise ClientNotAuthenticated(identifiant=identifiant)

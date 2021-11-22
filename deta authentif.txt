@@ -11,10 +11,10 @@ PS C:\Users\natha\Desktop\ensaeats-2\ensaeats\fastapideta> deta new
 Successfully created a new micro
 {
         "name": "ensaeats",
-        "id": "9092c6e2-d334-43fe-a591-674143f652f6",
+        "id": "42af9b6d-e1b8-4309-a55b-56001d531624",
         "project": "a0wrm90d",
         "runtime": "python3.9",
-        "endpoint": "https://xxo2h0.deta.dev",
+        "endpoint": "https://lyj4je.deta.dev",
         "region": "eu-central-1",
         "visor": "enabled",
         "http_auth": "disabled"
