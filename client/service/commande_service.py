@@ -36,4 +36,5 @@ class Faire_commande:
         Args:
             commande ([Commande]): [Commande faite par l'utilisateur]
         """
+        ## Requete post 
         CommandeDAO.add_commande(commande)
