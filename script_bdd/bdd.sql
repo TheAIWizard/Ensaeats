@@ -45,12 +45,14 @@ id_commande SERIAL PRIMARY KEY,
 date date ,
 prix_total INT,
 statut_commande text
+FOREIGN KEY (id_restaurant) REFERENCES ensaeats.Restaurant(id_restaurant)
 ) ;
 
 CREATE TABLE ensaeats.Table_menu_commande(
 id SERIAL PRIMARY KEY,
 id_menu INT,
 id_commande INT,
+quantite INT,
 FOREIGN KEY (id_menu) REFERENCES ensaeats.Menu(id_menu),
 FOREIGN KEY (id_commande) REFERENCES ensaeats.Commande(id_commande)
 ) ;
@@ -67,7 +69,6 @@ CREATE TABLE ensaeats.Client(
 id_client SERIAL PRIMARY KEY,
 nom text,
 prenom text,
-adresse text,
 mot_de_passe text,
 telephone text
 ) ;

@@ -23,7 +23,8 @@ restaurateurs=requests.get('http://localhost:5000/restaurateurs/{}'.format('TheS
 
 id_restaurant_fontaine_perles='LTy9AUgMnLn8YS21KfFZ8g'
 id_restaurant='NL0ROvACBWrwYv1BZxBWtQ'
-username=password='KingAlex35'
+username=password='KingAlex35'#client
+identifiant=mot_de_passe='CrossMartin' #restaurateur
 
 """ RECHERCHE GET """
 
@@ -40,26 +41,35 @@ menus_by_id_restaurant=requests.get('http://localhost:5000/menus/{}'.format(id_r
 #requête recherche avis by id_restaurant
 params_avis_by_id_restaurant={'id_restaurant':id_restaurant,'username':username,'password':password}
 avis_by_id_restaurant=requests.get('http://localhost:5000/avis/',params=params_avis_by_id_restaurant).json()
-print(avis_by_id_restaurant) 
+#print(avis_by_id_restaurant) 
 
 #requête recherche commandes by id_restaurant
-params_commandes_by_id_restaurant={'id_restaurant':id_restaurant,'username':username,'password':password}
-commandes_by_id_restaurant=requests.get('http://localhost:5000/commandes/{}'.format(id_restaurant),params=params_commandes_by_id_restaurant).json()
-#print(commandes_by_id_restaurant)
+params_commandes_by_id_restaurant={'id_restaurant':id_restaurant_fontaine_perles,'identifiant_restaurateur':identifiant,'mot_de_passe_restaurateur':mot_de_passe}
+commandes_by_id_restaurant=requests.get('http://localhost:5000/commandes/restaurant',params=params_commandes_by_id_restaurant).json()
+print(commandes_by_id_restaurant) 
 
-""" AJOUT: REQUETE POST """
-avis=Avis(avis="l'EJR c'est quand même mieux" ,identifiant_auteur="l'EJR c'est quand même mieux",id_restaurant="NL0ROvACBWrwYv1BZxBWtQ")
+#requête recherche commandes by client
+params_commandes_by_client={'identifiant_client':username,'mot_de_passe_client':password}
+commandes_by_id_client=requests.get('http://localhost:5000/commandes/client',params=params_commandes_by_client).json()
+print(commandes_by_id_client) 
+
+""" AJOUT POST"""
 
 #requête ajout avis by id_restaurant
 params_ajout_avis_by_id_restaurant={'username':username,'password':password}
-ajout_avis_by_id_restaurant=requests.post('http://localhost:5000/avis/',params=params_ajout_avis_by_id_restaurant,json=dict(avis)).json()
-print(ajout_avis_by_id_restaurant)
+#ajout_avis_by_id_restaurant=requests.post('http://localhost:5000/avis/',params=params_ajout_avis_by_id_restaurant,json=dict(avis)).json()
+#print(ajout_avis_by_id_restaurant)
 
 """ #requête ajout commandes by id_restaurant: à venir
 params_commandes_by_id_restaurant={'id_restaurant':id_restaurant,'username':username,'password':password}
 commandes_by_id_restaurant=requests.post('http://localhost:5000/commandes/{}'.format(id_restaurant),params=params_commandes_by_id_restaurant).json()
 #print(commandes_by_id_restaurant) """
 
+
+""" #requête ajout commandes by id_client: à venir
+params_commandes_by_id_restaurant={'id_restaurant':id_restaurant,'username':username,'password':password}
+commandes_by_id_restaurant=requests.post('http://localhost:5000/commandes/{}'.format(id_restaurant),params=params_commandes_by_id_restaurant).json()
+#print(commandes_by_id_restaurant) """
 
 
 """ TEST AVIS"""

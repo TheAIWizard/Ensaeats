@@ -28,15 +28,15 @@ class RestaurateurService:
         return RestaurateurDao.deleteRestaurateur(restaurateur_id)
 
     @staticmethod
-    def authenticate_and_get_restaurateur(identifiant: str, password: str) -> Restaurateur:
-        if (RestaurateurDao.verifyPassword(identifiant=identifiant, mot_de_passe=password)):
+    def authenticate_and_get_restaurateur(identifiant: str, mot_de_passe: str) -> Restaurateur:
+        if (RestaurateurDao.verifyPassword(identifiant=identifiant, mot_de_passe=mot_de_passe)):
             return RestaurateurDao.getRestaurateur(identifiant)
         else:
             raise RestaurateurNotAuthenticated(identifiant=identifiant)
 
     @staticmethod
-    def authenticate_and_create_restaurateur(identifiant: str, password: str, restaurateur:Restaurateur) -> Restaurateur:
-        if (RestaurateurDao.verifyPassword(identifiant=identifiant, mot_de_passe=password)):
+    def authenticate_and_create_restaurateur(identifiant: str, mot_de_passe: str, restaurateur:Restaurateur) -> Restaurateur:
+        if (RestaurateurDao.verifyPassword(identifiant=identifiant, mot_de_passe=mot_de_passe)):
             #on vérifie si un autre restaurateur n'a pas déjà le même id_restaurant
             if (RestaurateurDao.checkRestaurantIdUniqueness(restaurateur.id_restaurant)):
                 return RestaurateurDao.createRestaurateur(restaurateur)
@@ -46,15 +46,15 @@ class RestaurateurService:
             raise RestaurateurNotAuthenticated(identifiant=identifiant)
     
     @staticmethod
-    def authenticate_and_update_restaurateur(ancien_identifiant: str, ancien_password: str, identifiant: str, password: str) -> Restaurateur:
-        if (RestaurateurDao.verifyPassword(identifiant=ancien_identifiant, mot_de_passe=ancien_password)):
-            return RestaurateurDao.updateRestaurateur(ancien_identifiant, ancien_password, identifiant, password)
+    def authenticate_and_update_restaurateur(ancien_identifiant: str, ancien_mot_de_passe: str, identifiant: str, mot_de_passe: str) -> Restaurateur:
+        if (RestaurateurDao.verifyPassword(identifiant=ancien_identifiant, mot_de_passe=ancien_mot_de_passe)):
+            return RestaurateurDao.updateRestaurateur(ancien_identifiant, ancien_mot_de_passe, identifiant, mot_de_passe)
         else:
             raise RestaurateurNotAuthenticated(identifiant=ancien_identifiant)
     
     @staticmethod
-    def authenticate_and_delete_restaurateur(identifiant: str, password: str) -> Restaurateur:
-        if (RestaurateurDao.verifyPassword(identifiant=identifiant, mot_de_passe=password)):
+    def authenticate_and_delete_restaurateur(identifiant: str, mot_de_passe: str) -> Restaurateur:
+        if (RestaurateurDao.verifyPassword(identifiant=identifiant, mot_de_passe=mot_de_passe)):
             return RestaurateurDao.deleteRestaurateur(identifiant)
         else:
             raise RestaurateurNotAuthenticated(identifiant=identifiant)

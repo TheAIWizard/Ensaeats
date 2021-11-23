@@ -41,5 +41,9 @@ class CommandeService:
         
     
     @staticmethod 
-    def obtenir_commandes(client : Client) : 
-        return CommandeDAO.obtenir_commandes(client)
+    def obtenir_commandes_client(client : Client) : 
+        return CommandeDAO.obtenir_commandes_par_client(client)
+
+    @staticmethod 
+    def obtenir_commandes_id_restaurant(id_restaurant : str) : 
+        return CommandeDAO.obtenir_commandes_par_id_restaurant(id_restaurant=id_restaurant)
