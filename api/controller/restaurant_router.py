@@ -4,7 +4,7 @@ from api.service.restaurateur_service import RestaurateurService
 from typing import Optional
 from api.exception.user_not_authenticated_exception import UserNotAuthenticated
 from api.service.restaurant_service import RestaurantsService
-from brouillon.DAO.menu_DAO import MenuDao
+from api.dao.menu_dao import MenuDao
 from api.dao.article_dao import ArticleDao
 from api.metier.article import Article
 from api.metier.menu import Menu 
@@ -14,7 +14,8 @@ router = APIRouter()
 
 
 @router.get("/restaurants/", tags=["Restaurants"])
-async def get_restaurants(username: Optional[str] = Header(None), password: Optional[str] = Header(None), localisation:str="Bruz", term : str = "", radius : int = 2000):
+#async def get_restaurants(username: Optional[str] = Header(None), password: Optional[str] = Header(None), localisation:str="Bruz", term : str = "", radius : int = 2000):
+async def get_restaurants(username: str, password: str, localisation:str="Bruz", term : str = "", radius : int = 2000):
     try:
         client = ClientService.authenticate_and_get_client(identifiant=username, mot_de_passe=password)
         print(client)
@@ -26,7 +27,7 @@ async def get_restaurants(username: Optional[str] = Header(None), password: Opti
 
 
 @router.get("/restaurant/{id_restaurant}", tags=["Restaurants"])
-async def get_restaurant(username: Optional[str] = Header(None), password: Optional[str] = Header(None), id_restaurant: str = ''):
+async def get_restaurant(username: str, password: str, id_restaurant: str):
     try:
         client = ClientService.authenticate_and_get_client(identifiant=username, mot_de_passe=password)
         print(client)
@@ -39,7 +40,7 @@ async def get_restaurant(username: Optional[str] = Header(None), password: Optio
 
 
 @router.get("/menus/{id_restaurant}", tags=["Menus"])
-async def get_menus_by_id_restaurant(id_restaurant: str , username: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+async def get_menus_by_id_restaurant(id_restaurant: str , username: str, password: str):
     try:
         client = ClientService.authenticate_and_get_client(identifiant=username, mot_de_passe=password)
         print(client)

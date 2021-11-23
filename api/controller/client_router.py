@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Header
 from typing import Optional
-from client.business.client import Client
-from client.service.client_service import ClientService
+from api.metier.client import Client
+from api.service.client_service import ClientService
 
 router = APIRouter()
 

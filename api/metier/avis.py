@@ -1,4 +1,7 @@
 from pydantic import BaseModel
+from datetime import datetime
+#date actuelle
+now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
 class Avis(BaseModel):
     """
@@ -24,7 +27,7 @@ class Avis(BaseModel):
     #id_avis : int
     avis : str
     identifiant_auteur : str
-    date: str #au format '13/11/2021 00:53:16'
+    date: str = now #au format '13/11/2021 00:53:16'
     id_restaurant: str
 
         
