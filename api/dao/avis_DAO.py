@@ -27,7 +27,7 @@ class AvisDao(metaclass=Singleton):
         avis_restau = []
         if res :
             for row in res : 
-                avis_restau.append(Avis(avis=row["avis"],identifiant_auteur=row["identifiant_auteur"],date=row["date"],id_restaurant=row['id_restaurant']))
+                avis_restau.append(Avis(avis=row["avis"],identifiant_auteur=row["identifiant_auteur"],date=str(row["date"]),id_restaurant=row['id_restaurant']))
         return avis_restau
 
     @staticmethod

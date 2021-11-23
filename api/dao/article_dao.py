@@ -1,6 +1,6 @@
 from typing import List, Optional
-from brouillon.utils.singleton import Singleton
-from brouillon.DAO.db_connection import DBConnection
+from api.utils.singleton import Singleton
+from api.dao.db_connection import DBConnection
 from api.metier.article import Article
 import api.dao.menu_dao as MenuDao 
 

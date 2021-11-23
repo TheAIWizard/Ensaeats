@@ -2,14 +2,14 @@ from fastapi import APIRouter, Header, HTTPException
 from api.service.client_service import ClientService
 from api.service.avis_service import AvisService
 from api.metier.avis import Avis
-from client.exception.client_not_authenticated_exception import ClientNotAuthenticated
+from api.exception.client_not_authenticated_exception import ClientNotAuthenticated
 
 router = APIRouter()
 
 @router.get("/avis/", tags=["Avis"])
-async def get_avis_by_id_restaurant(id_restaurant: str, identifiant: str, password: str):
+async def get_avis_by_id_restaurant(id_restaurant: str, username: str, password: str):
     try:
-        client = ClientService.authenticate_and_get_client(identifiant=identifiant, mot_de_passe=password)
+        client = ClientService.authenticate_and_get_client(identifiant=username, mot_de_passe=password)
         return AvisService.get_avis_by_id_restaurant(id_restaurant)
         
     except ClientNotAuthenticated: 
