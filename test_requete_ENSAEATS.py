@@ -37,10 +37,10 @@ params_menus_by_id_restaurant={'id_restaurant':id_restaurant,'username':username
 menus_by_id_restaurant=requests.get('http://localhost:5000/menus/{}'.format(id_restaurant),params=params_menus_by_id_restaurant).json()
 #print(menus_by_id_restaurant)
 
-""" #requête recherche avis by id_restaurant
+#requête recherche avis by id_restaurant
 params_avis_by_id_restaurant={'id_restaurant':id_restaurant,'username':username,'password':password}
-avis_by_id_restaurant=requests.get('http://localhost:5000/avis/{}'.format(id_restaurant),params=params_avis_by_id_restaurant).json()
-print(avis_by_id_restaurant) """
+avis_by_id_restaurant=requests.get('http://localhost:5000/avis/',params=params_avis_by_id_restaurant).json()
+print(avis_by_id_restaurant) 
 
 #requête recherche commandes by id_restaurant
 params_commandes_by_id_restaurant={'id_restaurant':id_restaurant,'username':username,'password':password}
@@ -52,7 +52,7 @@ avis=Avis(avis="l'EJR c'est quand même mieux" ,identifiant_auteur="l'EJR c'est 
 
 #requête ajout avis by id_restaurant
 params_ajout_avis_by_id_restaurant={'username':username,'password':password}
-ajout_avis_by_id_restaurant=requests.post('http://localhost:5000/avis/?username=KingAlex35&password=KingAlex35',params=params_ajout_avis_by_id_restaurant,json=dict(avis)).json()
+ajout_avis_by_id_restaurant=requests.post('http://localhost:5000/avis/',params=params_ajout_avis_by_id_restaurant,json=dict(avis)).json()
 print(ajout_avis_by_id_restaurant)
 
 """ #requête ajout commandes by id_restaurant: à venir

@@ -1,4 +1,4 @@
-from brouillon.metier.commande import Commande
+from api.metier.commande import Commande
 from api.dao.commande_dao import CommandeDAO
 from api.metier.client import Client
 from api.metier.restaurant import Restaurant
