@@ -86,24 +86,22 @@ class CommandeDAO():
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
-                    "SELECT id_commande FROM ensaeats.table_client_commande"\
-                    "JOIN ensaeats.commande BY id_commande"\
-                    " WHERE ensaeats.table_client_commande.id_client = %(id_client)s ;"
+                    "SELECT * FROM ensaeats.commande"\
+                    " JOIN ensaeats.table_client_commande ON commande.id_commande = table_client_commande.id_commande"\
+                    " WHERE table_client_commande.id_client =  %(id_client)s ;"
                 , {"id_client" : client.id_client})
                 res = cursor.fetchall()
                 
         if res : 
             commandes=[]
             for r in res:
-                with DBConnection().connection as connection:
-                    with connection.cursor() as cursor :
-                        cursor.execute(
-                            "SELECT * FROM ensaeats.commande"\
-                            " WHERE id_commande = %(id_commande)s;"
-                        , {"id_commande" : r["id_commande"]})
-                        res = cursor.fetchone()
-                commande = Commande(id_commande = res['id_commande'] , date = res['date'] , statut_commande = res['statut_commande'], liste_menu= CommandeDAO.obtenir_menus_par_id_commande(r["id_commande"]),liste_quantite = CommandeDAO.obtenir_quantite_par_id_commande['liste_quantite'])
+                print(r['date'])
+                print(type(r['date']))
+                commande = Commande(id_commande = r['id_commande'] , date = str(r['date']) , statut_commande = r['statut_commande']
+                            , liste_menu= CommandeDAO.obtenir_menus_par_id_commande(r["id_commande"]))         
                 commandes.append(commande)
+            return commandes 
+        
         else : 
             return 'Le client ne possède pas de commandes'
 
