@@ -47,7 +47,7 @@ async def post_menu(id_restaurant : str, menu : Menu, identifiant_restaurateur: 
 
 
 @router.put("/menus/{id_menu}", tags = ['Menus'])
-async def update_menu(id_menu : int, menu : Menu, identifiant_restaurateur: Optional[str] = Header(None), mot_de_passe_restaurateur: Optional[str] = Header(None)):
+async def update_menu(id_menu : int, menu : Menu, identifiant_restaurateur: str, mot_de_passe_restaurateur: str):
     try:
         restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant_restaurateur, mot_de_passe=mot_de_passe_restaurateur)
         print(restaurateur)
@@ -65,3 +65,21 @@ async def update_menu(id_menu : int, menu : Menu, identifiant_restaurateur: Opti
     except RestaurateurNotAuthenticated:
         raise HTTPException(status_code=403, detail="Vous devez être connecté en tant que restaurateur")
 
+@router.delete("/menus/{id_menu}", tags = ['Menus'])
+async def delete_menu(id_menu : int, menu : Menu, identifiant_restaurateur: Optional[str] = Header(None), mot_de_passe_restaurateur: Optional[str] = Header(None)):
+    try:
+        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant_restaurateur, mot_de_passe=mot_de_passe_restaurateur)
+        print(restaurateur)
+        try : 
+            if restaurateur.id_restaurant == MenuDao.get_id_restaurant_by_menu(menu) :
+                # # call your service here
+                if id_menu == menu.id_menu : 
+                    return RestaurantsService.deleteMenuOnRestaurant(menu)
+                else : 
+                    raise HTTPException(status_code=401, detail = "Vous ne pouvez pas changer l'identifiant du menu")
+            
+        except RestaurateurNotAuthenticated:
+            raise HTTPException(status_code=403, detail= "Vous n'êtes pas le propriétaire de ce restaurant") 
+                        
+    except RestaurateurNotAuthenticated:
+        raise HTTPException(status_code=403, detail="Vous devez être connecté en tant que restaurateur")
