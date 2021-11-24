@@ -82,7 +82,7 @@ class CommandeDAO():
     
     
     @staticmethod
-    def obtenir_commandes(client : Client) : 
+    def obtenir_commandes_par_client(client : Client) : 
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
@@ -95,8 +95,8 @@ class CommandeDAO():
         if res : 
             commandes=[]
             for r in res:
-                print(r['date'])
-                print(type(r['date']))
+                #print(r['date'])
+                #print(type(r['date']))
                 commande = Commande(id_commande = r['id_commande'] , date = str(r['date']) , statut_commande = r['statut_commande']
                             , liste_menu= CommandeDAO.obtenir_menus_par_id_commande(r["id_commande"]))         
                 commandes.append(commande)
@@ -107,25 +107,22 @@ class CommandeDAO():
 
 
     @staticmethod
-    def obtenir_commandes_restaurant(restaurant : Restaurant) : 
+    def obtenir_commandes_par_id_restaurant(id_restaurant : str) : 
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(
-                    "SELECT id_commande FROM table_restaurant_commande"\
+                    "SELECT * FROM ensaeats.commande "\
                     "WHERE id_restaurant = %(id_restaurant)s;"
-                , {"id_client" : restaurant.id_restaurant})
+                , {"id_restaurant" : id_restaurant})
                 res = cursor.fetchall()
-                
+        commandes=[]       
         if res : 
-            with DBConnection().connection as connection:
-                with connection.cursor() as cursor :
-                    cursor.execute(
-                        "SELECT * FROM commande"\
-                        "WHERE id_commande in %(id_commande)s;"
-                    , {"id_commande" : res})
-                    res = cursor.fetchall()
-                if res : 
-                    return res
+            for r in res:
+                commande = Commande(id_commande = r['id_commande'] , date = str(r['date']) , statut_commande = r['statut_commande']
+                            , liste_menu= CommandeDAO.obtenir_menus_par_id_commande(r["id_commande"]))         
+                commandes.append(commande)
+            return commandes 
         else : 
             return 'Le restaurant ne possède pas de commandes'
+            
                 
