@@ -102,6 +102,24 @@ class CommandeDAO():
                 menus.append(menu)
         return menus
     
+    @staticmethod 
+    def obtenir_quantites_par_id_commande(id_commande : int): 
+        request = "SELECT * FROM ensaeats.menu "\
+                  "JOIN ensaeats.table_menu_commande USING(id_menu) "\
+                  "WHERE table_menu_commande.id_commande=%(id_commande)s;"
+
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor :
+                cursor.execute(
+                    request,
+                    {"id_commande": id_commande}
+                )
+                res = cursor.fetchall()
+        quantites= []
+        if res :
+            for row in res :
+                quantites.append(row['quantite'])
+        return quantites
     
     @staticmethod
     def obtenir_commandes_par_client(client : Client) : 
@@ -141,7 +159,9 @@ class CommandeDAO():
         if res : 
             for r in res:
                 commande = Commande(id_commande = r['id_commande'] , date = str(r['date']) , statut_commande = r['statut_commande']
-                            , liste_menu= CommandeDAO.obtenir_menus_par_id_commande(r["id_commande"]))         
+                            , liste_menu= CommandeDAO.obtenir_menus_par_id_commande(r["id_commande"])
+                            , liste_quantite= CommandeDAO.obtenir_quantites_par_id_commande(r["id_commande"])
+                            , id_restaurant=id_restaurant)         
                 commandes.append(commande)
             return commandes 
         else : 
