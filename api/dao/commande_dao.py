@@ -10,46 +10,65 @@ from api.metier.menu import Menu
 class CommandeDAO():
     inserted = False
     @staticmethod
-    def add_commande(commande: Commande):
+    def add_commande(commande: Commande, id_client : int):
         """Ajout d'une commande dans la base de données
         """
        
-        requete = "INSERT INTO ensaeats.commande (date, prix_total, statut_commande) VALUES "\
-            "('{}', {}, '{}') RETURNING id_commande".format(commande.date, commande.prix_total(), commande.statut_commande)
+        requete = "INSERT INTO ensaeats.commande (date, prix_total, statut_commande, id_restaurant) VALUES "\
+            "('{}', {}, '{}', '{}') RETURNING *".format(commande.date, commande.prix_total(), commande.statut_commande, commande.id_restaurant)
         
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(requete)
                 res = cursor.fetchone()
-                if res :
-                    return res['id_commande']
-                
-        commande.id_commande = res['id_commande']         
+        if res :
+            commande.id_commande = res['id_commande']
+            commande.date = str(res['date'])
+            if CommandeDAO.lien_commande_menus(commande) == True : 
+                if CommandeDAO.lien_commande_client(commande, id_client) == True :
+                    return commande
+                else : 
+                    return "La commande n'a pas été attribué au client"
+            else : 
+                return "Un menu ou plus n'a pas été ajouté à la commande"
+                    
+                                     
     
-    ## Lien entre commande et menus
+    @staticmethod
     def lien_commande_menus(commande: Commande):
-        #list_id_menus = [menu.id_menu for menu in commande.liste_menu]
-
+        ajout_lien_commande_menus = [False]*len(commande.liste_menu)
+        
         ## Insertion dans la table commande_menu
-        for menu in commande.liste_menu:
+        for i in range(len(commande.liste_menu)):
             requete = "INSERT INTO ensaeats.table_menu_commande (id_menu, id_commande) VALUES ({}, {}) "\
-            "RETURNING id".format(menu.id_menu, commande.id_commande)
+            "RETURNING id".format(commande.liste_menu[i].id_menu, commande.id_commande, commande.liste_quantite[i])
             with DBConnection().connection as connection:
                 with connection.cursor() as cursor :
                     cursor.execute(requete)
                     res = cursor.fetchone()
                     if res :
-                        return res
+                        ajout_lien_commande_menus[i] = True 
         
-
-        ## Tenir compte du lien avec le client (Table_client_commande)
-       
-    def lien_commande_client(id_client, id_commande):
+        if False in ajout_lien_commande_menus : 
+            return False
+        else : 
+            return True  
+        
+        
+    @staticmethod  
+    def lien_commande_client(id_client, commande : Commande):
         requete = "INSERT INTO ensaeats.table_client_commande (id_commande, id_client) VALUES"\
-            "({}, {})".format(id_commande, id_client)
+            "({}, {}) RETURNING id".format(commande.id_commande, id_client)
+            
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
                 cursor.execute(requete)
+                res = cursor.fetchone()
+                if res : 
+                    return True
+                else : 
+                    return False 
+                
                 
     @staticmethod 
     def obtenir_menus_par_id_commande(id_commande : int): 

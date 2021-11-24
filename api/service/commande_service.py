@@ -31,13 +31,13 @@ class CommandeService:
         return commande       
         
     @staticmethod 
-    def valider_commande(commande: Commande):
+    def valider_commande(commande: Commande, id_client : int):
         """[Ajouter la commande de l'utilisateur]
 
         Args:
             commande ([Commande]): [Commande faite par l'utilisateur]
         """
-        CommandeDAO.add_commande(commande)
+        CommandeDAO.add_commande(commande, id_client)
         
     
     @staticmethod 
