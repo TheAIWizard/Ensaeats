@@ -1,8 +1,8 @@
 from PyInquirer import prompt
 from pydantic.main import ModelMetaclass
 from PyInquirer.separator import Separator
-from Tidiane_client_brouillon.view.abstract_view import AbstractView
-from Tidiane_client_brouillon.view.welcom_view import WelcomeView
+from client.view.abstract_view import AbstractView
+from client.view.welcom_view import WelcomeView
 from client.service.client_service import ClientService
 from client.business.client import Client
 from client.exception.client_not_authenticated_exception import ClientNotAuthenticated
@@ -13,9 +13,7 @@ class AuthentificationView(AbstractView):
         pass
      
     def make_choice(self):
-        #si on ne mets pas cette ligne inutile avant, ça ne fonctionne pas
-        #sinon problème d'accès aux paramètres de .env pour db_connection
-        self.debug=ClientService.consulter_menu("LTy9AUgMnLn8YS21KfFZ8g")
+             
         question = [{
             'type': 'list',
             'name': 'Menu',
@@ -24,8 +22,8 @@ class AuthentificationView(AbstractView):
         }]
         reponse = prompt(question)
         if reponse['Menu']=='Oui':
-            self.identifiant = input("Entrez votre identifiant client: ")
-            self.mot_de_passe = input("Entrez votre mot de passe:")
+            self.identifiant = input("Entrez votre identifiant client:   ")
+            self.mot_de_passe = input("Entrez votre mot de passe:   ")
             #sans erreur d'authentification, on passe à la view suivante
             try:
                 self.client=ClientService.authenticate_and_get_client(identifiant=self.identifiant, password=self.mot_de_passe)
@@ -49,12 +47,13 @@ class AuthentificationView(AbstractView):
             try:
                 self.nouveau_client=ClientService.createClient(self.nouveau_client)
 
-                AbstractView.session.nouveau_client = self.nouveau_client
+                #AbstractView.session.nouveau_client = self.nouveau_client
+                AbstractView.session.client = self.nouveau_client
                 AbstractView.session.id_client = self.nouveau_client.id_client
                 AbstractView.session.nom = self.nom
                 AbstractView.session.prenom = self.prenom
                 AbstractView.session.adresse = self.adresse
-                AbstractView.session.create_identifiant = self.create_identifiant
+                AbstractView.session.identifiant = self.create_identifiant
                 AbstractView.session.create_mot_de_passe = self.create_mot_de_passe
                 AbstractView.session.create_telephone = self.telephone
                 return WelcomeView()

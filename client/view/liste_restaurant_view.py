@@ -10,7 +10,8 @@ from client.view.select_param import selection
 class RestaurantListeView(AbstractView):
     def __init__(self) -> None:
         ## Liste des restaurants
-        self.liste_restaurant = selection(AbstractView.session.localite, AbstractView.session.nom_restaurant, AbstractView.session.radius)
+        self.liste_restaurant = selection(AbstractView.session.localite, AbstractView.session.nom_restaurant, 
+                                          AbstractView.session.radius)
         
         ## Liste avec uniquement les noms
         self.liste_nom_restaurant = [restaurant.nom for restaurant in self.liste_restaurant]

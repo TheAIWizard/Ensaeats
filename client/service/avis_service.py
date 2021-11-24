@@ -1,28 +1,22 @@
-
 import json
 from fastapi import params
 from psycopg2.extensions import STATUS_IN_TRANSACTION
 import requests
 from requests.api import request
 
-class RestaurantService:
+
+
+class AvisService:
     
-    #Get restaurants
+    
+    # Get avis
     @staticmethod
-    def getRestaurants(localite, term, radius, identifiant, mot_de_passe):
+    def getAvis_By_Id_Restaurant(id_restaurant, identifiant, mot_de_passe):
+        # Requête vers api get avis
+        params_avis_by_restaurant = {'id_restaurant': id_restaurant, 'username': identifiant, 'password': mot_de_passe}
+        avis = request.get('http://localhost:5000/avis/{}'.format(id_restaurant), params = params_avis_by_restaurant).json()
         
-        params_restaurants={'localisation':localite,'term': term,'radius':radius,'username': identifiant,'password': mot_de_passe}
-        restaurants=requests.get('http://localhost:5000/restaurants/', params = params_restaurants).json()
-        
-        return restaurants
-    
-    
-    
-    
-    
-    
-    ## Methode d'ajout
-    
+        return avis
     
     # Post Avis
     @staticmethod
@@ -39,8 +33,3 @@ class RestaurantService:
             output = True
             return output
         return output
-    
-    
-        
-        
-        

@@ -1,8 +1,8 @@
-from brouillon.metier.commande import Commande
-from brouillon.metier.menu import Menu
-from brouillon.metier.commande import Commande
-from brouillon.metier.restaurant import Restaurant
-from brouillon.utils.singleton import Singleton
+from api.metier.commande import Commande
+from api.metier.menu import Menu
+from api.metier.commande import Commande
+from api.metier.restaurant import Restaurant
+from api.utils.singleton import Singleton
 
 
 class Session(metaclass=Singleton):
@@ -19,6 +19,7 @@ class Session(metaclass=Singleton):
         self.nom_restaurant = None
         self.radius = None
         
+        self.client = None
         self.nouveau_client = None
         self.id_client = None
         self.identifiant = None

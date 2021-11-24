@@ -1,8 +1,9 @@
 from PyInquirer import prompt, Separator
+from client.business.client import Client
 
-from Tidiane_client_brouillon.view.abstract_view import AbstractView
-from Tidiane_client_brouillon.dao.avis_DAO import AvisDao
-from brouillon.metier.avis import Avis
+from client.view.abstract_view import AbstractView
+from client.service.client_service import ClientService
+from api.metier.avis import Avis
 
 class RestaurantView(AbstractView):
     def __init__(self) -> None:
@@ -14,32 +15,40 @@ class RestaurantView(AbstractView):
                 'choices': ['Consulter Menus',
                 Separator(),
                 'Consulter les avis',
-                Separator(), ## Ajouter : consulter les commandes
+                Separator(),
+                'Liste des restaurants',
+                Separator(), 
                 'Accueil']
             }
         ]
         
     
     def display_info(self):
-        pass
+        print("Restaurant", AbstractView.session.restaurant_actif.nom)
+        print('\n')
     
     
     def make_choice(self):
         reponse = prompt(self.questions)
         if reponse["Menu"] == 'Accueil':
             ## Aller à l'accueil
-            from Tidiane_client_brouillon.view.welcom_view import WelcomeView
+            from client.view.welcom_view import WelcomeView
             return WelcomeView()
         
         elif reponse["Menu"] == 'Consulter Menus':
             ## Aller dans menus liste view
-            from Tidiane_client_brouillon.view.menu_list_view import MenuListView
+            from client.view.menu_list_view import MenuListView
             return MenuListView()
+        
+        elif reponse['Menu'] == "Liste des restaurants":
+            from client.view.liste_restaurant_view import RestaurantListeView
+            return RestaurantListeView()
         else :
             ## Aller dans avis liste view
             id_restaurant = AbstractView.session.restaurant_actif.id_restaurant
-            AbstractView.session.listeAvis = AvisDao.find_avis_by_id_restaurant(id_restaurant)
-            from Tidiane_client_brouillon.view.avisView import AvisView
+            AbstractView.session.listeAvis = ClientService.consulter_avis(id_restaurant)
+                     
+            from client.view.avisView import AvisView
             return AvisView()
             
     

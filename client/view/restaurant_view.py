@@ -3,7 +3,8 @@ from client.business.client import Client
 
 from client.view.abstract_view import AbstractView
 from client.service.client_service import ClientService
-from api.metier.avis import Avis
+from client.service.avis_service import AvisService
+from client.business.avis import Avis
 
 class RestaurantView(AbstractView):
     def __init__(self) -> None:
@@ -24,7 +25,7 @@ class RestaurantView(AbstractView):
         
     
     def display_info(self):
-        print("Restaurant", AbstractView.session.restaurant_actif.nom)
+        print("Restaurant ", AbstractView.session.restaurant_actif.nom)
         print('\n')
     
     
@@ -46,7 +47,10 @@ class RestaurantView(AbstractView):
         else :
             ## Aller dans avis liste view
             id_restaurant = AbstractView.session.restaurant_actif.id_restaurant
-            AbstractView.session.listeAvis = ClientService.consulter_avis(id_restaurant)
+            identifiant = AbstractView.session.identifiant
+            mdp = AbstractView.session.mot_de_passe
+            AbstractView.session.listeAvis = AvisService.getAvis_By_Id_Restaurant(id_restaurant,
+                                                                                  identifiant, mdp)
                      
             from client.view.avisView import AvisView
             return AvisView()

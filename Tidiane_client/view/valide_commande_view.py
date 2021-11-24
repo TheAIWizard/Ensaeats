@@ -1,6 +1,7 @@
 from PyInquirer import prompt, Separator
 from pydantic.errors import ListError
 from client.view.liste_restaurant_view import RestaurantListeView
+from client.dao.commande_dao import CommandeDAO
 from brouillon.metier.commande import Commande
 from client.view.abstract_view import AbstractView
 from datetime import datetime

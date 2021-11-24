@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from Tidiane_client_brouillon.view.session import Session
+from client.view.session import Session
  
 class AbstractView(ABC):
     session = Session()
