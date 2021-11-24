@@ -10,9 +10,9 @@ from client.exception.client_not_authenticated_exception import ClientNotAuthent
 router = APIRouter()
 
 @router.post("/commandes/", tags=["Commandes"]) #post_commande(commande: Commande, identifiant: Optional[str] = Header(None), password: Optional[str] = Header(None)):
-async def post_commande(commande: Commande, identifiant: str, password: str):
+async def post_commande(commande: Commande, identifiant_client: str, mot_de_passe_client: str):
     try:
-        client = ClientService.authenticate_and_get_client(identifiant=identifiant, mot_de_passe=password)
+        client = ClientService.authenticate_and_get_client(identifiant=identifiant_client, mot_de_passe=mot_de_passe_client)
         print(client)
         return CommandeService.valider_commande(commande)
         

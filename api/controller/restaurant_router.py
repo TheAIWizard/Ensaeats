@@ -14,10 +14,10 @@ router = APIRouter()
 
 
 @router.get("/restaurants/", tags=["Restaurants"])
-#async def get_restaurants(username: Optional[str] = Header(None), password: Optional[str] = Header(None), localisation:str="Bruz", term : str = "", radius : int = 2000):
-async def get_restaurants(username: str, password: str, localisation:str="Bruz", term : str = "", radius : int = 2000):
+#async def get_restaurants(identifiant_client: Optional[str] = Header(None), mot_de_passe_client: Optional[str] = Header(None), localisation:str="Bruz", term : str = "", radius : int = 2000):
+async def get_restaurants(identifiant_client: str, mot_de_passe_client: str, localisation:str="Bruz", term : str = "", radius : int = 2000):
     try:
-        client = ClientService.authenticate_and_get_client(identifiant=username, mot_de_passe=password)
+        client = ClientService.authenticate_and_get_client(identifiant=identifiant_client, mot_de_passe=mot_de_passe_client)
         print(client)
         # # call your service here
         return RestaurantsService.getRestaurants(localisation, term, radius)
@@ -27,9 +27,9 @@ async def get_restaurants(username: str, password: str, localisation:str="Bruz",
 
 
 @router.get("/restaurant/{id_restaurant}", tags=["Restaurants"])
-async def get_restaurant(username: str, password: str, id_restaurant: str):
+async def get_restaurant(identifiant_client: str, mot_de_passe_client: str, id_restaurant: str):
     try:
-        client = ClientService.authenticate_and_get_client(identifiant=username, mot_de_passe=password)
+        client = ClientService.authenticate_and_get_client(identifiant=identifiant_client, mot_de_passe=mot_de_passe_client)
         print(client)
         # # call your service here
         return RestaurantsService.getRestaurant(id_restaurant)
@@ -40,9 +40,9 @@ async def get_restaurant(username: str, password: str, id_restaurant: str):
 
 
 @router.get("/menus/{id_restaurant}", tags=["Menus"])
-async def get_menus_by_id_restaurant(id_restaurant: str , username: str, password: str):
+async def get_menus_by_id_restaurant(id_restaurant: str , identifiant_client: str, mot_de_passe_client: str):
     try:
-        client = ClientService.authenticate_and_get_client(identifiant=username, mot_de_passe=password)
+        client = ClientService.authenticate_and_get_client(identifiant=identifiant_client, mot_de_passe=mot_de_passe_client)
         print(client)
         # # call your service here
         return RestaurantsService.getMenus_by_id_restaurant(id_restaurant)

@@ -21,7 +21,7 @@ RESTAURATEUR
   "nom": "Delacroix",
   "prenom": "Martin",
   "identifiant": "CrossMartin",
-  "mot_de_passe": "1234",
+  "mot_de_passe": "CrossMartin",
   "id_restaurant": "LTy9AUgMnLn8YS21KfFZ8g"
 }
 

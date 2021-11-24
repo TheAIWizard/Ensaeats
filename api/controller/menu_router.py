@@ -12,9 +12,9 @@ from api.metier.menu import Menu
 router = APIRouter()
 
 @router.get("/menus/{id_restaurant}", tags=["Menus"])
-async def get_menus_by_id_restaurant(id_restaurant: str , identifiant: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+async def get_menus_by_id_restaurant(id_restaurant: str , identifiant_restaurateur: Optional[str] = Header(None), mot_de_passe_restaurateur: Optional[str] = Header(None)):
     try:
-        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant, password=password)
+        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant_restaurateur, mot_de_passe=mot_de_passe_restaurateur)
         print(restaurateur)
         
         # # call your service here
@@ -26,9 +26,9 @@ async def get_menus_by_id_restaurant(id_restaurant: str , identifiant: Optional[
 
 
 @router.post("/menus", tags = ['Menus'])
-async def post_menu(id_restaurant : str, menu : Menu, identifiant: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+async def post_menu(id_restaurant : str, menu : Menu, identifiant_restaurateur: Optional[str] = Header(None), mot_de_passe_restaurateur: Optional[str] = Header(None)):
     try:
-        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant, password=password)
+        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant_restaurateur, mot_de_passe=mot_de_passe_restaurateur)
         print(restaurateur)
         
         try :
@@ -47,9 +47,9 @@ async def post_menu(id_restaurant : str, menu : Menu, identifiant: Optional[str]
 
 
 @router.put("/menus/{id_menu}", tags = ['Menus'])
-async def update_menu(id_menu : int, menu : Menu, identifiant: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+async def update_menu(id_menu : int, menu : Menu, identifiant_restaurateur: Optional[str] = Header(None), mot_de_passe_restaurateur: Optional[str] = Header(None)):
     try:
-        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant, password=password)
+        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant_restaurateur, mot_de_passe=mot_de_passe_restaurateur)
         print(restaurateur)
         try : 
             if restaurateur.id_restaurant == MenuDao.get_id_restaurant_by_menu(menu) :

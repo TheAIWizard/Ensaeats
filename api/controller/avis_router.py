@@ -7,18 +7,18 @@ from api.exception.client_not_authenticated_exception import ClientNotAuthentica
 router = APIRouter()
 
 @router.get("/avis/", tags=["Avis"])
-async def get_avis_by_id_restaurant(id_restaurant: str, username: str, password: str):
+async def get_avis_by_id_restaurant(id_restaurant: str, identifiant_client: str, mot_de_passe_client: str):
     try:
-        client = ClientService.authenticate_and_get_client(identifiant=username, mot_de_passe=password)
+        client = ClientService.authenticate_and_get_client(identifiant=identifiant_client, mot_de_passe=mot_de_passe_client)
         return AvisService.get_avis_by_id_restaurant(id_restaurant)
         
     except ClientNotAuthenticated: 
         raise HTTPException(status_code=403, detail="Vous devez être connecté en tant que client")
 
 @router.post("/avis/", tags=["Avis"])
-async def post_avis(avis:Avis, username: str, password: str):
+async def post_avis(avis:Avis, identifiant_client: str, mot_de_passe_client: str):
     try:
-        client = ClientService.authenticate_and_get_client(identifiant=username, mot_de_passe=password)
+        client = ClientService.authenticate_and_get_client(identifiant=identifiant_client, mot_de_passe=mot_de_passe_client)
         return AvisService.ajout_avis(avis)
         
     except : 

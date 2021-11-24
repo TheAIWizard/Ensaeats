@@ -12,9 +12,9 @@ from api.metier.menu import Menu
 router = APIRouter()
 
 @router.post("/articles/", tags = ['Articles'])
-async def post_article(article : Article, identifiant: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+async def post_article(article : Article, identifiant: Optional[str] = Header(None), mot_de_passe: Optional[str] = Header(None)):
     try:
-        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant, password=password)
+        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant, mot_de_passe=mot_de_passe)
         print(restaurateur)
         # # call your service here
 
@@ -27,10 +27,10 @@ async def post_article(article : Article, identifiant: Optional[str] = Header(No
 
 
 @router.put("/articles/{id_article}", tags = ['Articles'])
-async def put_article(id_article : int, article:Article, identifiant: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+async def put_article(id_article : int, article:Article, identifiant: Optional[str] = Header(None), mot_de_passe: Optional[str] = Header(None)):
     # l'idée serait de mettre en valeur par défaut la composition et le type de base de l'identifiant article
     try:
-        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant, password=password)
+        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant, mot_de_passe=mot_de_passe)
         print(restaurateur)
         # # call your service here
         if id_article == article.id_article : 
@@ -42,9 +42,9 @@ async def put_article(id_article : int, article:Article, identifiant: Optional[s
         raise HTTPException(status_code=403, detail="Vous devez être connecter en tant que restaurateur ")
 
 @router.delete("/articles/", tags = ['Articles'])
-async def delete_article(id_article : int, identifiant: Optional[str] = Header(None), password: Optional[str] = Header(None)):
+async def delete_article(id_article : int, identifiant: Optional[str] = Header(None), mot_de_passe: Optional[str] = Header(None)):
     try:
-        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant, password=password)
+        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant, mot_de_passe=mot_de_passe)
         print(Restaurateur)
         # # call your service here
         article = ArticleDao.find_article_by_id_article(id_article) 

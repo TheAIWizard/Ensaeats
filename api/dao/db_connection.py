@@ -3,7 +3,7 @@ import os
 import dotenv
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from brouillon.utils.singleton import Singleton
+from api.utils.singleton import Singleton
 
 
 class DBConnection(metaclass=Singleton):
