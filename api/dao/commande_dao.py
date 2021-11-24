@@ -6,6 +6,9 @@ from api.metier.restaurateur import Restaurateur
 from api.metier.client import Client
 from api.dao.menu_dao import MenuDao
 from api.metier.menu import Menu
+from datetime import datetime 
+now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
 
 class CommandeDAO():
     inserted = False
@@ -15,7 +18,7 @@ class CommandeDAO():
         """
        
         requete = "INSERT INTO ensaeats.commande (date, prix_total, statut_commande, id_restaurant) VALUES "\
-            "('{}', {}, '{}', '{}') RETURNING *".format(commande.date, commande.prix_total(), commande.statut_commande, commande.id_restaurant)
+            "('{}',{}, '{}', '{}') RETURNING *".format(now, commande.prix_total(), commande.statut_commande, commande.id_restaurant)
         
         with DBConnection().connection as connection:
             with connection.cursor() as cursor :
@@ -25,7 +28,7 @@ class CommandeDAO():
             commande.id_commande = res['id_commande']
             commande.date = str(res['date'])
             if CommandeDAO.lien_commande_menus(commande) == True : 
-                if CommandeDAO.lien_commande_client(commande, id_client) == True :
+                if CommandeDAO.lien_commande_client(id_client, commande) == True :
                     return commande
                 else : 
                     return "La commande n'a pas été attribué au client"
@@ -40,7 +43,7 @@ class CommandeDAO():
         
         ## Insertion dans la table commande_menu
         for i in range(len(commande.liste_menu)):
-            requete = "INSERT INTO ensaeats.table_menu_commande (id_menu, id_commande) VALUES ({}, {}) "\
+            requete = "INSERT INTO ensaeats.table_menu_commande (id_menu, id_commande, quantite) VALUES ({}, {},{}) "\
             "RETURNING id".format(commande.liste_menu[i].id_menu, commande.id_commande, commande.liste_quantite[i])
             with DBConnection().connection as connection:
                 with connection.cursor() as cursor :

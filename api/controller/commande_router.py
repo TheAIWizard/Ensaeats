@@ -36,7 +36,7 @@ async def get_commandes_restaurant(id_restaurant: str, identifiant_restaurateur:
         restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant_restaurateur, mot_de_passe=mot_de_passe_restaurateur)
         #On s'assure qu'il s'agit du bon id_restaurant pour le restaurateur sinon n'importe quel restaurateur peut accéder aux commandes
         if restaurateur.id_restaurant!=id_restaurant:
-            return "Le restaurateur n'appartient pas à ce restaurant. Changez id_restaurant"
+            return "Le restaurant n'appartient pas à ce restaurateur. Changez id_restaurant"
         return CommandeService.obtenir_commandes_id_restaurant(id_restaurant=id_restaurant)
         
     except ClientNotAuthenticated: 
