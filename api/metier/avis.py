@@ -14,7 +14,7 @@ class Avis(BaseModel):
             Avis permet au client de donner son appréciation sur la qualité du service du restaurant. 
 
     identifiant_auteur : str
-            Permet quel avis correspiond à un tel client
+            Permet quel avis correspond à un tel client
 
     date : str
             Perùmet de connaître la date à laquelle le client à laisser un avis
