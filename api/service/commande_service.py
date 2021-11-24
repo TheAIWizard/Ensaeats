@@ -37,7 +37,7 @@ class CommandeService:
         Args:
             commande ([Commande]): [Commande faite par l'utilisateur]
         """
-        CommandeDAO.add_commande(commande, id_client)
+        return CommandeDAO.add_commande(commande, id_client)
         
     
     @staticmethod 

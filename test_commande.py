@@ -1,18 +1,12 @@
-from Tidiane_client_brouillon.dao.commande_dao import CommandeDAO
-from brouillon.metier.commande import Commande
-from brouillon.metier.menu import Menu
-from api.metier.client import Client
-from api.
 
-#menu1 = Menu(1500, "Menu 1", 5)
-#menu2 = Menu(1544,"Menu2", 7)
-#list_menu = [menu1, menu2]
+import api.metier.commande as Commande
+import api.dao.menu_dao as menu_dao
 
-#command = Commande(21, "23-3-2021", "En cour", list_menu)
+menu = menu_dao.MenuDao.find_menu_by_id_menu(1)
+command = Commande(id_commande = 0, date = "23-3-2021", statut_commande = "En cours", liste_menu = [menu], liste_quantite = [1])
 
 
-#client = Client(id_client = 9999, nom = 'Moulin', prenom= 'Valentine', adresse= 'lalala', identifiant= 'valmoulin', mot_de_passe= 1234,
-    telephone= '0621')
+#client = Client(id_client = 9999, nom = 'Moulin', prenom= 'Valentine', adresse= 'lalala', identifiant= 'valmoulin', mot_de_passe= 1234,telephone= '0621')
 
 #comDAO = CommandeDAO()
 
