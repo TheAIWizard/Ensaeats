@@ -50,7 +50,6 @@ print(commandes_by_id_restaurant)
 
 #requête recherche commandes by client
 params_commandes_by_client={'identifiant_client':identifiant_client,'mot_de_passe_client':mot_de_passe_client}
-commandes_by_id_client=requests.get('http://localhost:5000/commandes/client',params=params_commandes_by_client).json()
 print(commandes_by_id_client) 
 
 """ AJOUT POST"""

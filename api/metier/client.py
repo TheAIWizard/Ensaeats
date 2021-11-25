@@ -30,7 +30,7 @@ class Client(BaseModel):
     id_client: int
     nom: str
     prenom: str
-    adresse: Adresse = None
+    adresse: Adresse
     identifiant: str
     mot_de_passe: str
     telephone: str
