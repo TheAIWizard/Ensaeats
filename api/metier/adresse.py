@@ -24,10 +24,10 @@ class Adresse(BaseModel):
     __str__ () : 
                 Permet l'affichage d'une adresse
     """
-    adresse : str
-    code_postal : int
-    ville : str
-    pays : str
+     adresse : str
+     code_postal : int
+     ville : str
+     pays : str
 
-    def __str__(self) -> str:
+     def __str__(self) -> str:
         print(self.adresse + ' ' + self.code_postal + ' ' + self.ville + ' ' + self.pays)
