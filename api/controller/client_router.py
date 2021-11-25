@@ -22,11 +22,11 @@ async def update_client(client : Client, identifiant_client: Optional[str] = Hea
          raise HTTPException(status_code=401, detail = "Vous ne pouvez pas avoir un identifiant ou mot de passe vide")
     else : 
         try : 
-            print(client.nom, identifiant_client, mot_de_passe_client)
             return ClientService.authenticate_and_update_client(identifiant_client,mot_de_passe_client, client)
         except : 
             raise HTTPException(status_code=401, detail= "La modification n'a pas été prise en compte") 
-        
+
+
 @router.get("/clients/{identifiant_client}", tags=["Clients"])
 async def get_client(identifiant_client: str, mot_de_passe_client:str):
     try : 

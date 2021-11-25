@@ -42,18 +42,4 @@ async def get_restaurant(identifiant_client: str, mot_de_passe_client: str, id_r
 
 
 
-@router.get("/menus/{id_restaurant}", tags=["Menus"])
-async def get_menus_by_id_restaurant(id_restaurant: str , identifiant_client: str, mot_de_passe_client: str):
-    try:
-        client = ClientService.authenticate_and_get_client(identifiant=identifiant_client, mot_de_passe=mot_de_passe_client)
-        print(client)
-        # # call your service here
-        return RestaurantsService.getMenus_by_id_restaurant(id_restaurant)
-
-    except UserNotAuthenticated:
-        raise HTTPException(status_code=403, detail="Vous devez vous connecter ou créer un compte en tant que client")
-
-
-
-
 

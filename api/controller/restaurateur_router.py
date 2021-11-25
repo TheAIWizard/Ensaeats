@@ -19,7 +19,7 @@ async def create_restaurateur(restaurateur: Restaurateur):
             raise HTTPException(status_code=401, detail="Vous n'avez pas pu créer votre compte")
 
 
-@router.put("/restaurateurs/{ancien_identifiant_restaurateur_restaurateur}", tags=["Restaurateurs"])
+@router.put("/restaurateurs/{ancien_identifiant_restaurateur}", tags=["Restaurateurs"])
 async def update_restaurateur(restaurateur : Restaurateur, identifiant_restaurateur: Optional[str] = Header(None), mot_de_passe_restaurateur:Optional[str] = Header(None)):
     if (restaurateur.identifiant == '' or restaurateur.mot_de_passe == '') : 
          raise HTTPException(status_code=401, detail = "Vous ne pouvez pas avoir un identifiant ou mot de passe vide")

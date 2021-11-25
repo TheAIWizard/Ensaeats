@@ -48,12 +48,9 @@ class ClientService:
     @staticmethod
     def authenticate_and_update_client(ancien_identifiant: str, ancien_password: str, client : Client) -> Client:
         if (ClientDao.verifyPassword(identifiant=ancien_identifiant, mot_de_passe=ancien_password) == True):
-            print ("ok")
             if (ClientDao.verifierIdUnique(client.identifiant) == True or client.identifiant == ancien_identifiant) : 
-                print ("ok")
                 return ClientDao.updateClient(ancien_identifiant, ancien_password, client)
             else : 
-                print("pas ok 1")
                 raise IdentifiantAlreadyExistsException(identifant = client.identifiant) 
         else:
             raise ClientNotAuthenticated(identifiant=ancien_identifiant)

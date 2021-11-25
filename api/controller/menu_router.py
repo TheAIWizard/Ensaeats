@@ -4,6 +4,8 @@ from api.service.restaurateur_service import RestaurateurService
 from typing import Optional
 from api.exception.restaurateur_not_authenticated_exception import RestaurateurNotAuthenticated
 from api.service.restaurant_service import RestaurantsService
+from api.service.client_service import ClientService
+from api.exception.client_not_authenticated_exception import ClientNotAuthenticated
 from api.dao.menu_dao import MenuDao
 from api.dao.article_dao import ArticleDao
 from api.metier.article import Article
@@ -12,17 +14,18 @@ from api.metier.menu import Menu
 router = APIRouter()
 
 @router.get("/menus/{id_restaurant}", tags=["Menus"])
-async def get_menus_by_id_restaurant(id_restaurant: str , identifiant_restaurateur: Optional[str] = Header(None), mot_de_passe_restaurateur: Optional[str] = Header(None)):
+async def get_menus_by_id_restaurant(id_restaurant: str, identifiant: Optional[str] = Header(None), mot_de_passe: Optional[str] = Header(None)):
     try:
-        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant_restaurateur, mot_de_passe=mot_de_passe_restaurateur)
+        restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant, mot_de_passe=mot_de_passe)
         print(restaurateur)
-        
-        # # call your service here
-        return RestaurantsService.getMenus_by_id_restaurant(id_restaurant)
-
-    except RestaurateurNotAuthenticated:
-        raise HTTPException(status_code=403, detail="Vous devez être connecté en tant que restaurateur")
-
+        return RestaurantsService.getMenus_by_id_restaurant(id_restaurant)    
+    except : 
+        try : 
+            client = ClientService.authenticate_and_get_client(identifiant=identifiant, mot_de_passe=mot_de_passe)
+            print(client)
+            return RestaurantsService.getMenus_by_id_restaurant(id_restaurant)
+        except RestaurateurNotAuthenticated:
+            raise HTTPException(status_code=403, detail="Vous devez être connecté en tant que restaurateur ou client")
 
 
 @router.post("/menus", tags = ['Menus'])

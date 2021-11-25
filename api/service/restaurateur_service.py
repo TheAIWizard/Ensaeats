@@ -63,11 +63,15 @@ class RestaurateurService:
             # Vérification si l'identifiant du restaurateur est bien unique si modification 
             if (RestaurateurDao.checkIdentifiantUniqueness(restaurateur.identifiant) == True or ancien_identifiant == restaurateur.identifiant) :
                 # Vérification si l'identifiant du restaurant est bien unique si modification
-                if (RestaurateurDao.checkRestaurantIdUniqueness(restaurateur.id_restaurant) == True or ancien_client.id_restaurant == restaurateur.id_restaurant):
+                try : 
+                    RestaurantsService.getRestaurant(restaurateur.id_restaurant)
+                    if (RestaurateurDao.checkRestaurantIdUniqueness(restaurateur.id_restaurant) == True or ancien_client.id_restaurant == restaurateur.id_restaurant):
                     # Si les trois vérifications sont faites -> update Restaurateur 
-                    return RestaurateurDao.updateRestaurateur(ancien_identifiant, ancien_mot_de_passe, restaurateur)
-                else : 
-                    raise RestaurantIDAlreadyExistsException(id_restaurant=restaurateur.id_restaurant)
+                        return RestaurateurDao.updateRestaurateur(ancien_identifiant, ancien_mot_de_passe, restaurateur)
+                    else : 
+                        raise RestaurantIDAlreadyExistsException(id_restaurant=restaurateur.id_restaurant)
+                except : 
+                    raise RestaurantPasTrouveException(id_restaurant= restaurateur.id_restaurant) 
             else : 
                 raise RestaurateurIDAlreadyExistsException(identifiant = restaurateur.identifiant) 
         else:
