@@ -34,7 +34,7 @@ class Faire_commande:
         return commande       
         
     @staticmethod 
-    def valider_commande(id_restaurant, identifiant, mot_de_passe, commande: Commande):
+    def valider_commande(identifiant, mot_de_passe, commande: Commande):
         """[Ajouter la commande de l'utilisateur]
 
         Args:
@@ -42,11 +42,11 @@ class Faire_commande:
         """
         ## Requete post 
         output = False
-        params_post_commande = {'id_restaurant': id_restaurant, 'username': identifiant,
-                                'password': mot_de_passe}
-        post_commande = request.post('http://localhost:5000/commande/{}'.format(id_restaurant),
+        params_post_commande = {'identifiant_client': identifiant,
+                                'mot_de_passe_client': mot_de_passe}
+        post_commande = request.post('http://localhost:5000/commande/',
                                      json = dict(commande),
-                                     params = params_post_commande)
+                                     params = params_post_commande).json()
         if post_commande: 
             output = True
             return output

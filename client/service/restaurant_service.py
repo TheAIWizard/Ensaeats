@@ -4,6 +4,8 @@ from fastapi import params
 from psycopg2.extensions import STATUS_IN_TRANSACTION
 import requests
 from requests.api import request
+from client.service.mapper import BusinessMapper
+
 
 class RestaurantService:
     
@@ -11,9 +13,12 @@ class RestaurantService:
     @staticmethod
     def getRestaurants(localite, term, radius, identifiant, mot_de_passe):
         
-        params_restaurants={'localisation':localite,'term': term,'radius':radius,'username': identifiant,'password': mot_de_passe}
-        restaurants=requests.get('http://localhost:5000/restaurants/', params = params_restaurants).json()
-        
+        params_restaurants = {'localisation':localite,'term': term,
+                            'radius':radius,'identifiant_client': identifiant,
+                            'mot_de_passe_client': mot_de_passe}
+        restaurants_json = requests.get('http://localhost:5000/restaurants/',
+                                 params = params_restaurants).json()
+        restaurants = BusinessMapper.restaurant_mapper(restaurants_json)
         return restaurants
     
     
@@ -21,24 +26,6 @@ class RestaurantService:
     
     
     
-    ## Methode d'ajout
-    
-    
-    # Post Avis
-    @staticmethod
-    def post_avis_by_id_restaurant(id_restaurant, identifiant, mot_de_passe, avis):
-        output = False
-        param_avis_post = {'id_restraurant': id_restaurant,
-                           'username': identifiant,
-                           'password': mot_de_passe}
-        post_avis = request.post('http://localhost:5000/avis/{}'.format(id_restaurant), 
-                                 json = dict(avis),
-                                 params = param_avis_post)
-        
-        if post_avis:
-            output = True
-            return output
-        return output
     
     
         

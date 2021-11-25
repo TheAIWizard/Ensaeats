@@ -1,11 +1,12 @@
 from PyInquirer import prompt, Separator
 from pydantic.errors import ListError
 from client.view.liste_restaurant_view import RestaurantListeView
-from brouillon.metier.commande import Commande
+from client.business.commande import Commande
 from client.view.abstract_view import AbstractView
 from datetime import datetime
-from client.service.client_service import ClientService
 from client.business.avis import Avis
+from client.service.commande_service import Faire_commande
+from client.service.avis_service import AvisService
 
 
 class Valider(AbstractView):
@@ -17,6 +18,10 @@ class Valider(AbstractView):
             'message': 'Fenetre : ',
             'choices': list_choix
         }]
+        
+        ## Identifiant et mot de passe de l'utilisateur
+        self.identifiant = AbstractView.session.identifiant
+        self.mdp = AbstractView.session.mot_de_passe
        
     def display_info(self):
         print("-----------------------------------------")
@@ -28,10 +33,15 @@ class Valider(AbstractView):
         choix = prompt(self.question)
         ## Si choix valider : appel commande insert dao
         if choix["Menu"] == 'Valider la commande':
-            id_commande = CommandeDAO.add_commande(commande = AbstractView.session.commande_active)
-            CommandeDAO.lien_commande_menus(AbstractView.session.commande_active, id_commande= id_commande)
-            CommandeDAO.lien_commande_client(AbstractView.session.id_client, id_commande)
-            if id_commande: print("Commande effectuée")
+            
+            commande_active = AbstractView.session.commande_active
+            resultat_post_commande = Faire_commande.valider_commande(self.identifiant, self.mdp, commande_active)
+            if resultat_post_commande: 
+                print("Commande ajoutée avec succès !")
+                print('\n')
+                
+            
+            
             ## Effacer les informations en session sur la commande
             AbstractView.session.commande_active = None
             AbstractView.session.list_menu = []
@@ -54,17 +64,21 @@ class Valider(AbstractView):
 
                 today = datetime.today().strftime('%Y-%m-%d') 
 
-                avis_user = Avis(avis = avis_txt, identifiant_auteur = AbstractView.session.identifiant,
+                avis_client = Avis(avis = avis_txt, identifiant_auteur = self.identifiant,
                 id_restaurant = AbstractView.session.restaurant_actif.id_restaurant, date = today)
                 ## Ajout avis dans la base de données
-                result =  ClientService.ajouter_avis(avis_user)
-                print(result)
-                
+                result_post_avis = AvisService.post_avis_by_id_restaurant(self.identifiant,
+                                                                self.mdp,
+                                                                avis_client)
+                if result_post_avis:
+                    print("Avis ajouter avec succès ! ")
+                                
                 input("Appuyer sur Entrer pour revenir en accueil")
                 from client.view.welcom_view import WelcomeView
                 return WelcomeView()
             
             else: 
+                input("Appuyer sur Entrer pour revenir en accueil")
                 from client.view.welcom_view import WelcomeView
                 return WelcomeView()
             

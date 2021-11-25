@@ -1,8 +1,6 @@
 from PyInquirer import prompt, Separator
 from client.business.client import Client
-
 from client.view.abstract_view import AbstractView
-from client.service.client_service import ClientService
 from client.service.avis_service import AvisService
 from client.business.avis import Avis
 
