@@ -70,6 +70,7 @@ id_client SERIAL PRIMARY KEY,
 nom text,
 prenom text,
 mot_de_passe text,
+adresse text,
 telephone text
 ) ;
 

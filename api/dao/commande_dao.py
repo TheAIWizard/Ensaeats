@@ -138,7 +138,9 @@ class CommandeDAO():
                 #print(r['date'])
                 #print(type(r['date']))
                 commande = Commande(id_commande = r['id_commande'] , date = str(r['date']) , statut_commande = r['statut_commande']
-                            , liste_menu= CommandeDAO.obtenir_menus_par_id_commande(r["id_commande"]))         
+                            , liste_menu= CommandeDAO.obtenir_menus_par_id_commande(r["id_commande"])
+                            , liste_quantite= CommandeDAO.obtenir_quantites_par_id_commande(r["id_commande"])
+                            , id_restaurant=r['id_restaurant'])        
                 commandes.append(commande)
             return commandes 
         

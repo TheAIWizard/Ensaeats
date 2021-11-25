@@ -44,13 +44,13 @@ avis_by_id_restaurant=requests.get('http://localhost:5000/avis/',params=params_a
 #print(avis_by_id_restaurant) 
 
 #requête recherche commandes by id_restaurant
-params_commandes_by_id_restaurant={'id_restaurant':id_restaurant_fontaine_perles,'identifiant_restaurateur':identifiant_restaurateur,'mot_de_passe_restaurateur':mot_de_passe_restaurateur}
-commandes_by_id_restaurant=requests.get('http://localhost:5000/commandes/restaurant',params=params_commandes_by_id_restaurant).json()
+""" params_commandes_by_id_restaurant={'id_restaurant':id_restaurant_fontaine_perles,'identifiant_restaurateur':identifiant_restaurateur,'mot_de_passe_restaurateur':mot_de_passe_restaurateur}
+commandes_by_id_restaurant=requests.get('http://localhost:5000/commandes/restaurant',params=params_commandes_by_id_restaurant).json() """
 #print(commandes_by_id_restaurant) 
 
 #requête recherche commandes by client
-params_commandes_by_client={'identifiant_client':identifiant_client,'mot_de_passe_client':mot_de_passe_client}
-commandes_by_id_client=requests.get('http://localhost:5000/commandes/client',params=params_commandes_by_client).json()
+""" params_commandes_by_client={'identifiant_client':identifiant_client,'mot_de_passe_client':mot_de_passe_client}
+commandes_by_id_client=requests.get('http://localhost:5000/commandes/client',params=params_commandes_by_client).json() """
 #print(commandes_by_id_client) 
 
 """ AJOUT POST"""
@@ -77,8 +77,12 @@ json_client={
 
 #requête ajout client
 params_ajout_client={'identifiant_client':identifiant_client,'mot_de_passe_client':mot_de_passe_client}
-ajout_client=requests.post('http://localhost:5000/clients/',params=params_ajout_client,json=json_client).json()
+ajout_client=requests.post('http://localhost:5000/clients/',json=json_client).json()
 print(ajout_client)
+
+params_ajout_client={'identifiant_client':identifiant_client,'mot_de_passe_client':mot_de_passe_client}
+print(requests.get('http://localhost:5000/clients/{}'.format(identifiant_client),params=params_ajout_client).json())
+
 
 
 """ #requête ajout commandes by id_restaurant: à venir

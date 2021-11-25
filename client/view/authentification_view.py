@@ -1,11 +1,9 @@
 from PyInquirer import prompt
-from pydantic.main import ModelMetaclass
 from PyInquirer.separator import Separator
 from client.view.abstract_view import AbstractView
 from client.view.welcom_view import WelcomeView
-from client.service.client_service import ClientService
-from client.business.client import Client
-from client.exception.client_not_authenticated_exception import ClientNotAuthenticated
+
+import requests
 
 class AuthentificationView(AbstractView):
     
@@ -26,9 +24,10 @@ class AuthentificationView(AbstractView):
             self.mot_de_passe = input("Entrez votre mot de passe:   ")
             #sans erreur d'authentification, on passe à la view suivante
             try:
-                self.client=ClientService.authenticate_and_get_client(identifiant=self.identifiant, password=self.mot_de_passe)
+                #requête get client pour l'authentification 
+                params_ajout_client={'identifiant_client':self.identifiant,'mot_de_passe_client':self.mot_de_passe}
+                self.client=requests.get('http://localhost:5000/clients/{}'.format(self.identifiant),params=params_ajout_client).json()
                 AbstractView.session.client = self.client
-                AbstractView.session.id_client = self.client.id_client
                 AbstractView.session.identifiant = self.identifiant
                 AbstractView.session.mot_de_passe = self.mot_de_passe
                 return WelcomeView()
@@ -38,18 +37,30 @@ class AuthentificationView(AbstractView):
             self.nom= input("Nom: ")
             self.prenom= input("Prénom: ")
             self.adresse= input("Adresse: ")
+            self.code_postal= input("Code postal: ")
+            self.ville= input("Ville: ")
+            self.pays= input("Pays: ")
             self.telephone= input("Numéro de téléphone: ")
             self.create_identifiant= input("Créez votre identifiant client: ")
             self.create_mot_de_passe= input("Créez votre mot de passe client: ")
             
-            self.nouveau_client=Client(id_client = 1, nom=self.nom, prenom=self.prenom, adresse=self.adresse, 
-            identifiant=self.create_identifiant, mot_de_passe=self.create_mot_de_passe, telephone=self.telephone)
+            self.client_json={
+                "id_client": 0,
+                "nom": self.nom,
+                "prenom": self.prenom,
+                "adresse": {
+                    "adresse": self.adresse,
+                    "code_postal": self.code_postal,
+                    "ville": self.ville,
+                    "pays": self.pays
+                    },
+                    "identifiant": self.create_identifiant,
+                    "mot_de_passe": self.create_mot_de_passe,
+                    "telephone": self.telephone}
             try:
-                self.nouveau_client=ClientService.createClient(self.nouveau_client)
+                self.client=requests.post('http://localhost:5000/clients/',json=self.client_json).json()
 
-                #AbstractView.session.nouveau_client = self.nouveau_client
-                AbstractView.session.client = self.nouveau_client
-                AbstractView.session.id_client = self.nouveau_client.id_client
+                AbstractView.session.client = self.client
                 AbstractView.session.nom = self.nom
                 AbstractView.session.prenom = self.prenom
                 AbstractView.session.adresse = self.adresse
