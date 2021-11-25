@@ -13,8 +13,11 @@ if __name__ == '__main__':
             print(asset.read()) 
         # les infos à afficher
         current_vue.display_info()
+
         # le choix que doit saisir l'utilisateur
         current_vue = current_vue.make_choice()
 
+    
+    
     
 
