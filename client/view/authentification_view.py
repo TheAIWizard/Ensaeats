@@ -3,6 +3,7 @@ from PyInquirer.separator import Separator
 from client.view.abstract_view import AbstractView
 from client.view.welcom_view import WelcomeView
 
+
 import requests
 
 class AuthentificationView(AbstractView):
@@ -37,9 +38,6 @@ class AuthentificationView(AbstractView):
             self.nom= input("Nom: ")
             self.prenom= input("Prénom: ")
             self.adresse= input("Adresse: ")
-            self.code_postal= input("Code postal: ")
-            self.ville= input("Ville: ")
-            self.pays= input("Pays: ")
             self.telephone= input("Numéro de téléphone: ")
             self.identifiant= input("Créez votre identifiant client: ")
             self.mot_de_passe= input("Créez votre mot de passe client: ")
@@ -48,15 +46,10 @@ class AuthentificationView(AbstractView):
                 "id_client": 0,
                 "nom": self.nom,
                 "prenom": self.prenom,
-                "adresse": {
-                    "adresse": self.adresse,
-                    "code_postal": self.code_postal,
-                    "ville": self.ville,
-                    "pays": self.pays
-                    },
-                    "identifiant": self.identifiant,
-                    "mot_de_passe": self.mot_de_passe,
-                    "telephone": self.telephone}
+                "adresse": self.adresse,
+                "identifiant": self.identifiant,
+                "mot_de_passe": self.mot_de_passe,
+                "telephone": self.telephone}
             try:
                 self.client=requests.post('http://localhost:5000/clients/',json=self.client_json).json()
 
