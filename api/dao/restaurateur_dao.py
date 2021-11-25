@@ -8,7 +8,18 @@ La bibliothèque psycopg, en voyant %(identifiant)s va le remplacer par la valeu
 effectuant toutes les transformations nécessaires pour que les caractères dangereux soient neutralisés"""
 
 class RestaurateurDao:
+    """
+    La classe RestaurateurDao permet de faire la gestion de la table restaurateur de la base de données
 
+    verifypassword (identifiant, mot_de_passe):
+    Cette fonction permet de verifier l'authentification du restaurateur avant  la connexion à la base de données
+
+    return : bool
+
+    checkRestaurantIdUniqueness (id_restaurant) :
+    
+
+    """
     @staticmethod
     def verifyPassword(identifiant: str, mot_de_passe: str) -> bool:
         #on compare le hachage du mot de passe entré et stocké dans la base de données

@@ -50,8 +50,8 @@ commandes_by_id_restaurant=requests.get('http://localhost:5000/commandes/restaur
 #print(commandes_by_id_restaurant) 
 
 #requête recherche commandes by client
-params_commandes_by_client={'identifiant_client':identifiant_client,'mot_de_passe_client':mot_de_passe_client}
-print(commandes_by_id_client) 
+""" params_commandes_by_client={'identifiant_client':identifiant_client,'mot_de_passe_client':mot_de_passe_client}
+print(commandes_by_id_client)  """
 
 """ AJOUT POST"""
 avis=Avis(avis="l'EJR c'est quand même mieux" ,identifiant_auteur="l'EJR c'est quand même mieux",id_restaurant="NL0ROvACBWrwYv1BZxBWtQ")
@@ -83,9 +83,13 @@ ajout_client=requests.post('http://localhost:5000/clients/',json=json_client).js
 params_ajout_client={'identifiant_client':identifiant_client,'mot_de_passe_client':mot_de_passe_client}
 #print(requests.get('http://localhost:5000/clients/{}'.format(identifiant_client),params=params_ajout_client).json())
 
-params_restaurant_by_id_restaurant={'id_restaurant':id_restaurant,'identifiant_client':identifiant_client,'mot_de_passe_client':mot_de_passe_client}
-print(list(pd.DataFrame(requests.get('http://localhost:5000/restaurants',params=params_restaurant_by_id_restaurant).json())['nom']))
+params_restaurant_by_id_restaurant={'identifiant_client':identifiant_client,'mot_de_passe_client':mot_de_passe_client}
+restaurants=requests.get('http://localhost:5000/restaurants',params=params_restaurant_by_id_restaurant).json()
+
+print(pd.DataFrame(requests.get('http://localhost:5000/restaurants',params=params_restaurant_by_id_restaurant).json())['nom'].to_list())
 print(requests.get('http://localhost:5000/restaurants',params=params_restaurant_by_id_restaurant).json())
+
+print([restaurant['nom'] for restaurant in restaurants])
 
 
 """ #requête ajout commandes by id_restaurant: à venir
