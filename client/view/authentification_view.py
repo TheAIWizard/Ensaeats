@@ -26,7 +26,7 @@ class AuthentificationView(AbstractView):
             #sans erreur d'authentification, on passe à la view suivante
             try:
                 parametres = {"identifiant_client" : self.identifiant , "mot_de_passe_client" : self.mot_de_passe}
-                self.client=requests.get('http://localhost:5000/clients/{identifiant_client}',params=parametres).json()
+                self.client=requests.get('http://localhost:5000/clients/',params=parametres).json()
                 #self.client=ClientService.authenticate_and_get_client(identifiant=self.identifiant, password=self.mot_de_passe)
                 AbstractView.session.client = self.client
                 AbstractView.session.identifiant = self.identifiant
