@@ -38,6 +38,7 @@ class RestaurateurDao:
                 )
                 res = cursor.fetchone()
             print(type(res))
+            print(res)
             if res != None:
                 return False
             return True
@@ -55,6 +56,8 @@ class RestaurateurDao:
                     {"identifiant":identifiant}
                 )
                 res = cursor.fetchone()
+            print(type(res))
+            print(res)
             if res != None:
                 return False
             return True
@@ -80,18 +83,25 @@ class RestaurateurDao:
         #rien ne change en pratique, juste la colonne mot_de_passe qui n'est pas en clair, on compare les hash entre eux
         hash_mot_de_passe=hashlib.sha512(restaurateur.mot_de_passe.encode("utf-8")).hexdigest()
         #vérifie si le profil du restaurateur n'existe pas déjà
-        try:
-            RestaurateurDao.getRestaurateur(restaurateur.identifiant)
-        except RestaurateurNotFoundException:
-            with DBConnection().connection as connection:
-                with connection.cursor() as cursor:
-                    #on sauvegarde le mot de passe sous forme haché. Ce sont les hachages qui seront comparés pour l'authentification
-                    cursor.execute(
-                        "INSERT INTO ensaeats.restaurateur (nom, prenom, identifiant, mot_de_passe, id_restaurant) VALUES "
-                        "(%(nom)s, %(prenom)s, %(identifiant)s, %(mot_de_passe)s, %(id_restaurant)s);", {"nom": restaurateur.nom, "prenom": restaurateur.prenom, "identifiant": restaurateur.identifiant, "mot_de_passe": hash_mot_de_passe, "id_restaurant": restaurateur.id_restaurant})
-            print(hash_mot_de_passe)
-            return RestaurateurDao.getRestaurateur(restaurateur.identifiant)
 
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "INSERT INTO ensaeats.restaurant (id_restaurant) VALUES "
+                    "(%(id_restaurant)s);", {"id_restaurant" : restaurateur.id_restaurant})
+            
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
+                #on sauvegarde le mot de passe sous forme haché. Ce sont les hachages qui seront comparés pour l'authentification
+                cursor.execute(
+                    "INSERT INTO ensaeats.restaurateur (nom, prenom, identifiant, mot_de_passe, id_restaurant) VALUES "
+                    "(%(nom)s, %(prenom)s, %(identifiant)s, %(mot_de_passe)s, %(id_restaurant)s);"
+                    , {"nom": restaurateur.nom, "prenom": restaurateur.prenom, "identifiant": restaurateur.identifiant, "mot_de_passe": hash_mot_de_passe, "id_restaurant": restaurateur.id_restaurant})
+        
+        print(RestaurateurDao.getRestaurateur(restaurateur.identifiant))
+        return RestaurateurDao.getRestaurateur(restaurateur.identifiant)
+
+            
     @staticmethod
     def updateRestaurateur(ancien_identifiant:str, ancien_mot_de_passe:str, identifiant:str, mot_de_passe:str) -> Restaurateur:
         #on compare les mots de passe par leur hachage
