@@ -5,6 +5,42 @@ from api.metier.article import Article
 from api.dao.menu_dao import MenuDao 
 
 class ArticleDao:
+
+    """
+    La classe ArticleDao permet de remplir notre base de données avec les données recuperer sur l'API de yelp. 
+
+    Attributes
+    ----------
+
+    Méthodes
+    ---------
+
+    find_article_by_id_article (id_article):
+        Cette méthode nous permet de remplir la table Article de notre base de données à partir des données recuperer sur l'api de yelp. Elle nous permet de se connecter à l' api
+        de yelp. 
+
+        return : Article
+
+    add_article ():
+        cette méthode permet d'ajouter un article à la table article dans notre DAO
+        return : void()
+
+    
+    update_article ():
+     Cette fonction permet de modifier les information sur la tables articles dans la base de données. Elle sert à une mise à jour. 
+         return : void()
+    
+    get_article ():
+        cette fonction permet d'obtenir la liste des articles. 
+        return : ??
+
+    delete_article ():
+        Cette méthode nous permettra de suprrimé un article et un menu les tables article et menu de notre base de données. 
+
+        return : Bool 
+
+    
+    """
     @staticmethod
     def find_article_by_id_article(id_article:int) -> Article:
         ''' Recupère l'article par l'identifiant '''
@@ -42,7 +78,7 @@ class ArticleDao:
             created = True
             article.id_article = res['id_article']
         return created
-    
+
     @staticmethod
     def update_article(article:Article):
         ''' Modification de l'article '''
@@ -68,6 +104,7 @@ class ArticleDao:
             
                 
     @staticmethod 
+        
     def get_articles() -> List[Article] : 
         with DBConnection().connection as connection : 
             with connection.cursor() as cursor :
