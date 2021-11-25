@@ -41,8 +41,8 @@ class AuthentificationView(AbstractView):
             self.ville= input("Ville: ")
             self.pays= input("Pays: ")
             self.telephone= input("Numéro de téléphone: ")
-            self.create_identifiant= input("Créez votre identifiant client: ")
-            self.create_mot_de_passe= input("Créez votre mot de passe client: ")
+            self.identifiant= input("Créez votre identifiant client: ")
+            self.mot_de_passe= input("Créez votre mot de passe client: ")
             
             self.client_json={
                 "id_client": 0,
@@ -54,8 +54,8 @@ class AuthentificationView(AbstractView):
                     "ville": self.ville,
                     "pays": self.pays
                     },
-                    "identifiant": self.create_identifiant,
-                    "mot_de_passe": self.create_mot_de_passe,
+                    "identifiant": self.identifiant,
+                    "mot_de_passe": self.mot_de_passe,
                     "telephone": self.telephone}
             try:
                 self.client=requests.post('http://localhost:5000/clients/',json=self.client_json).json()
@@ -64,9 +64,9 @@ class AuthentificationView(AbstractView):
                 AbstractView.session.nom = self.nom
                 AbstractView.session.prenom = self.prenom
                 AbstractView.session.adresse = self.adresse
-                AbstractView.session.identifiant = self.create_identifiant
-                AbstractView.session.create_mot_de_passe = self.create_mot_de_passe
-                AbstractView.session.create_telephone = self.telephone
+                AbstractView.session.identifiant = self.identifiant
+                AbstractView.session.mot_de_passe = self.mot_de_passe
+                AbstractView.session.telephone = self.telephone
                 return WelcomeView()
             except Exception:
                 return AuthentificationView()

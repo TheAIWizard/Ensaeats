@@ -1,5 +1,6 @@
 from fastapi import params
 import requests
+import pandas as pd
 
 from api.metier.avis import Avis
 from api.dao.avis_DAO import AvisDao
@@ -78,11 +79,14 @@ json_client={
 #requête ajout client
 params_ajout_client={'identifiant_client':identifiant_client,'mot_de_passe_client':mot_de_passe_client}
 ajout_client=requests.post('http://localhost:5000/clients/',json=json_client).json()
-print(ajout_client)
+#print(ajout_client)
 
 params_ajout_client={'identifiant_client':identifiant_client,'mot_de_passe_client':mot_de_passe_client}
-print(requests.get('http://localhost:5000/clients/{}'.format(identifiant_client),params=params_ajout_client).json())
+#print(requests.get('http://localhost:5000/clients/{}'.format(identifiant_client),params=params_ajout_client).json())
 
+params_restaurant_by_id_restaurant={'id_restaurant':id_restaurant,'identifiant_client':identifiant_client,'mot_de_passe_client':mot_de_passe_client}
+print(list(pd.DataFrame(requests.get('http://localhost:5000/restaurants',params=params_restaurant_by_id_restaurant).json())['nom']))
+print(requests.get('http://localhost:5000/restaurants',params=params_restaurant_by_id_restaurant).json())
 
 
 """ #requête ajout commandes by id_restaurant: à venir
