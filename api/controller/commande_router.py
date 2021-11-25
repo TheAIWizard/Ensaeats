@@ -16,7 +16,7 @@ async def post_commande(commande: Commande, identifiant_client: str, mot_de_pass
         print(client)
         return CommandeService.valider_commande(commande, client.id_client)
         
-    except : 
+    except ClientNotAuthenticated: 
         raise HTTPException(status_code=403, detail="Vous devez être connecté en tant que client")
     
 

@@ -2,16 +2,21 @@ from api.exception.restaurateur_not_authenticated_exception import RestaurateurN
 from api.exception.id_restaurant_already_exists_exception import RestaurantIDAlreadyExistsException
 from api.exception.identifiant_already_exists_exception import IdentifiantAlreadyExistsException
 from api.exception.id_restaurant_already_exists_exception import RestaurantIDAlreadyExistsException
+from api.exception.id_restaurateur_already_exists_exception import RestaurateurIDAlreadyExistsException
 #from api_minuscule.service.DAO_mapper import DAOMapper
 from api.metier.restaurateur import Restaurateur
 from api.dao.restaurateur_dao import RestaurateurDao
-
+from api.service.restaurant_service import RestaurantsService
 
 class RestaurateurService:
     @staticmethod
     def createRestaurateur(restaurateur: Restaurateur) -> Restaurateur:
-        if (RestaurateurDao.checkRestaurantIdUniqueness(restaurateur.id_restaurant))&(RestaurateurDao.checkIdentifiantUniqueness(restaurateur.identifiant)):
-            return RestaurateurDao.createRestaurateur(restaurateur)
+        #if (RestaurantsService.getRestaurant())
+        if (RestaurateurDao.checkRestaurantIdUniqueness(restaurateur.id_restaurant) == True):
+            if RestaurateurDao.checkIdentifiantUniqueness(restaurateur.identifiant) == True :
+                return RestaurateurDao.createRestaurateur(restaurateur)
+            else : 
+                raise RestaurateurIDAlreadyExistsException(identifant = restaurateur.identifiant)
         else:
             raise RestaurantIDAlreadyExistsException(id_restaurant=restaurateur.id_restaurant) 
 

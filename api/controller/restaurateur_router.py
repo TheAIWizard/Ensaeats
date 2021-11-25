@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Header
 from typing import Optional
+
+from fastapi.exceptions import HTTPException
 from api.metier.restaurateur import Restaurateur
 from api.service.restaurateur_service import RestaurateurService
 
@@ -8,8 +10,10 @@ router = APIRouter()
 
 @router.post("/restaurateurs/", tags=["Restaurateurs"])
 async def create_restaurateur(restaurateur: Restaurateur):
-    return RestaurateurService.createRestaurateur(restaurateur=restaurateur)
-
+    try : 
+        return RestaurateurService.createRestaurateur(restaurateur=restaurateur)
+    except : 
+        raise HTTPException(status_code=401, detail="Vous n'avez pas pu créer votre compte")
 
 @router.put("/restaurateurs/{ancien_identifiant_restaurateur_restaurateur}", tags=["Restaurateurs"])
 async def update_restaurateur(ancien_identifiant_restaurateur: str, ancien_mot_de_passe_restaurateur:str, identifiant_restaurateur: Optional[str] = Header(None), mot_de_passe_restaurateur:Optional[str] = Header(None)):

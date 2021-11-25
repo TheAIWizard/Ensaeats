@@ -1,8 +1,8 @@
 from PyInquirer import prompt
 from PyInquirer.separator import Separator
+from api.metier.adresse import Adresse
 from client.view.abstract_view import AbstractView
 from client.view.welcom_view import WelcomeView
-
 
 import requests
 
@@ -25,9 +25,9 @@ class AuthentificationView(AbstractView):
             self.mot_de_passe = input("Entrez votre mot de passe:   ")
             #sans erreur d'authentification, on passe à la view suivante
             try:
-                #requête get client pour l'authentification 
-                params_ajout_client={'identifiant_client':self.identifiant,'mot_de_passe_client':self.mot_de_passe}
-                self.client=requests.get('http://localhost:5000/clients/{}'.format(self.identifiant),params=params_ajout_client).json()
+                parametres = {"identifiant_client" : self.identifiant , "mot_de_passe_client" : self.mot_de_passe}
+                self.client=requests.get('http://localhost:5000/clients/{identifiant_client}',params=parametres).json()
+                #self.client=ClientService.authenticate_and_get_client(identifiant=self.identifiant, password=self.mot_de_passe)
                 AbstractView.session.client = self.client
                 AbstractView.session.identifiant = self.identifiant
                 AbstractView.session.mot_de_passe = self.mot_de_passe

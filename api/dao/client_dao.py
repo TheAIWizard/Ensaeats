@@ -1,3 +1,4 @@
+from api.metier.adresse import Adresse
 from api.metier.client import Client
 from api.exception.client_not_found_exception import ClientNotFoundException
 from api.dao.db_connection import DBConnection
@@ -38,8 +39,8 @@ class ClientDao:
                     {"identifiant":identifiant}
                 )
                 res = cursor.fetchone()
-        if res != None: # adresse=res["adresse"] supprimé dû au changement de type
-            return Client(id_client = res["id_client"],nom=res["nom"], prenom=res["prenom"],identifiant=res["identifiant"], mot_de_passe=res["mot_de_passe"], telephone=res["telephone"])
+        if res != None: 
+            return Client(id_client = res["id_client"],nom=res["nom"], prenom=res["prenom"],identifiant=res["identifiant"], mot_de_passe=res["mot_de_passe"], telephone=res["telephone"], adresse = res["adresse"])
         else:
             raise ClientNotFoundException(identifiant)
 
@@ -49,6 +50,7 @@ class ClientDao:
         #rien ne change en pratique, juste la colonne mot_de_passe qui n'est pas en clair, on compare les hash entre eux
         hash_mot_de_passe=hashlib.sha512(client.mot_de_passe.encode("utf-8")).hexdigest()
         #vérifie si le profil du client n'existe pas déjà
+        print(client.adresse)
         try:
             ClientDao.getClient(client.identifiant)
         except ClientNotFoundException:
@@ -56,8 +58,8 @@ class ClientDao:
                 with connection.cursor() as cursor:
                     #on sauvegarde le mot de passe sous forme haché. Ce sont les hachages qui seront comparés pour l'authentification
                     cursor.execute(
-                        "INSERT INTO ensaeats.client (nom, prenom, identifiant, mot_de_passe, telephone) VALUES "
-                        "(%(nom)s, %(prenom)s,%(identifiant)s, %(mot_de_passe)s, %(telephone)s);", {"nom": client.nom, "prenom": client.prenom, "identifiant": client.identifiant, "mot_de_passe": hash_mot_de_passe, "telephone": client.telephone})
+                        "INSERT INTO ensaeats.client (nom, prenom, identifiant, mot_de_passe, telephone, adresse) VALUES "
+                        "(%(nom)s, %(prenom)s,%(identifiant)s, %(mot_de_passe)s, %(telephone)s, %(adresse)s);", {"nom": client.nom, "prenom": client.prenom, "identifiant": client.identifiant, "mot_de_passe": hash_mot_de_passe, "telephone": client.telephone, "adresse": client.adresse})
             #print(hash_mot_de_passe)
             return ClientDao.getClient(client.identifiant)
 

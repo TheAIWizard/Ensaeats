@@ -28,9 +28,9 @@ class ClientService:
 
     @staticmethod
     def authenticate_and_get_client(identifiant: str, mot_de_passe: str) -> Client:
-        if (ClientDao.verifyPassword(identifiant=identifiant, mot_de_passe=mot_de_passe)):
+        if ClientDao.verifyPassword(identifiant=identifiant, mot_de_passe=mot_de_passe) == True :
             return ClientDao.getClient(identifiant)
-        else:
+        else :
             raise ClientNotAuthenticated(identifiant=identifiant)
 
     @staticmethod
