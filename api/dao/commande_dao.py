@@ -1,4 +1,3 @@
-
 from api.dao.db_connection import DBConnection
 from api.metier.commande import Commande
 from api.metier.restaurant import Restaurant
@@ -11,6 +10,18 @@ now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
 
 class CommandeDAO():
+    """
+    La classe CommandeDAO nous permet de mieux gerer la table commande de notre base de donnée. Au sein de cette classe nous avons implementé  plusieurs fonction afin d'avoir une meilleur gestion des données
+
+    add_commande (Commande, id_client):
+    Cette fonction permet d'ajouter la commande d'un client dans la table commande de notre base de donnée
+
+    return : void
+        Elle retourne un message de confirmation
+
+    lien_commande_menus(commande) :
+
+    """
     inserted = False
     @staticmethod
     def add_commande(commande: Commande, id_client : int):
