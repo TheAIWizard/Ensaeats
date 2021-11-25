@@ -6,6 +6,7 @@ from api.metier.menu import Menu
 from api.dao.article_dao import ArticleDao
 from api.dao.menu_dao import MenuDao
 from typing import List
+from api.exception.restaurant_pas_trouve import RestaurantPasTrouveException
 
 
 
@@ -21,9 +22,12 @@ class RestaurantsService:
     @staticmethod
     def getRestaurant(id: str) -> Restaurant:
         response = YelpApiService.get_business_by_id(id)
-        restaurant = YelpMapper.business_to_restaurant(response)
-        return restaurant
-
+        try : 
+            restaurant = YelpMapper.business_to_restaurant(response)
+            return restaurant
+        except : 
+            raise RestaurantPasTrouveException(id_restaurant=id)
+        
     @staticmethod
     def getMenus_by_id_restaurant(id_restaurant : str) -> List[Menu] :
         return MenuDao.find_all_menus_by_id_restaurant(id_restaurant)

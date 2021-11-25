@@ -8,11 +8,16 @@ from api.metier.avis import Avis
 from api.dao.client_dao import ClientDao
 from api.dao.menu_dao import MenuDao
 from api.dao.avis_DAO import AvisDao
+from api.dao.client_dao import ClientDao
+from api.exception.identifiant_already_exists_exception import IdentifiantAlreadyExistsException
 
 class ClientService:
     @staticmethod
     def createClient(client: Client) -> Client:
+        if(ClientDao.verifierIdUnique(client.identifiant) == True): 
             return ClientDao.createClient(client)
+        else : 
+            raise IdentifiantAlreadyExistsException(identifant = client.identifiant) 
         
     @staticmethod
     def getClient(identifiant: str) -> Client:
@@ -41,9 +46,15 @@ class ClientService:
             raise ClientNotAuthenticated(identifiant=identifiant)
     
     @staticmethod
-    def authenticate_and_update_client(ancien_identifiant: str, ancien_password: str, identifiant: str, mot_de_passe: str) -> Client:
-        if (ClientDao.verifyPassword(identifiant=ancien_identifiant, mot_de_passe=ancien_password)):
-            return ClientDao.updateClient(ancien_identifiant, ancien_password, identifiant, mot_de_passe)
+    def authenticate_and_update_client(ancien_identifiant: str, ancien_password: str, client : Client) -> Client:
+        if (ClientDao.verifyPassword(identifiant=ancien_identifiant, mot_de_passe=ancien_password) == True):
+            print ("ok")
+            if (ClientDao.verifierIdUnique(client.identifiant) == True or client.identifiant == ancien_identifiant) : 
+                print ("ok")
+                return ClientDao.updateClient(ancien_identifiant, ancien_password, client)
+            else : 
+                print("pas ok 1")
+                raise IdentifiantAlreadyExistsException(identifant = client.identifiant) 
         else:
             raise ClientNotAuthenticated(identifiant=ancien_identifiant)
     
