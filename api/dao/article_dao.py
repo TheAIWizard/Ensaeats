@@ -32,17 +32,17 @@ class ArticleDao:
     """
     @staticmethod
     def find_article_by_id_article(id_article:int) -> Article:
-    """
-    find_article_by_id_article (id_article):
-        Cette méthode nrecupère des des articles par identifiant dans la base de données
+        """
+        find_article_by_id_article (id_article):
+            Cette méthode nrecupère des des articles par identifiant dans la base de données
 
-        Atttributes
-        ----------
-        id_article : int
+            Atttributes
+            ----------
+            id_article : int
 
-        return : Article
-        
-    """
+            return : Article
+            
+        """
         
         request = "SELECT * FROM ensaeats.article "\
                   "WHERE id_article=%(id_article)s;"
