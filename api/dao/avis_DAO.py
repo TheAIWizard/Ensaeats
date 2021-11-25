@@ -9,6 +9,21 @@ now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
  
 
 class AvisDao(metaclass=Singleton):
+    """
+    Cette classe nous permet de gerer les avis laisser par les clients sur la DAo.
+
+    fin_avis_by_restaurant (id_restaurant) :
+    Cette fonction permet de recuperer les avis sur les client dans l'api de yelp
+
+    return : json 
+
+    add_avis (avis):
+    La fonction add_avis nous permet d'ajouter des avis dans la base de donnée
+
+    return : void
+    retuirn de message de confirmation 
+        
+    """
     @staticmethod
     def find_avis_by_id_restaurant(id_restaurant : str)-> List:
         '''
