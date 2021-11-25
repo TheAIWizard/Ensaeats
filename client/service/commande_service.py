@@ -44,7 +44,7 @@ class Faire_commande:
         output = False
         params_post_commande = {'identifiant_client': identifiant,
                                 'mot_de_passe_client': mot_de_passe}
-        post_commande = request.post('http://localhost:5000/commande/',
+        post_commande = requests.post('http://localhost:5000/commande/',
                                      json = dict(commande),
                                      params = params_post_commande).json()
         if post_commande: 

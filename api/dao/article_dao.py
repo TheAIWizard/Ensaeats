@@ -7,43 +7,42 @@ from api.dao.menu_dao import MenuDao
 class ArticleDao:
 
     """
-    La classe ArticleDao permet de remplir notre base de données avec les données recuperer sur l'API de yelp. 
+    La classe ArticleDao permet d'inserer ou de recuperer des article dans la table article de notre  base de donnée. Cette classe joue un 
+    rêle très important dans le projet. 
 
-    Attributes
-    ----------
 
     Méthodes
     ---------
-
     find_article_by_id_article (id_article):
-        Cette méthode nous permet de remplir la table Article de notre base de données à partir des données recuperer sur l'api de yelp. Elle nous permet de se connecter à l' api
-        de yelp. 
+        retourne un  article
 
-        return : Article
+    add_article (article):
+        retourne True si un article est ajouté à la table article de la base de donnée sinon False 
 
-    add_article ():
-        cette méthode permet d'ajouter un article à la table article dans notre DAO
-        return : void()
+    update_article (article):
+        retourne True si un article est modifié à la table article de la base de donnée sinon False 
 
-    
-    update_article ():
-     Cette fonction permet de modifier les information sur la tables articles dans la base de données. Elle sert à une mise à jour. 
-         return : void()
-    
     get_article ():
-        cette fonction permet d'obtenir la liste des articles. 
-        return : ??
-
-    delete_article ():
-        Cette méthode nous permettra de suprrimé un article et un menu les tables article et menu de notre base de données. 
-
-        return : Bool 
+        retourne un eliste d'article 
+    
+    delete_article (article):
+        retourne True si un article est supprimé sinon False
 
     
     """
     @staticmethod
     def find_article_by_id_article(id_article:int) -> Article:
-        ''' Recupère l'article par l'identifiant '''
+        """
+        find_article_by_id_article (id_article):
+            Cette méthode nrecupère des des articles par identifiant dans la base de données
+
+            Atttributes
+            ----------
+            id_article : int
+
+            return : Article
+            
+        """
         
         request = "SELECT * FROM ensaeats.article "\
                   "WHERE id_article=%(id_article)s;"
@@ -61,6 +60,16 @@ class ArticleDao:
 
     @staticmethod
     def add_article(article : Article) -> bool: 
+
+        """
+        Cette fonction permet l'insertion de nouveau article dans la table article de notre base de donnée
+
+        Attributes :
+        -----------
+        article : Article
+        
+            Return : Bool
+        """
         created = False
         #rajouter identification restaurateur
         with DBConnection().connection as connection:
@@ -81,7 +90,16 @@ class ArticleDao:
 
     @staticmethod
     def update_article(article:Article):
-        ''' Modification de l'article '''
+        """
+        Cette méthode permet de modifier un article dans latable article de la base de donnée
+
+        Attribute:
+        ----------
+        article : Article
+
+        return : bool
+        """
+        
         update_article = False 
 
         # Update dans la base de données des informations de l'article 
@@ -106,6 +124,14 @@ class ArticleDao:
     @staticmethod 
         
     def get_articles() -> List[Article] : 
+        """
+        Cette fonction nous permet de recupèrer des article dans la base de donnée
+
+        Attribute:
+        --------
+        
+        return : List[Article]
+        """
         with DBConnection().connection as connection : 
             with connection.cursor() as cursor :
                 cursor.execute(
@@ -116,6 +142,14 @@ class ArticleDao:
            
     @staticmethod
     def delete_article(article : Article) -> Article : 
+        """
+        Cette fonction permet de supprimer un article
+
+        Attribute:
+        article : Article
+
+        return bool
+        """
         #on peut ajouter un article même s'il n'est pas encore dans un menu
         deleted_article,deleted_menu_article = False, False
         #supprimer son id_article de la table table_menu_article

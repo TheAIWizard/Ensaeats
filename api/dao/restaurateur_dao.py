@@ -9,19 +9,44 @@ effectuant toutes les transformations nécessaires pour que les caractères dang
 
 class RestaurateurDao:
     """
-    La classe RestaurateurDao permet de faire la gestion de la table restaurateur de la base de données
+    La classe RestaurateurDao permet d'inserer et recupèrer des données dans la table Restaurateur de notre base de données.
 
-    verifypassword (identifiant, mot_de_passe):
-    Cette fonction permet de verifier l'authentification du restaurateur avant  la connexion à la base de données
+    verifyPassword(identifiant, mot_de_passe) :
+        retourne vrai si le mot de passe du restaurateur est correcte sinon faux
 
-    return : bool
-
-    checkRestaurantIdUniqueness (id_restaurant) :
+    getgetRestaurateur(identifiant):
+         retourne l'identifiant du restaurateur
     
+    checkRestaurantIdUniqueness(id_restaurant) 
+         retourne vrai si id_restaurant est unique sinon faux
+    
+     checkIdentifiantUniqueness(identifiant: str) :
+         retourne vrai si l'identifiant est unique sinon faux 
 
+
+    createRestaurateur(restaurateur) :
+          retourne un objet de type restaurant
+
+    updateRestaurateur(ancien_identifiant:str, ancien_mot_de_passe:str, restaurateur : Restaurateur) :
+         retourne vrai si la mise à jour est effectuée sinon faux
+
+    deleteRestaurateur(identifiant) :
+        retourne un objet de type restaurant
+         
+    
     """
     @staticmethod
     def verifyPassword(identifiant: str, mot_de_passe: str) -> bool:
+        """
+        Cette méthode nous permet de verifier si le mot de passe et l'indentifiant du restaurateur sont correcte avant de permettre à ce dernier de ce connecté. 
+
+        Attribute :
+        ---------
+        identifiant: str
+        mot_de_passe: str
+        
+        return : bool
+        """
         #on compare le hachage du mot de passe entré et stocké dans la base de données
         hash_mot_de_passe=hashlib.sha512(mot_de_passe.encode("utf-8")).hexdigest()
         with DBConnection().connection as connection:
@@ -57,8 +82,18 @@ class RestaurateurDao:
 
     @staticmethod
     def checkIdentifiantUniqueness(identifiant: str) -> bool:
-        """ vérifier que l'identifiant proposé par le restaurateur s'authetifiant n'est pas déjà utilisé"""
-        """ vérifier qu'un id_restaurant n'existe pas déjà"""
+        """
+        Cette methode permet de verifier si l'id_restaurant de table unique dans la table restaurateur de notre base de données
+         vérifier que l'identifiant proposé par le restaurateur s'authetifiant n'est pas déjà utilisé
+         vérifier qu'un id_restaurant n'existe pas déjà
+
+         Attribute :
+         ----------
+         identifiant: str
+
+        return : bool 
+        """
+        
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -75,6 +110,15 @@ class RestaurateurDao:
     
     @staticmethod
     def getRestaurateur(identifiant: str) -> Restaurateur:
+        """
+        Cette méthode permet d'obtenir l'identifiant d'un restaurateur. 
+
+        Attribute :
+        -----------
+        identifiant: str
+
+        return : client
+        """
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -91,8 +135,17 @@ class RestaurateurDao:
 
     staticmethod
     def checkidRestaurant(id_restaurant: str) -> bool:
-        """ vérifier que l'identifiant proposé par le restaurateur s'authetifiant n'est pas déjà utilisé"""
-        """ vérifier qu'un id_restaurant n'existe pas déjà"""
+
+        """ 
+        Cette  méthode nous permet de voir si l'indentifant proposé par le restaurateur est unique.
+        vérifier que l'identifiant proposé par le restaurateur s'authetifiant n'est pas déjà utilisé
+        vérifier qu'un id_restaurant n'existe pas déjà
+
+        Atribute :
+        id_restaurant: str
+
+         return : bool
+        """
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -107,6 +160,16 @@ class RestaurateurDao:
         
     @staticmethod
     def createRestaurateur(restaurateur: Restaurateur) -> Restaurateur:
+        """
+        Cette méthode nous permet d'inserer un restaurateur dans la tables restaurateur de notre base de données. Elle permet de faire une inserser de donnée dans cette table 
+        
+        Attribute :
+        -----------
+        restaurateur: Restaurateur
+
+
+        return :Restaurateur
+        """
         #il faudrait hacher le mot de passe : hashlib.sha512(x.encode("utf-8")).hexdigest(), 16 : cet algo de hachage retourne le même hachage pour la même entrée
         #rien ne change en pratique, juste la colonne mot_de_passe qui n'est pas en clair, on compare les hash entre eux
         hash_mot_de_passe=hashlib.sha512(restaurateur.mot_de_passe.encode("utf-8")).hexdigest()
@@ -132,6 +195,16 @@ class RestaurateurDao:
             
     @staticmethod
     def updateRestaurateur(ancien_identifiant:str, ancien_mot_de_passe:str, restaurateur : Restaurateur) -> Restaurateur:
+        """
+        Cette fonction permet de mettre à jour la table restaurateur. Grâce à cette fonction nous pouvons mettre à jours des données dans notre BD. 
+
+        Attribute :
+        ancien_identifiant:str
+        ancien_mot_de_passe:str
+        restaurateur : Restaurateur
+
+        return :  Restaurateur:
+        """
         #on compare les mots de passe par leur hachage
         hash_mot_de_passe=hashlib.sha512(restaurateur.mot_de_passe.encode("utf-8")).hexdigest()
         # le restaurateur peut changer n'importe quelle information qu'il souhaite sur son statut
@@ -149,6 +222,16 @@ class RestaurateurDao:
     
     @staticmethod
     def deleteRestaurateur(identifiant:str) -> Restaurateur:
+
+        """
+        Cette table nous permet de supprimer un restaurateur dans la base de donnée
+
+        Attribute :
+        ---------
+        identifiant:str
+        
+         return :  Restaurateur
+        """
         restaurateur_to_delete: Restaurateur = RestaurateurDao.getRestaurateur(identifiant)
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:

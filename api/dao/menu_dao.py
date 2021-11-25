@@ -10,10 +10,51 @@ import api.dao.article_dao as ArticleDao
 #un article peut nepas être encore dans un menu
 
 class MenuDao():
+    """
+    Cette classe nous permet de recupèrer et inserer des menu dans notre base de données
 
+    Methodes:
+    --------
+    find_all_id_article_by_id_menu(id_menu):
+        retourne une liste des identifiant des menus 
+
+    get_id_restaurant_by_menu(menu : Menu)
+        retourne l'identifiant d'un restaurant
+
+    get_id_restaurant_by_id_menu(id_menu )
+         retourne l'identifiant d'un restaurant
+
+     find_all_menus(limit, offest)
+        retourne la liste des menus
+
+    find_all_menus_by_id_restaurant(id_restaurant):
+        retoune une liste de restaurant
+
+    find_menu_by_id_menu(id_menu):
+        retourne un menu
+
+    add_menu(menu : Menu):
+        retourne vrai si le menu est ajouté sinon faux
+
+    add_menu_by_id_restaurant(menu , id_restaurant):
+        retourne vrai si le menu est ajouté sinon faux
+
+    delete_menu(menu : Menu):
+        retourne vrai si un menu est supprimé sion faux
+    """
+    
     @staticmethod
     #on récupère les id_article pour pouvoir entrer les objets articles en attribut des classes menus
     def find_all_id_article_by_id_menu(id_menu:int) -> List[int]:
+        """
+        Cette fonction nous permet de recupèrer les identifiant des menus dans la base de données
+
+        Attribute :
+        ---------
+        id_menu:int
+
+        return id_menu
+        """
         request = "SELECT id_article FROM ensaeats.table_menu_article "\
                   "WHERE id_menu=%(id_menu)s;"
         with DBConnection().connection as connection:
@@ -30,6 +71,15 @@ class MenuDao():
 
     @staticmethod 
     def get_id_restaurant_by_menu(menu : Menu) -> str: 
+        """
+        cette fonction sert à trouver les menu associés au restauarant
+
+        Attribute :
+        -----------
+        menu : menu
+
+        return : str
+        """
         with DBConnection().connection as connection : 
             with connection.cursor() as cursor : 
                 cursor.execute(
@@ -42,6 +92,15 @@ class MenuDao():
     
     @staticmethod 
     def get_id_restaurant_by_id_menu(id_menu : int) -> str: 
+        """
+        cette fonction sert à trouver les identifiant associés au restauarant
+
+        Attribute :
+        -----------
+        id_menu : int
+
+        return : str
+        """
         with DBConnection().connection as connection : 
             with connection.cursor() as cursor : 
                 cursor.execute(
@@ -61,12 +120,15 @@ class MenuDao():
     @staticmethod
     def find_all_menus(limit:int=0, offest:int=0) -> List[Menu]:
         """
-        Get all menu in the db without any filter
+        cette foinction permet d'obtenir tous les menus dans la base de données sans les filtrer
 
-        :param limit: how many menu are requested
-        :type limit: int
-        :param offest: the offset of the request
-        :type offest: int
+        Attribute :
+        ----------
+        limit:int
+        offest:int
+
+        return : list
+       
         """
         request= "SELECT * FROM ensaeats.menu;"
         if limit :
@@ -99,10 +161,14 @@ class MenuDao():
     @staticmethod
     def find_all_menus_by_id_restaurant(id_restaurant:int) -> List[Menu]:
         """
-        Get all menu of a specific restaurant with the given id
+        Cette fonction permet de recuperer les restaurant selon un id
 
-        :param id_menu: The menu id
-        :type id_menu: int
+        Attribute :
+        ----------
+        id_restaurant:int
+
+        return : list
+        
         """
         request = "SELECT * FROM ensaeats.menu "\
                   "JOIN ensaeats.table_restaurant_menu USING(id_menu) "\
@@ -134,10 +200,13 @@ class MenuDao():
     @staticmethod
     def find_menu_by_id_menu(id_menu:int) -> Menu:
         """
-        Get a menu with the given id_menu
+        Trouver un menu selon son id_menu:int
 
-        :param id_menu: The menu id
-        :type id_menu: int
+        Attribute :
+        ---------
+        id_menu:int
+        return : menu
+
         """
         request = "SELECT * FROM ensaeats.menu "\
                   "WHERE id_menu=%(id_menu)s;"
@@ -166,6 +235,15 @@ class MenuDao():
 
     @staticmethod
     def add_menu(menu : Menu) -> bool:
+        """
+        Cette fonction permet d'ajouter un menu dans la table menu de la base de donnée
+
+        Attribute :
+        ----------
+        menu : Menu
+
+        return : bool
+        """
         created = False
     #rajouter identification restaurateur
         with DBConnection().connection as connection:
@@ -185,6 +263,16 @@ class MenuDao():
 
     @staticmethod
     def add_menu_by_id_restaurant(menu : Menu, id_restaurant:str) -> bool:
+        """
+        ajouter un menu a un restaurant 
+
+        Attribute :
+        ----------
+        menu : Menu
+        id_restaurant:str
+
+        return : bool
+        """
         created_menu,created_restaurant_menu, created_menu_article_1, created_menu_article_2, created_menu_article_3 = False,False,False,False, False
         #rajouter identification restaurateur
         with DBConnection().connection as connection:
@@ -264,6 +352,16 @@ class MenuDao():
   
     @staticmethod
     def delete_menu(menu : Menu) -> bool:
+
+        """
+        Cette fonction permet de supprimer un menu dans la table menu
+
+        Attribute :
+        -----------
+        menu : menu
+
+        return : bool
+        """
         deleted_menu,deleted_restaurant_menu,deleted_menu_article = False,False,False
         
         #suppression du menu dans la table table_restaurant_menu
