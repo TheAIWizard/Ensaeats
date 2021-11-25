@@ -6,7 +6,7 @@ class Client(BaseModel):
 
     Attribute
     --------
-    id_client : str
+    id_client : int
                 Permet d'identifier un client
 
     nom : str
@@ -27,10 +27,10 @@ class Client(BaseModel):
     telephone : str
              Le numero de telephone du client
     """
-    id_client: str
+    id_client: int
     nom: str
     prenom: str
-    adresse: Adresse
+    adresse: str = None
     identifiant: str
     mot_de_passe: str
     telephone: str

@@ -1,9 +1,7 @@
-from client.business.client import Client
 from client.view.abstract_view import AbstractView
 from PyInquirer import prompt, Separator
-from api.metier.avis import Avis
-from client.dao.avis_DAO import AvisDao
-from client.service.client_service import ClientService
+from client.business.avis import Avis
+from client.service.avis_service import AvisService
 from datetime  import datetime
 
 class AvisView(AbstractView):
@@ -36,13 +34,21 @@ class AvisView(AbstractView):
             avis_txt = input('Donner votre avis : ')
 
             today = datetime.today().strftime('%Y-%m-%d') 
-
-            avis_user = Avis(avis = avis_txt, identifiant_auteur = AbstractView.session.identifiant,
-             id_restaurant = AbstractView.session.restaurant_actif.id_restaurant, date = today)
+            
+            id_restaurant = AbstractView.session.restaurant_actif.id_restaurant
+            identifiant = AbstractView.session.identifiant
+            mdp = AbstractView.session.mot_de_passe
+            avis_user = Avis(avis = avis_txt, identifiant_auteur = identifiant,
+             id_restaurant = id_restaurant, date = today)
             ## Ajout avis dans la base de données
-            result =  ClientService.ajouter_avis(avis_user)
-            print(result)
-            input("Appuyer sur entrer pour retourner")
+            result_ajout_avis =  AvisService.post_avis_by_id_restaurant(id_restaurant, identifiant, mdp, avis_user)
+        
+            if result_ajout_avis : 
+                print("Votre avis a été bien ajouté ! ")
+                input("Appuyer sur entrer pour retourner")
+            else:
+                return AvisView()
+            
             from client.view.restaurant_view import RestaurantView
             return RestaurantView()
 

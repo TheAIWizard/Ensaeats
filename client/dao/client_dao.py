@@ -55,8 +55,9 @@ class ClientDao:
                 with connection.cursor() as cursor:
                     #on sauvegarde le mot de passe sous forme haché. Ce sont les hachages qui seront comparés pour l'authentification
                     cursor.execute(
-                        "INSERT INTO ensaeats.client (nom, prenom, adresse, identifiant, mot_de_passe, telephone) VALUES "
-                        "(%(nom)s, %(prenom)s, %(adresse)s,%(identifiant)s, %(mot_de_passe)s, %(telephone)s);", {"nom": client.nom, "prenom": client.prenom, "adresse":client.adresse, "identifiant": client.identifiant, "mot_de_passe": hash_mot_de_passe, "telephone": client.telephone})
+                        "INSERT INTO ensaeats.client (nom, prenom, mot_de_passe, telephone, identifiant, adresse) VALUES "
+                        "(%(nom)s, %(prenom)s, %(mot_de_passe)s, %(telephone)s, %(identifiant)s, %(adresse)s);"
+                        , {"nom": client.nom, "prenom": client.prenom,  "mot_de_passe": hash_mot_de_passe, "telephone": client.telephone,"identifiant": client.identifiant,"adresse":client.adresse.__str__()})
             #print(hash_mot_de_passe)
             return ClientDao.getClient(client.identifiant)
 

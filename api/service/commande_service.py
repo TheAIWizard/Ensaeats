@@ -1,10 +1,10 @@
-from brouillon.metier.commande import Commande
+from api.metier.commande import Commande
 from api.dao.commande_dao import CommandeDAO
 from api.metier.client import Client
 from api.metier.restaurant import Restaurant
 from datetime  import datetime
 
-class Faire_commande:
+class CommandeService:
     
     today = datetime.today().strftime('%Y-%m-%d')
     @staticmethod
@@ -31,15 +31,19 @@ class Faire_commande:
         return commande       
         
     @staticmethod 
-    def valider_commande(commande: Commande):
+    def valider_commande(commande: Commande, id_client : int):
         """[Ajouter la commande de l'utilisateur]
 
         Args:
             commande ([Commande]): [Commande faite par l'utilisateur]
         """
-        CommandeDAO.add_commande(commande)
+        return CommandeDAO.add_commande(commande, id_client)
         
     
     @staticmethod 
-    def obtenir_commandes(client : Client) : 
-        return CommandeDAO.obtenir_commandes(client)
+    def obtenir_commandes_client(client : Client) : 
+        return CommandeDAO.obtenir_commandes_par_client(client)
+
+    @staticmethod 
+    def obtenir_commandes_id_restaurant(id_restaurant : str) : 
+        return CommandeDAO.obtenir_commandes_par_id_restaurant(id_restaurant=id_restaurant)

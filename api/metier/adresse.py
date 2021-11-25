@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 class Adresse(BaseModel):
-     """
+    """
     Cette classe permet d'avoir l'adresse d'un lieu (restaurant) ou d'une personne (client ou restaurateur)
 
     Attributes
@@ -24,10 +24,10 @@ class Adresse(BaseModel):
     __str__ () : 
                 Permet l'affichage d'une adresse
     """
-     adresse : str
-     code_postal : int
-     ville : str
-     pays : str
+    adresse : str 
+    code_postal : int 
+    ville : str
+    pays : str 
 
-     def __str__(self) -> str:
-        print(self.adresse + ' ' + self.code_postal + ' ' + self.ville + ' ' + self.pays)
+    def __str__(self) -> str:
+        print(self.adresse + ' ' + str(self.code_postal) + ' ' + self.ville + ' ' + self.pays)

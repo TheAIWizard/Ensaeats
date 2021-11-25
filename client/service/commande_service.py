@@ -1,7 +1,11 @@
 
 from api.metier.commande import Commande
-from client.dao.commande_dao import CommandeDAO
 from datetime  import datetime
+import json
+from fastapi import params
+from psycopg2.extensions import STATUS_IN_TRANSACTION
+import requests
+from requests.api import request
 
 class Faire_commande:
     
@@ -30,10 +34,21 @@ class Faire_commande:
         return commande       
         
     @staticmethod 
-    def valider_commande(commande: Commande):
+    def valider_commande(identifiant, mot_de_passe, commande: Commande):
         """[Ajouter la commande de l'utilisateur]
 
         Args:
             commande ([Commande]): [Commande faite par l'utilisateur]
         """
-        CommandeDAO.add_commande(commande)
+        ## Requete post 
+        output = False
+        params_post_commande = {'identifiant_client': identifiant,
+                                'mot_de_passe_client': mot_de_passe}
+        post_commande = request.post('http://localhost:5000/commande/',
+                                     json = dict(commande),
+                                     params = params_post_commande).json()
+        if post_commande: 
+            output = True
+            return output
+        return output    
+   

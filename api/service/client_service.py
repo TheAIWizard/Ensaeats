@@ -1,18 +1,23 @@
-from client.exception.client_not_authenticated_exception import ClientNotAuthenticated
+from api.exception.client_not_authenticated_exception import ClientNotAuthenticated
 #from Client.exception.id_Client_already_exists_exception import ClientIDAlreadyExistsException
 #from Client.exception.identifiant_already_exists_exception import IdentifiantAlreadyExistsException
 #from Client.exception.id_Client_already_exists_exception import ClientIDAlreadyExistsException
 #from Client.service.DAO_mapper import DAOMapper
-from client.business.client import Client
-from client.business.avis import Avis
-from client.dao.client_dao import ClientDao
+from api.metier.client import Client
+from api.metier.avis import Avis
+from api.dao.client_dao import ClientDao
 from api.dao.menu_dao import MenuDao
-from client.dao.avis_DAO import AvisDao
+from api.dao.avis_DAO import AvisDao
+from api.dao.client_dao import ClientDao
+from api.exception.identifiant_already_exists_exception import IdentifiantAlreadyExistsException
 
 class ClientService:
     @staticmethod
     def createClient(client: Client) -> Client:
+        if(ClientDao.verifierIdUnique(client.identifiant) == True): 
             return ClientDao.createClient(client)
+        else : 
+            raise IdentifiantAlreadyExistsException(identifant = client.identifiant) 
         
     @staticmethod
     def getClient(identifiant: str) -> Client:
@@ -27,29 +32,32 @@ class ClientService:
         return ClientDao.deleteClient(client_id)
 
     @staticmethod
-    def authenticate_and_get_client(identifiant: str, password: str) -> Client:
-        if (ClientDao.verifyPassword(identifiant, password)):
+    def authenticate_and_get_client(identifiant: str, mot_de_passe: str) -> Client:
+        if ClientDao.verifyPassword(identifiant=identifiant, mot_de_passe=mot_de_passe) == True :
             return ClientDao.getClient(identifiant)
-        else:
+        else :
             raise ClientNotAuthenticated(identifiant=identifiant)
 
     @staticmethod
-    def authenticate_and_create_client(identifiant: str, password: str, client:Client) -> Client:
-        if (ClientDao.verifyPassword(identifiant, password)):
+    def authenticate_and_create_client(identifiant: str, mot_de_passe: str, client:Client) -> Client:
+        if (ClientDao.verifyPassword(identifiant=identifiant, mot_de_passe=mot_de_passe)):
                 return ClientDao.createClient(client)
         else:
             raise ClientNotAuthenticated(identifiant=identifiant)
     
     @staticmethod
-    def authenticate_and_update_client(ancien_identifiant: str, ancien_password: str, identifiant: str, password: str) -> Client:
-        if (ClientDao.verifyPassword(ancien_identifiant, ancien_password)):
-            return ClientDao.updateClient(ancien_identifiant, ancien_password, identifiant, password)
+    def authenticate_and_update_client(ancien_identifiant: str, ancien_password: str, client : Client) -> Client:
+        if (ClientDao.verifyPassword(identifiant=ancien_identifiant, mot_de_passe=ancien_password) == True):
+            if (ClientDao.verifierIdUnique(client.identifiant) == True or client.identifiant == ancien_identifiant) : 
+                return ClientDao.updateClient(ancien_identifiant, ancien_password, client)
+            else : 
+                raise IdentifiantAlreadyExistsException(identifant = client.identifiant) 
         else:
             raise ClientNotAuthenticated(identifiant=ancien_identifiant)
     
     @staticmethod
-    def authenticate_and_delete_client(identifiant: str, password: str) -> Client:
-        if (ClientDao.verifyPassword(identifiant, password)):
+    def authenticate_and_delete_client(identifiant: str, mot_de_passe: str) -> Client:
+        if (ClientDao.verifyPassword(identifiant=identifiant, mot_de_passe=mot_de_passe)):
             return ClientDao.deleteClient(identifiant)
         else:
             raise ClientNotAuthenticated(identifiant=identifiant)

@@ -8,7 +8,18 @@ La bibliothèque psycopg, en voyant %(identifiant)s va le remplacer par la valeu
 effectuant toutes les transformations nécessaires pour que les caractères dangereux soient neutralisés"""
 
 class RestaurateurDao:
+    """
+    La classe RestaurateurDao permet de faire la gestion de la table restaurateur de la base de données
 
+    verifypassword (identifiant, mot_de_passe):
+    Cette fonction permet de verifier l'authentification du restaurateur avant  la connexion à la base de données
+
+    return : bool
+
+    checkRestaurantIdUniqueness (id_restaurant) :
+    
+
+    """
     @staticmethod
     def verifyPassword(identifiant: str, mot_de_passe: str) -> bool:
         #on compare le hachage du mot de passe entré et stocké dans la base de données
@@ -38,6 +49,7 @@ class RestaurateurDao:
                 )
                 res = cursor.fetchone()
             print(type(res))
+            print(res)
             if res != None:
                 return False
             return True
@@ -55,6 +67,8 @@ class RestaurateurDao:
                     {"identifiant":identifiant}
                 )
                 res = cursor.fetchone()
+            print(type(res))
+            print(res)
             if res != None:
                 return False
             return True
@@ -74,48 +88,65 @@ class RestaurateurDao:
         else:
             raise RestaurateurNotFoundException(identifiant)
 
+
+    staticmethod
+    def checkidRestaurant(id_restaurant: str) -> bool:
+        """ vérifier que l'identifiant proposé par le restaurateur s'authetifiant n'est pas déjà utilisé"""
+        """ vérifier qu'un id_restaurant n'existe pas déjà"""
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "SELECT * "
+                    "\nFROM ensaeats.restaurant WHERE id_restaurant=%(id_restaurant)s;",
+                    {"id_restaurant":id_restaurant}
+                )
+                res = cursor.fetchone()
+            if res != None:
+                return False
+            return True
+        
     @staticmethod
     def createRestaurateur(restaurateur: Restaurateur) -> Restaurateur:
         #il faudrait hacher le mot de passe : hashlib.sha512(x.encode("utf-8")).hexdigest(), 16 : cet algo de hachage retourne le même hachage pour la même entrée
         #rien ne change en pratique, juste la colonne mot_de_passe qui n'est pas en clair, on compare les hash entre eux
         hash_mot_de_passe=hashlib.sha512(restaurateur.mot_de_passe.encode("utf-8")).hexdigest()
         #vérifie si le profil du restaurateur n'existe pas déjà
-        try:
-            RestaurateurDao.getRestaurateur(restaurateur.identifiant)
-        except RestaurateurNotFoundException:
+        if RestaurateurDao.checkidRestaurant(restaurateur.id_restaurant) == True :
             with DBConnection().connection as connection:
                 with connection.cursor() as cursor:
-                    #on sauvegarde le mot de passe sous forme haché. Ce sont les hachages qui seront comparés pour l'authentification
                     cursor.execute(
-                        "INSERT INTO ensaeats.restaurateur (nom, prenom, identifiant, mot_de_passe, id_restaurant) VALUES "
-                        "(%(nom)s, %(prenom)s, %(identifiant)s, %(mot_de_passe)s, %(id_restaurant)s);", {"nom": restaurateur.nom, "prenom": restaurateur.prenom, "identifiant": restaurateur.identifiant, "mot_de_passe": hash_mot_de_passe, "id_restaurant": restaurateur.id_restaurant})
-            print(hash_mot_de_passe)
-            return RestaurateurDao.getRestaurateur(restaurateur.identifiant)
+                        "INSERT INTO ensaeats.restaurant (id_restaurant) VALUES "
+                        "(%(id_restaurant)s);", {"id_restaurant" : restaurateur.id_restaurant})
+            
+        with DBConnection().connection as connection:
+            with connection.cursor() as cursor:
+                #on sauvegarde le mot de passe sous forme haché. Ce sont les hachages qui seront comparés pour l'authentification
+                cursor.execute(
+                    "INSERT INTO ensaeats.restaurateur (nom, prenom, identifiant, mot_de_passe, id_restaurant) VALUES "
+                    "(%(nom)s, %(prenom)s, %(identifiant)s, %(mot_de_passe)s, %(id_restaurant)s);"
+                    , {"nom": restaurateur.nom, "prenom": restaurateur.prenom, "identifiant": restaurateur.identifiant, "mot_de_passe": hash_mot_de_passe, "id_restaurant": restaurateur.id_restaurant})
+        
+        print(RestaurateurDao.getRestaurateur(restaurateur.identifiant))
+        return RestaurateurDao.getRestaurateur(restaurateur.identifiant)
 
+            
     @staticmethod
-    def updateRestaurateur(ancien_identifiant:str, ancien_mot_de_passe:str, identifiant:str, mot_de_passe:str) -> Restaurateur:
+    def updateRestaurateur(ancien_identifiant:str, ancien_mot_de_passe:str, restaurateur : Restaurateur) -> Restaurateur:
         #on compare les mots de passe par leur hachage
-        hash_ancien_mot_de_passe=hashlib.sha512(ancien_mot_de_passe.encode("utf-8")).hexdigest()
-        hash_mot_de_passe=hashlib.sha512(mot_de_passe.encode("utf-8")).hexdigest()
+        hash_mot_de_passe=hashlib.sha512(restaurateur.mot_de_passe.encode("utf-8")).hexdigest()
         # le restaurateur peut changer n'importe quelle information qu'il souhaite sur son statut
-        parameters_requests={}
-        #Si l'identifiant n'est pas renseigné, on reprend l'ancien identifiant
-        if identifiant is None:
-            parameters_requests={"identifiant": ancien_identifiant, "mot_de_passe": hash_mot_de_passe, "ancien_identifiant":ancien_identifiant}
-        #Si le mot de passe n'est pas renseigné, on reprend l'ancien mot de passe
-        elif mot_de_passe is None:
-            parameters_requests={"identifiant": identifiant, "mot_de_passe": hash_ancien_mot_de_passe, "ancien_identifiant":ancien_identifiant}
-        #sinon, on met à jour identifiant et mot de passe
-        else:
-            parameters_requests={"identifiant": identifiant, "mot_de_passe": hash_mot_de_passe, "ancien_identifiant":ancien_identifiant}
         #on effectue la requête SQl sur Postgre
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
+                print ("ok")
+                print(restaurateur.id_restaurant, restaurateur.nom, restaurateur.prenom, restaurateur.identifiant)
                 cursor.execute(
-                    "UPDATE ensaeats.restaurateur SET identifiant=%(identifiant)s, mot_de_passe=%(mot_de_passe)s WHERE identifiant=%(ancien_identifiant)s;", parameters_requests)
+                    "UPDATE ensaeats.restaurateur SET id_restaurant = %(id_restaurant)s, nom = %(nom)s, prenom = %(prenom)s, identifiant=%(identifiant)s, mot_de_passe=%(mot_de_passe)s WHERE identifiant=%(ancien_identifiant)s;"
+                    , {"id_restaurant": restaurateur.id_restaurant, "nom": restaurateur.nom, "prenom": restaurateur.prenom, "identifiant": restaurateur.identifiant, "mot_de_passe": hash_mot_de_passe, "ancien_identifiant": ancien_identifiant})
+                print("okkkk")
         #retourner les modifications qui vont apparaître sur l'interface de fast-api
-        return RestaurateurDao.getRestaurateur(identifiant) if identifiant else RestaurateurDao.getRestaurateur(ancien_identifiant)
-
+        return RestaurateurDao.getRestaurateur(restaurateur.identifiant)
+    
     @staticmethod
     def deleteRestaurateur(identifiant:str) -> Restaurateur:
         restaurateur_to_delete: Restaurateur = RestaurateurDao.getRestaurateur(identifiant)
