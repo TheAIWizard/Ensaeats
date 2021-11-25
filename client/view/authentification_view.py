@@ -27,14 +27,14 @@ class AuthentificationView(AbstractView):
             parametres = {"mot_de_passe_client" : self.mot_de_passe}
             self.client=requests.get('http://localhost:8000/clients/{}'.format(self.identifiant),params=parametres,headers = {'accept': 'application/json',}) 
              #self.client=ClientService.authenticate_and_get_client(identifiant=self.identifiant, password=self.mot_de_passe)
-            AbstractView.session.client = self.client
-            AbstractView.session.identifiant = self.identifiant
-            AbstractView.session.mot_de_passe = self.mot_de_passe
             #s'il y a une erreur au niveau de la requête, on retourne la page d'authentification
             if self.client.status_code!=200:
                 return AuthentificationView()
             #sinon on retient le json du client et on passe à la page d'accueil
             self.client=self.client.json()
+            AbstractView.session.client = self.client
+            AbstractView.session.identifiant = self.identifiant
+            AbstractView.session.mot_de_passe = self.mot_de_passe
             return WelcomeView()
         else:
             self.nom= input("Nom: ")

@@ -6,36 +6,15 @@ from api.service.restaurant_service import RestaurantsService
 
 from client.view.select_param import selection
 import requests
-import pandas as pd
-
-#paramètres pour obtenir les restaurants à proximité
-params_restaurants_proximite={'identifiant_client':AbstractView.session.identifiant,'mot_de_passe_client':AbstractView.session.mot_de_passe,
-                                'localisation':AbstractView.session.adresse, 'term': AbstractView.session.term,'radius': AbstractView.session.radius}
-#paramètres restaurant où l'on précise sa localisation
-params_restaurants={'identifiant_client':AbstractView.session.identifiant,'mot_de_passe_client':AbstractView.session.mot_de_passe,
-                                'localisation':AbstractView.session.localite, 'term': AbstractView.session.term,'radius': AbstractView.session.radius}
 
 
 class RestaurantListeView(AbstractView):
     def __init__(self) -> None:
-    
-        question_proximite = [{
-        'type': 'list',
-        'name': 'proximite',
-        'message': "Voulez vous être livré à votre adresse ? \n",
-        'choices': ['Oui', Separator(), 'Non']
-        }]    
-        reponse = prompt(question_proximite)
-        if reponse['proximite'] == 'Oui':
-             ## Liste des restaurants à proximité
-            self.liste_restaurant = requests.get('http://localhost:5000/restaurants',params=params_restaurants_proximite).json()
-            ## Liste avec uniquement les noms des res restaurants à proximité
-            self.liste_nom_restaurant = [restaurant for restaurant in self.liste_restaurant]#pd.DataFrame(requests.get('http://localhost:5000/restaurants',params=params_restaurants).json())['nom'].to_list()
-        else:  
-            ## Liste des restaurants
-            self.liste_restaurant = requests.get('http://localhost:5000/restaurants',params=params_restaurants).json()
-            ## Liste avec uniquement les noms
-            self.liste_nom_restaurant = [restaurant for restaurant in self.liste_restaurant]#pd.DataFrame(requests.get('http://localhost:5000/restaurants',params=params_restaurants).json())['nom'].to_list()
+        ## Liste des restaurants
+        
+        self.liste_restaurant = requests.get('http://localhost:8000/restaurants/?identifiant_client=oui&mot_de_passe_client=oui&localisation=rennes&radius=2000',headers={'accept': 'application/json'}).json()
+        ## Liste avec uniquement les noms
+        self.liste_nom_restaurant = [restaurant['nom'] for restaurant in self.liste_restaurant]
         
         ## Creation de la liste de choix
         choix_restaurant = self.liste_nom_restaurant

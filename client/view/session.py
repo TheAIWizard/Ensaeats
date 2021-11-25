@@ -32,6 +32,8 @@ class Session(metaclass=Singleton):
         self.create_telephone = None
         self.term = None
         self.radius = None
+        self.liste_restaurant = None
+        self.liste_nom_restaurant = None
         
         self.listeAvis = []
         

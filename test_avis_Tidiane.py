@@ -7,7 +7,7 @@ import requests
 def getMenus_By_Id_restaurant(id_restaurant):
         # Requête vers api get menus
         menus_headers={'accept': 'application/json','identifiant': 'Tige','mot-de-passe': '1234',}
-        menus_by_id_restaurant=requests.get('http://localhost:5000/menus/{}'.format(id_restaurant),headers=menus_headers).json()
+        menus_by_id_restaurant=requests.get('http://localhost:8000/menus/{}'.format(id_restaurant),headers=menus_headers).json()
 
         return menus_by_id_restaurant
     
