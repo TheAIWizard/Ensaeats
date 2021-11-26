@@ -1,6 +1,7 @@
 from client.business.restaurant import Restaurant
 from client.business.avis import Avis
 from client.business.menu import Menu
+from client.business.client import Client
 
 class BusinessMapper:
     
@@ -43,5 +44,17 @@ class BusinessMapper:
         return liste_restaurant
         
         
+    @staticmethod
+    def client_mapper(client_json):
+        client_metier = Client(
+            id_client = client_json['id_client'],
+            nom = client_json['nom'],
+            prenom = client_json['prenom'],
+            adresse = client_json['adresse'],
+            identifiant = client_json['identifiant'],
+            mot_de_passe = client_json['mot_de_passe'],
+            telephone = client_json['telephone']
+        )
 
+        return client_metier
 

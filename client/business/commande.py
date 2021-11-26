@@ -37,10 +37,11 @@ class Commande (BaseModel):
 
     """
     id_commande : int
+    id_restaurant : str
     date : str
     statut_commande : str
     liste_menu : List[Menu]
-    #liste_quantite : List[int]
+    liste_quantite : List[int]
         
     def prix_total(self):
         """

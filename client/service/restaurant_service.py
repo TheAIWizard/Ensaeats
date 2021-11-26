@@ -21,9 +21,7 @@ class RestaurantService:
         restaurants = BusinessMapper.restaurant_mapper(restaurants_json)
         return restaurants
     
-    
-    
-    
+      
     
     
     
