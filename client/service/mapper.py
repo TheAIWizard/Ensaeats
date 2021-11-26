@@ -7,6 +7,14 @@ class BusinessMapper:
     
     @staticmethod
     def avis_mapper(avis_json):
+        """Défini un objet Avis lorsqu'on lui envoie un json
+
+        Args:
+            avis_json (json): [l'avis en format json]
+
+        Returns:
+            [list]: [liste d'objet avis]
+        """
         list_avis = []
         for element in avis_json:
             avis_metier = Avis(avis = element["avis"], identifiant_auteur = element["identifiant_auteur"],
@@ -19,6 +27,14 @@ class BusinessMapper:
     
     @staticmethod
     def menus_mapper(menu_json):
+        """Transforme un menu au format json en objet menu
+
+        Args:
+            menu_json ([type]): [description]
+
+        Returns:
+            list: list d'objet menu
+        """
         liste_menus = []
         
         for element in menu_json:
@@ -34,6 +50,14 @@ class BusinessMapper:
     
     @staticmethod
     def restaurant_mapper(restaurant_json):
+        """Transforme un json restaurant en objet restaurant
+
+        Args:
+            restaurant_json ([json]): [description]
+
+        Returns:
+            [list]: liste des objets restaurants
+        """
         liste_restaurant = []
         for element in restaurant_json:
             restaurant_metier = Restaurant(id_restaurant = element['id_restaurant'],
@@ -46,6 +70,14 @@ class BusinessMapper:
         
     @staticmethod
     def client_mapper(client_json):
+        """Transforme un json client en objet client
+
+        Args:
+            client_json ([json]): le client sous forme json
+
+        Returns:
+            [list]: liste des objets clients
+        """
         client_metier = Client(
             id_client = client_json['id_client'],
             nom = client_json['nom'],
