@@ -18,22 +18,22 @@ class MenuView(AbstractView):
         question_ajout = [{
             'type': 'list',
             'name': 'ajout_choix',
-            'message': "Voulez vous l'ajouter au panier ?",
+            'message': "Voulez vous l'ajouter au panier ? \n",
             'choices': ['Oui', Separator(), 'Non']
         }]
         reponse_ajout = prompt(question_ajout)
         if reponse_ajout['ajout_choix'] == 'Oui':
-            print("\n")
+            
             quantite = int(input("Quantite de ce menu: "))
             ## Ajouter le menu à la liste des menus en session et faire
             ## une commande en attente de validation
             AbstractView.session.list_menu.append(self.menu_choix)
-            AbstractView.session.quantite_menu = quantite
+            AbstractView.session.quantite = quantite
             AbstractView.session.list_quantite.append(quantite)
-            
+            id_restaurant = AbstractView.session.restaurant_actif.id_restaurant
             from client.service.commande_service import Faire_commande
             AbstractView.session.commande_active = Faire_commande.faire_commande(AbstractView.session.list_menu, 
-                                                            AbstractView.session.list_quantite)
+                                                            AbstractView.session.list_quantite, id_restaurant)
             print("\n")
             print("Menu ajouté à la commande")
             print("\n")
@@ -54,6 +54,7 @@ class MenuView(AbstractView):
                 from client.view.commande_view import Modif_commande
                 return Modif_commande()
             else: 
+                ## Annuler la commande
                 AbstractView.session.list_menu = []
                 AbstractView.session.list_quantite = []
                 AbstractView.session.commande_active = None
