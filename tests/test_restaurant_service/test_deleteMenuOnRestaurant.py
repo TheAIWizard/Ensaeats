@@ -6,9 +6,9 @@ from api.metier.menu import Menu
 from api.metier.article import Article
 
 
-class TestupdateMenuonRestaurant(TestCase):
-    def test_update_menu_on_restaurant(self):
-        """ The goal here is to test if a menu is updated properly in the PostgreSQL database. 
+class TestdeleteMenuonRestaurant(TestCase):
+    def test_delete_menu_on_restaurant(self):
+        """ The goal here is to test if a menu is deleted properly in the PostgreSQL database. 
         In fact, even if we want to delete a menu from a restaurant, we need to delete it in every tables of the database too. 
         That's why we don't need to give the restaurant id"""
         # GIVEN
@@ -36,7 +36,9 @@ class TestupdateMenuonRestaurant(TestCase):
                 type= "plat"
                 )
         )
-        expected_state=True
+        #we want to make sure menu,article1,article2 and article3 are erased from the database. 
+        #The restorer will have to create new articles again if he wants a new menu
+        expected_state=True,True,True,True
 
         # WHEN
         state = RestaurantsService.deleteMenuOnRestaurant(menu=menu)

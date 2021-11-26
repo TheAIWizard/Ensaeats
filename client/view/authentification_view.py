@@ -17,7 +17,7 @@ class AuthentificationView(AbstractView):
             'type': 'list',
             'name': 'Menu',
             'message': "Avez vous deja un compte \n",
-            'choices': ['Oui', Separator(), 'Non']
+            'choices': ['Oui', Separator(), 'Non'] 
         }]
         reponse = prompt(question)
         if reponse['Menu']=='Oui':

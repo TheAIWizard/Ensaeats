@@ -1,8 +1,8 @@
 from PyInquirer import prompt
 from PyInquirer.separator import Separator
+
 from client.view.abstract_view import AbstractView
 from client.view.liste_restaurant_view import RestaurantListeView
-import requests
 
 class WelcomeView(AbstractView):
     
@@ -56,9 +56,8 @@ class WelcomeView(AbstractView):
             ## Sortir de l'application
             return None
             
-                
 
- 
+
 
     
     

@@ -8,7 +8,7 @@ class Menu(BaseModel):
     Attribute
     --------
     id_menu : int 
-            Identoifiant du menu
+            Identifiant du menu
 
     nom_menu : str
             Nom du menu

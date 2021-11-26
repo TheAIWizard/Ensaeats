@@ -14,7 +14,7 @@ class ArticleDao:
     Méthodes
     ---------
     find_article_by_id_article (id_article):
-        return: article
+        retourne un  article
 
     add_article (article):
         retourne True si un article est ajouté à la table article de la base de donnée sinon False 
