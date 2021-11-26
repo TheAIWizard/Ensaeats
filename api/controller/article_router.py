@@ -23,7 +23,7 @@ async def post_article(article : Article, identifiant_restaurateur: str, mot_de_
         return RestaurantsService.addArticle(article)
 
     except RestaurateurNotAuthenticated:
-        raise HTTPException(status_code=403, detail="Le restaurateur doit être connecté")
+        raise HTTPException(status_code=401, detail="Le restaurateur doit être connecté")
 
 
 @router.put("/articles/{id_article}", tags = ['Articles'])
@@ -36,10 +36,10 @@ async def put_article(id_article : int, article:Article, identifiant_restaurateu
         if id_article == article.id_article : 
             return RestaurantsService.updateArticle(article = article)
         else : 
-            raise HTTPException(status_code=401, detail = "Vous n'avez pas le droit de changer l'identifiant de l'article")
+            raise HTTPException(status_code=422, detail = "Vous n'avez pas le droit de changer l'identifiant de l'article")
 
     except RestaurateurNotAuthenticated:
-        raise HTTPException(status_code=403, detail="Vous devez être connecter en tant que restaurateur ")
+        raise HTTPException(status_code=401, detail="Vous devez être connecter en tant que restaurateur ")
 
 @router.delete("/articles/", tags = ['Articles'])
 async def delete_article(id_article : int, identifiant_restaurateur: str, mot_de_passe_restaurateur: str):
@@ -51,4 +51,4 @@ async def delete_article(id_article : int, identifiant_restaurateur: str, mot_de
         return RestaurantsService.deleteArticle(article)
 
     except RestaurateurNotAuthenticated:
-        raise HTTPException(status_code=403, detail="Restaurateur must be logged")
+        raise HTTPException(status_code=403, detail="Vous devez être connecter en tant que restaurateur")

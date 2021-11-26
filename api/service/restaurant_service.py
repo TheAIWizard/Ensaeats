@@ -7,7 +7,7 @@ from api.dao.article_dao import ArticleDao
 from api.dao.menu_dao import MenuDao
 from typing import List
 from api.exception.restaurant_pas_trouve import RestaurantPasTrouveException
-
+from api.exception.restaurants_pas_trouves import RestaurantsPasTrouvesException
 
 
 class RestaurantsService:
@@ -16,9 +16,12 @@ class RestaurantsService:
     def getRestaurants(location: str, term: str = '', radius : int = 3000) -> List[Restaurant]:
         response = YelpApiService.get_businesses(location, term, radius) # recupere les infos de l'API de yelp
         restaurants = []
-        restaurants=YelpMapper.businesses_to_restaurants(response) # recupere une liste d'objets restaurant
-        return restaurants
-
+        try :
+            restaurants=YelpMapper.businesses_to_restaurants(response) # recupere une liste d'objets restaurant
+            return restaurants
+        except : 
+            return restaurants
+        
     @staticmethod
     def getRestaurant(id: str) -> Restaurant:
         response = YelpApiService.get_business_by_id(id)
@@ -30,8 +33,13 @@ class RestaurantsService:
         
     @staticmethod
     def getMenus_by_id_restaurant(id_restaurant : str) -> List[Menu] :
-        return MenuDao.find_all_menus_by_id_restaurant(id_restaurant)
-    
+        try : 
+            RestaurantsService.getRestaurant(id_restaurant) # si cette méthode renvoie une exception 
+            # c'est que l'identifiant du restaurant n'existe pas 
+            return MenuDao.find_all_menus_by_id_restaurant(id_restaurant) # renvoie une liste vide si pas de menus
+        except : 
+            raise RestaurantPasTrouveException(id_restaurant=id)
+        
     @staticmethod
     def addArticle(article : Article) -> Article :
         ''' Ajoute un article à la base de données des articles commun à tous '''
