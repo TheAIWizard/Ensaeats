@@ -1,6 +1,5 @@
 CREATE TABLE ensaeats.Restaurant (
-id_restaurant text PRIMARY KEY ,
-nom text );
+id_restaurant text PRIMARY KEY );
 
 CREATE TABLE ensaeats.Avis (
 id_avis SERIAL PRIMARY KEY,
@@ -22,7 +21,7 @@ FOREIGN KEY (id_restaurant) REFERENCES ensaeats.Restaurant(id_restaurant)
 CREATE TABLE ensaeats.Menu(
 id_menu SERIAL PRIMARY KEY,
 nom text,
-prix INT,
+prix INT
 ) ;
 
 CREATE TABLE ensaeats.Article(
@@ -40,11 +39,20 @@ FOREIGN KEY (id_menu) REFERENCES ensaeats.Menu(id_menu),
 FOREIGN KEY (id_article) REFERENCES ensaeats.Article(id_article)
 ) ;
 
+CREATE TABLE ensaeats.Table_restaurant_menu(
+id SERIAL PRIMARY KEY,
+id_menu INT,
+id_restaurant text,
+FOREIGN KEY (id_menu) REFERENCES ensaeats.Menu(id_menu),
+FOREIGN KEY (id_restaurant) REFERENCES ensaeats.Restaurant(id_restaurant)
+) ;
+
 CREATE TABLE ensaeats.Commande(
 id_commande SERIAL PRIMARY KEY,
 date date ,
 prix_total INT,
-statut_commande text
+statut_commande text,
+id_restaurant text,
 FOREIGN KEY (id_restaurant) REFERENCES ensaeats.Restaurant(id_restaurant)
 ) ;
 
@@ -57,13 +65,6 @@ FOREIGN KEY (id_menu) REFERENCES ensaeats.Menu(id_menu),
 FOREIGN KEY (id_commande) REFERENCES ensaeats.Commande(id_commande)
 ) ;
 
-CREATE TABLE ensaeats.Table_menu_restaurant(
-id SERIAL PRIMARY KEY,
-id_menu INT,
-id_restaurant text,
-FOREIGN KEY (id_menu) REFERENCES ensaeats.Menu(id_menu),
-FOREIGN KEY (id_restaurant) REFERENCES ensaeats.Restaurant(id_restaurant)
-) ;
 
 CREATE TABLE ensaeats.Client(
 id_client SERIAL PRIMARY KEY,

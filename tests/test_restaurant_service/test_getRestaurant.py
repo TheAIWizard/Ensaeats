@@ -1,6 +1,7 @@
 from unittest import TestCase
 
-from api.service.re
+from business_object.attack.fixed_damage_attack import FixedDamageAttack
+from business_object.pokemon.attacker_pokemon import AttackerPokemon
 
 
 class TestBasicFormulaAttack(TestCase):
@@ -16,3 +17,4 @@ class TestBasicFormulaAttack(TestCase):
         damage = basic_hit.compute_damage(pikachu, venusaur)
         # THEN
         self.assertEqual(power, damage)
+
