@@ -6,6 +6,6 @@ fastapi
 pydantic
 uvicorn
 PyInquirer==1.0.3
-pydantic==1.8.2
+pydantic
 psycopg2-binary
-#psycopg2
+
