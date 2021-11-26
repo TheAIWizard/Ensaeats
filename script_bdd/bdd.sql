@@ -9,7 +9,7 @@ nom_auteur text,
 id_restaurant text,
 FOREIGN KEY(id_restaurant) REFERENCES ensaeats.Restaurant(id_restaurant)
 );
-
+ 
 CREATE TABLE ensaeats.Restaurateur (
 id_restaurateur SERIAL PRIMARY KEY,
 nom text,
