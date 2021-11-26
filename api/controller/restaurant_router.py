@@ -20,8 +20,11 @@ async def get_restaurants(identifiant_client: str, mot_de_passe_client: str, loc
         client = ClientService.authenticate_and_get_client(identifiant=identifiant_client, mot_de_passe=mot_de_passe_client)
         print(client)
         # # call your service here
-        return RestaurantsService.getRestaurants(localisation, term, radius)
-
+        try : 
+            return RestaurantsService.getRestaurants(localisation, term, radius)
+        except : 
+            raise HTTPException(status_code=403, detail= "Aucun restaurant ne se trouve autour de la localisation rentrée")
+    
     except UserNotAuthenticated:
         raise HTTPException(status_code=401, detail="Vous devez vous connecter ou créer un compte en tant que client")
 

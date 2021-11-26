@@ -111,6 +111,10 @@ class MenuDao():
         if res : 
             return res['id_restaurant']
         
+        else : 
+            # Retourne None si l'identifiant du menu n'est pas referencé
+            return None
+        
         
     @staticmethod
     #on en déduit la liste des objets articles pour un id_menu donné par la méthode "find_article_by_id_article" de la classe ArticleDao

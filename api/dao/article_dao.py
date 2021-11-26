@@ -78,7 +78,7 @@ class ArticleDao:
                     "INSERT INTO ensaeats.article (nom,"\
                     " type_article, composition) VALUES "\
                     "(%(nom)s, %(type_article)s, %(composition)s)"\
-                    "RETURNING id_article;"
+                    "RETURNING *;"
                 , { "nom": article.nom
                   , "type_article": article.type
                   , "composition": article.composition})
@@ -86,7 +86,7 @@ class ArticleDao:
         if res :
             created = True
             article.id_article = res['id_article']
-        return created
+            return created,article
 
     @staticmethod
     def update_article(article:Article):
@@ -118,14 +118,13 @@ class ArticleDao:
                     , "id_article" : article.id_article})   
                 res = cursor.fetchone()
             if res : 
-                return res
+                return article
             
                 
     @staticmethod 
-        
     def get_articles() -> List[Article] : 
         """
-        Cette fonction nous permet de recupèrer des article dans la base de donnée
+        Cette fonction nous permet de recupèrer des articles dans la base de données
 
         Attribute:
         --------
@@ -137,9 +136,14 @@ class ArticleDao:
                 cursor.execute(
                     "SELECT * FROM ensaeats.article" )
                 res = cursor.fetchall 
-        if res : 
-            return res 
-           
+        articles = [] 
+        if res :
+            for row in res : 
+                articles.append(Article(id_article= row["id_article"], nom = row['nom']
+                                        , composition = row['composition']
+                                        , type = row["type"]))
+        return articles 
+    
     @staticmethod
     def delete_article(article : Article) -> Article : 
         """
