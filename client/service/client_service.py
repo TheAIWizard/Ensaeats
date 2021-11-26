@@ -5,11 +5,19 @@ class ClientService:
 
     @staticmethod
     def getClient(identifiant, mot_de_passe):
+        headers_client = {
+        'accept': 'application/json',
+        'Content-Type': 'application/json'}
         parametres = {
             'identifiant_client': identifiant,
             "mot_de_passe_client" : mot_de_passe}
-        client_json=requests.get('http://localhost:5000/clients/{}'.format(identifiant), params=parametres, 
-                                        headers = {'accept': 'application/json'}).json() 
-        client_metier = BusinessMapper.client_mapper(client_json)
 
-        return client_metier
+        result = requests.get('http://localhost:5000/clients/{}'.format(identifiant), 
+                            params=parametres, 
+                            headers = headers_client)
+        if result.status_code == 200:
+            client_json = result.json()
+            client_metier = BusinessMapper.client_mapper(client_json)
+            return client_metier
+        return False
+        
