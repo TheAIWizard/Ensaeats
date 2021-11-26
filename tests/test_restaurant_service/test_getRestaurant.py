@@ -17,7 +17,7 @@ class TestgetRestaurant(TestCase):
         # THEN
         print(response)
         print(expected_response)
-        self.assertEqual(expected_response, response)
+        self.assertEqual(str(expected_response), str(response))
 
 if __name__=='__main__':
     unittest.main()

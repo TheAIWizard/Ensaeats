@@ -9,8 +9,7 @@ class TestupdateArticle(TestCase):
     def test_update_article(self):
         """ The goal here is to test if an article is updated properly in the PostgreSQL database"""
         # GIVEN
-        expected_article=Article(id_article=50, nom='frites sans herbes', composition='sans herbes de Provence', type='accompagnement')
-        article_to_update =Article(id_article=50, nom='frites aux herbes', composition='herbes de Provence', type='accompagnement')
+        expected_article=Article(id_article=1,nom='frites sans herbes', composition='sans herbes de Provence', type='accompagnement')  #the updated article
 
         # WHEN
         article = RestaurantsService.updateArticle(expected_article)
