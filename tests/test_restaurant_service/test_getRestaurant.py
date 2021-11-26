@@ -8,15 +8,15 @@ class TestgetRestaurant(TestCase):
     def test_get_restaurant(self):
         # GIVEN
         id_restaurant='LTy9AUgMnLn8YS21KfFZ8g'
-        my_key = "jXH_gWewLB5gj0iJ6i55_TspH58WVWWTsKPZLJZej0SpLycR5Y_MWHnBwb5AcPMAUSYW3ud87VnSkxW2JMIb4xiEduf-KS0HpzEyB8wfWSw-q-Ko8u-38WtiPXFyYXYx"
-        url = "https://api.yelp.com/v3/businesses/{}".format(id_restaurant)
-        headers = {"Authorization" : "Bearer "+my_key}
-
-        expected_response = requests.get(url, params={"id": id_restaurant}, headers={'Authorization': "bearer "+my_key}).json()
+        expected_response = {"id_restaurant": "LTy9AUgMnLn8YS21KfFZ8g", 
+                            "adresse": {"adresse": "96 rue de la Poterie", "code_postal": 35700, "ville": "Rennes", "pays": "FR"}, 
+                            "nom": "La Fontaine aux Perles", "statut": false}
             
         # WHEN
-        response = RestaurantsService.getRestaurant(id=id_restaurant)
+        response = RestaurantsService.getRestaurant(id=id_restaurant).json()
         # THEN
+        print(response)
+        print(expected_response)
         self.assertEqual(expected_response, response)
 
 if __name__=='__main__':
