@@ -4,6 +4,7 @@ id_restaurant text PRIMARY KEY );
 CREATE TABLE ensaeats.Avis (
 id_avis SERIAL PRIMARY KEY,
 avis text,
+date date
 nom_auteur text,
 id_restaurant text,
 FOREIGN KEY(id_restaurant) REFERENCES ensaeats.Restaurant(id_restaurant)
@@ -13,6 +14,8 @@ CREATE TABLE ensaeats.Restaurateur (
 id_restaurateur SERIAL PRIMARY KEY,
 nom text,
 prenom text,
+identifiant text,
+mot_de_passe text,
 id_restaurant text,
 FOREIGN KEY (id_restaurant) REFERENCES ensaeats.Restaurant(id_restaurant)
 ) ;
@@ -70,6 +73,7 @@ CREATE TABLE ensaeats.Client(
 id_client SERIAL PRIMARY KEY,
 nom text,
 prenom text,
+identifiant text,
 mot_de_passe text,
 adresse text,
 telephone text
