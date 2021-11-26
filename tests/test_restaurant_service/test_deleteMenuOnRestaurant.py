@@ -6,14 +6,15 @@ from api.metier.menu import Menu
 from api.metier.article import Article
 
 
-class TestaddMenuonRestaurant(TestCase):
-    def test_add_menu_on_restaurant(self):
-        """ The goal here is to test if a menu is added properly in the PostgreSQL database.
-            The restaurant id should be added in all the appropriate five tables where it needs to appear"""
+class TestdeleteMenuonRestaurant(TestCase):
+    def test_delete_menu_on_restaurant(self):
+        """ The goal here is to test if a menu is deleted properly in the PostgreSQL database. 
+        In fact, even if we want to delete a menu from a restaurant, we need to delete it in every tables of the database too. 
+        That's why we don't need to give the restaurant id"""
         # GIVEN
-        id_restaurant='LTy9AUgMnLn8YS21KfFZ8g'
+       
         #The value 0 of the attibute id_article is given on purpose to be dealt by the auto-increment system of the database
-        menu=Menu(  id_menu= 40,
+        menu=Menu(  id_menu= 37,
                 nom= "Menu printannier",
                 prix= 54,
                 article1= Article(
@@ -35,10 +36,12 @@ class TestaddMenuonRestaurant(TestCase):
                 type= "plat"
                 )
         )
-        expected_state=True,True,True,True,True
+        #we want to make sure menu,article1,article2 and article3 are erased from the database. 
+        #The restorer will have to create new articles again if he wants a new menu
+        expected_state=True,True,True
 
         # WHEN
-        state = RestaurantsService.addMenuOnRestaurant(id_restaurant=id_restaurant,menu=menu)
+        state = RestaurantsService.deleteMenuOnRestaurant(menu=menu)
         # THEN
         self.assertEqual(expected_state, state)
 

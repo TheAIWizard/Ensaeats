@@ -10,24 +10,24 @@ now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
 class AvisDao(metaclass=Singleton):
     """
-    Cette classe nous permet de gerer les avis laisser par les clients sur la DAo.
+    Cette classe nous permet de gérer les avis laisser par les clients.
 
     fin_avis_by_restaurant (id_restaurant) :
-    Cette fonction permet de recuperer les avis sur les client dans l'api de yelp
-
-    return : json 
+        retourne la liste des restaurant
 
     add_avis (avis):
-    La fonction add_avis nous permet d'ajouter des avis dans la base de donnée
-
-    return : void
-    retuirn de message de confirmation 
-        
+        retourne Vrai si un avis est ajouté dans la table avis de notre BD sinon Faux.
     """
     @staticmethod
     def find_avis_by_id_restaurant(id_restaurant : str)-> List:
         '''
-        Get all the reviews of a restaurant thanks to its id
+        Cette fonction permet de voir les restaurant par id
+
+        Attribute :
+        -----------
+        id_restaurant : str
+
+        return : list
         
         '''
         with DBConnection().connection as connection:
@@ -48,7 +48,9 @@ class AvisDao(metaclass=Singleton):
     @staticmethod
     def add_avis(avis : Avis) -> Avis: 
         '''
-        Add a restaurant review 
+        Ici on ajout un avis dans la table avis de notre BD
+
+        return bool 
         
         '''
         created = False

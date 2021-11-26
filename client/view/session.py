@@ -1,8 +1,8 @@
-from api.metier.commande import Commande
-from api.metier.menu import Menu
-from api.metier.commande import Commande
-from api.metier.restaurant import Restaurant
-from api.utils.singleton import Singleton
+from client.business.commande import Commande
+from client.business.menu import Menu
+from client.business.commande import Commande
+from client.business.restaurant import Restaurant
+from client.utils.singleton import Singleton
 
 
 class Session(metaclass=Singleton):
@@ -27,11 +27,11 @@ class Session(metaclass=Singleton):
         self.nom = None
         self.prenom = None
         self.adresse = None
-        self.create_identifiant = None
-        self.create_mot_de_passe = None
-        self.create_telephone = None
+        self.telephone = None
         self.term = None
         self.radius = None
+        self.liste_restaurant = None
+        self.liste_nom_restaurant = None
         
         self.listeAvis = []
         

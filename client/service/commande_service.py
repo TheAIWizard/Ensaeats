@@ -1,18 +1,20 @@
 
-from api.metier.commande import Commande
+from client.business.commande import Commande
 from datetime  import datetime
 import json
 from fastapi import params
 from psycopg2.extensions import STATUS_IN_TRANSACTION
 import requests
 from requests.api import request
+from client.service.menus_service import MenusService
 
 class Faire_commande:
     
     today = datetime.today().strftime('%Y-%m-%d')
     @staticmethod
-    def faire_commande(liste_menu, liste_quantite, date= today, statut_commande = 'En cours', id_commande = 1):
-        return Commande(id_commande = id_commande, date = date, statut_commande=statut_commande, liste_menu=liste_menu, liste_quantite = liste_quantite)
+    def faire_commande(liste_menu, liste_quantite, id_restaurant, date= today, statut_commande = 'En cours', id_commande = 1):
+        return Commande(id_commande = id_commande,id_restaurant = id_restaurant, date = date,
+         statut_commande=statut_commande, liste_menu=liste_menu, liste_quantite = liste_quantite)
     
     @staticmethod
     def supprime_menu(commande: Commande, menu_sup):
@@ -34,7 +36,7 @@ class Faire_commande:
         return commande       
         
     @staticmethod 
-    def valider_commande(id_restaurant, identifiant, mot_de_passe, commande: Commande):
+    def valider_commande(identifiant, mot_de_passe, commande: Commande):
         """[Ajouter la commande de l'utilisateur]
 
         Args:
@@ -42,13 +44,25 @@ class Faire_commande:
         """
         ## Requete post 
         output = False
-        params_post_commande = {'id_restaurant': id_restaurant, 'username': identifiant,
-                                'password': mot_de_passe}
-        post_commande = request.post('http://localhost:5000/commande/{}'.format(id_restaurant),
+        params_post_commande = {
+            'identifiant_client': identifiant,
+            'mot_de_passe_client': mot_de_passe
+            }
+        post_commande = requests.post('http://localhost:5000/commande/',
                                      json = dict(commande),
-                                     params = params_post_commande)
+                                     params = params_post_commande).json()
         if post_commande: 
             output = True
             return output
         return output    
    
+
+    @staticmethod
+    def command_avec_menu_serializable(commande: Commande):
+        list_menu_serialiable = []
+        for menu in commande.liste_menu:
+            menu_bis = MenusService.menu_to_menu_serializable(menu)
+            list_menu_serialiable.append(menu_bis)
+        
+        commande.liste_menu = list_menu_serialiable
+        return commande

@@ -8,12 +8,23 @@ router = APIRouter()
 
 @router.post("/clients/", tags=["Clients"])
 async def create_client(client: Client):
-    return ClientService.createClient(client)
-
-
+    if (client.identifiant == '' or client.mot_de_passe == '') : 
+        raise HTTPException(status_code=401, detail = "Vous ne pouvez pas rentré un identifiant ou mot de passe vide")
+    else : 
+        try : 
+            return ClientService.createClient(client)
+        except : 
+            raise HTTPException(status_code=401, detail="L'identifiant que vous avez rentré est déjà pris")
+        
 @router.put("/clients/{ancien_identifiant_client}", tags=["Clients"])
-async def update_client(ancien_identifiant_client: str, ancien_mot_de_passe_client:str, identifiant_client: Optional[str] = Header(None), mot_de_passe_client:Optional[str] = Header(None)):
-    return ClientService.authenticate_and_update_client(ancien_identifiant_client, ancien_mot_de_passe_client, identifiant_client, mot_de_passe_client)
+async def update_client(client : Client, identifiant_client: Optional[str] = Header(None), mot_de_passe_client:Optional[str] = Header(None)):
+    if (client.identifiant == '' or client.mot_de_passe == '') : 
+         raise HTTPException(status_code=401, detail = "Vous ne pouvez pas avoir un identifiant ou mot de passe vide")
+    else : 
+        try : 
+            return ClientService.authenticate_and_update_client(identifiant_client,mot_de_passe_client, client)
+        except : 
+            raise HTTPException(status_code=401, detail= "La modification n'a pas été prise en compte") 
 
 
 @router.get("/clients/{identifiant_client}", tags=["Clients"])

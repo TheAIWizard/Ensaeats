@@ -1,12 +1,8 @@
-from api.dao.menu_dao import MenuDao
-from api.metier.menu import Menu
+from api.service.yelp_api_service import YelpApiService
+from api.service.yelp_mapper import YelpMapper
+response = YelpApiService.get_businesses(location = "Bruz", radius = 2000)
+print(YelpMapper.businesses_to_restaurants(response))
 
-#test_menu=MenuDao()
-#menu_à_ajouter=Menu(333,"la spéciale",1000)
-#menu_à_modifier=Menu(333,"la spéciale",100)
-
-print(MenuDao.get_id_restaurant_by_id_menu(1))
-print(MenuDao.find_menu_by_id_menu(1))
 
 #print(test_menu.find_all_menus_by_id_restaurant(id_restaurant= 90072796))
 

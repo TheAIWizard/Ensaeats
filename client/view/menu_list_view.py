@@ -1,12 +1,9 @@
 from PyInquirer import prompt, Separator
 from pydantic.errors import ListError
-from Brouillon_Nikiema.metier.menu import Menu
 from client.view.liste_restaurant_view import RestaurantListeView
-
 from client.view.abstract_view import AbstractView
+from client.service.menus_service import MenusService
 
-from client.service.restaurant_service import RestaurantService
-from brouillon.metier.commande import Commande
 
 
 
@@ -17,7 +14,7 @@ class MenuListView(AbstractView):
         ## Liste des menus
         identifiant = AbstractView.session.identifiant
         mdp = AbstractView.session.mot_de_passe
-        self.list_menu = RestaurantService.getMenus_By_Id_restaurant(id_restaurant, identifiant, mdp)
+        self.list_menu = MenusService.getMenus_By_Id_restaurant(id_restaurant, identifiant, mdp)
         ## Liste des noms des menus
         self.list_nom_menu = [menu.nom for menu in self.list_menu]
         self.list_nom_menu.append(Separator())
@@ -28,6 +25,7 @@ class MenuListView(AbstractView):
         self.list_nom_menu2 = self.list_nom_menu.copy()
         self.list_nom_menu2.append(Separator())
         self.list_nom_menu2.append('Valider la commande active')
+        ## Définir la liste de choix selon la présence ou non d'une commande encours
         if AbstractView.session.commande_active:
             choix = self.list_nom_menu2
         else: 
@@ -63,7 +61,7 @@ class MenuListView(AbstractView):
             return Valider()
 
         else: 
-            ## Ajouter le menu à la liste de menu en session
+            ## Ajouter le menu dans la session
             index = self.list_nom_menu.index(reponse['Menu'])
             AbstractView.session.menu_actif = self.list_menu[index]
             from client.view.menu_view import MenuView
