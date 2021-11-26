@@ -1,12 +1,12 @@
 from unittest import TestCase
 
-from api.service.re
+from api.service.restaurant_service import RestaurantsService
+from api.metier.restaurateur
 
-
-class TestBasicFormulaAttack(TestCase):
+class TestgetRestaurants(TestCase):
     def test_compute_damage(self):
         # GIVEN
-        power = 100
+        restaurateur=Restaurateur(id_restaurateur=)
         basic_hit = FixedDamageAttack(power=power)
 
         pikachu = AttackerPokemon()
