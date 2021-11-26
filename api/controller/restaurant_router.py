@@ -20,10 +20,7 @@ async def get_restaurants(identifiant_client: str, mot_de_passe_client: str, loc
         client = ClientService.authenticate_and_get_client(identifiant=identifiant_client, mot_de_passe=mot_de_passe_client)
         print(client)
         # # call your service here
-        try : 
-            return RestaurantsService.getRestaurants(localisation, term, radius)
-        except : 
-            raise HTTPException(status_code=403, detail= "Aucun restaurant ne se trouve autour de la localisation rentrée")
+        return RestaurantsService.getRestaurants(localisation, term, radius)
     
     except UserNotAuthenticated:
         raise HTTPException(status_code=401, detail="Vous devez vous connecter ou créer un compte en tant que client")
@@ -38,7 +35,7 @@ async def get_restaurant(identifiant_client: str, mot_de_passe_client: str, id_r
         try : 
             return RestaurantsService.getRestaurant(id_restaurant)
         except : 
-            raise HTTPException(status_code=403, detail = "Le restaurant n'est pas dans l'API de Yelp")
+            raise HTTPException(status_code=422, detail = "Le restaurant n'est pas dans l'API de Yelp")
             
     except UserNotAuthenticated:
         raise HTTPException(status_code=401, detail="Vous devez vous connecter ou créer un compte en tant que client")

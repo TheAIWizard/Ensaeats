@@ -15,13 +15,12 @@ class RestaurantsService:
     @staticmethod
     def getRestaurants(location: str, term: str = '', radius : int = 3000) -> List[Restaurant]:
         response = YelpApiService.get_businesses(location, term, radius) # recupere les infos de l'API de yelp
+        restaurants = []
         try :
-            restaurants = []
             restaurants=YelpMapper.businesses_to_restaurants(response) # recupere une liste d'objets restaurant
             return restaurants
-        
         except : 
-            raise RestaurantsPasTrouvesException(location)
+            return restaurants
         
     @staticmethod
     def getRestaurant(id: str) -> Restaurant:

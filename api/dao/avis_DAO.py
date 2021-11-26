@@ -34,15 +34,15 @@ class AvisDao(metaclass=Singleton):
             with connection.cursor() as cursor :
                 cursor.execute(
                     "SELECT * " \
-                    "\nFROM  ensaeats.avis   "\
-                    "\nWHERE id_restaurant = %(id_restaurant)s"
+                    " FROM  ensaeats.avis "\
+                    " WHERE id_restaurant = %(id_restaurant)s"
                     , {"id_restaurant": id_restaurant}
                 )
                 res = cursor.fetchall()
         avis_restau = []
         if res :
             for row in res : 
-                avis_restau.append(Avis(avis=row["avis"],identifiant_auteur=row["identifiant_auteur"],date=str(row["date"]),id_restaurant=row['id_restaurant']))
+                avis_restau.append(Avis(avis=row["avis"],identifiant_auteur=row["nom_auteur"],date=str(row["date"]),id_restaurant=row['id_restaurant']))
         return avis_restau
 
     @staticmethod

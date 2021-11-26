@@ -17,7 +17,7 @@ async def post_commande(commande: Commande, identifiant_client: str, mot_de_pass
         return CommandeService.valider_commande(commande, client.id_client)
         
     except ClientNotAuthenticated: 
-        raise HTTPException(status_code=403, detail="Vous devez être connecté en tant que client")
+        raise HTTPException(status_code=401, detail="Vous devez être connecté en tant que client")
     
 
 @router.get("/commandes/client", tags=["Commandes"])
@@ -28,7 +28,7 @@ async def get_commandes_client(identifiant_client: str, mot_de_passe_client: str
         return CommandeService.obtenir_commandes_client(client)
         
     except ClientNotAuthenticated: 
-        raise HTTPException(status_code=403, detail="Vous devez être connecté en tant que client")
+        raise HTTPException(status_code=401, detail="Vous devez être connecté en tant que client")
 
 @router.get("/commandes/restaurant", tags=["Commandes"])
 async def get_commandes_restaurant(id_restaurant: str, identifiant_restaurateur: str, mot_de_passe_restaurateur: str):
@@ -36,8 +36,9 @@ async def get_commandes_restaurant(id_restaurant: str, identifiant_restaurateur:
         restaurateur = RestaurateurService.authenticate_and_get_restaurateur(identifiant=identifiant_restaurateur, mot_de_passe=mot_de_passe_restaurateur)
         #On s'assure qu'il s'agit du bon id_restaurant pour le restaurateur sinon n'importe quel restaurateur peut accéder aux commandes
         if restaurateur.id_restaurant!=id_restaurant:
-            return "Le restaurant n'appartient pas à ce restaurateur. Changez id_restaurant"
-        return CommandeService.obtenir_commandes_id_restaurant(id_restaurant=id_restaurant)
+            raise HTTPException(status_code=403, detail="Le restaurant n'appartient pas à ce restaurateur. Changez id_restaurant")
+        else : 
+            return CommandeService.obtenir_commandes_id_restaurant(id_restaurant=id_restaurant)
         
     except ClientNotAuthenticated: 
-        raise HTTPException(status_code=403, detail="Vous devez être connecté en tant que client")
+        raise HTTPException(status_code=401, detail="Vous devez être connecté en tant que restaurateur")
