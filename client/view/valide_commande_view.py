@@ -1,5 +1,6 @@
 from PyInquirer import prompt, Separator
 from pydantic.errors import ListError
+from six import reraise
 from client.view.liste_restaurant_view import RestaurantListeView
 from client.business.commande import Commande
 from client.view.abstract_view import AbstractView
@@ -35,10 +36,14 @@ class Valider(AbstractView):
         if choix["Menu"] == 'Valider la commande':
             
             commande_active = AbstractView.session.commande_active
+            commande_active = Faire_commande.command_avec_menu_serializable(commande_active)
             resultat_post_commande = Faire_commande.valider_commande(self.identifiant, self.mdp, commande_active)
-            if resultat_post_commande: 
+            if resultat_post_commande == 200: 
                 print("Commande ajoutée avec succès !")
                 print('\n')
+            else:
+                from client.view.menu_list_view import MenuListView
+                return MenuListView()
                 
             
             

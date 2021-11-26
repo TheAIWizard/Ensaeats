@@ -16,9 +16,9 @@ def getMenus_By_Id_restaurant(id_restaurant, identifiant, mdp):
         }
         
         menus_by_id_restaurant = requests.get('http://localhost:5000/menus/{}'.format(id_restaurant),
-                                            headers= headers)
-        #menu = BusinessMapper.menus_mapper(menus_by_id_restaurant)
-        return menus_by_id_restaurant
+                                            headers= headers).json()
+        menu = BusinessMapper.menus_mapper(menus_by_id_restaurant)
+        return menu
 
 
 
@@ -86,18 +86,17 @@ def valider_commande(identifiant, mot_de_passe, commande: Commande):
             'accept': 'application/json',
             'Content-Type': 'application/json'
         }
-        data = dict(commande)
+        
         params_post_commande = {
             'identifiant_client': identifiant,
             'mot_de_passe_client': mot_de_passe
             }
-        post_commande = requests.post('http://localhost:5000/commande/',
+        post_commande = requests.post('http://localhost:5000/commandes/',
                                      json = dict(commande),
                                      params = params_post_commande,
-                                     headers= headers,
-                                     data = data)
+                                     headers= headers)
         
-        return post_commande 
+        return post_commande.status_code 
 
 
 
@@ -147,6 +146,47 @@ cmd = Commande(
     liste_quantite = [1]
 )
 
+
+def getClient(identifiant, mot_de_passe):
+    headers_client = {
+        'accept': 'application/json',
+        'Content-Type': 'application/json'}
+    parametres = {
+        'identifiant_client': identifiant,
+        "mot_de_passe_client" : mot_de_passe}
+
+    result = requests.get('http://localhost:5000/clients/{}'.format(identifiant), params=parametres, 
+                            headers = headers_client)
+    if result.status_code == 200:
+        client_json = result.json()
+        client_metier = BusinessMapper.client_mapper(client_json)
+        return client_metier
+    return False
+
+
+def post_avis_by_id_restaurant(identifiant, mot_de_passe, avis):
+        headers_avis = {
+        'accept': 'application/json',
+        'Content-Type': 'application/json'}
+        
+        param_avis_post = {
+            'identifiant_client': identifiant,
+            'mot_de_passe_client': mot_de_passe
+            }
+        post_avis = requests.post('http://localhost:5000/avis/', 
+                                 json = dict(avis),
+                                 params = param_avis_post,
+                                 headers = headers_avis)
+        
+        if post_avis.status_code == 200:
+            return True
+        else:
+            return False
+
+
+
+
+
 localite = 'Rennes'
 id_restau = 'LTy9AUgMnLn8YS21KfFZ8g'
 identifiant = 'Tige'
@@ -156,7 +196,8 @@ from client.service.commande_service import Faire_commande
 cmd = Faire_commande.command_avec_menu_serializable(cmd)
 
 
-reponse = getMenus_By_Id_restaurant(id_restau, identifiant, mdp)
+reponse = post_avis_by_id_restaurant(identifiant, mdp, avis)
+
 
 print(reponse)
 

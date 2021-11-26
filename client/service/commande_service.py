@@ -44,17 +44,21 @@ class Faire_commande:
         """
         ## Requete post 
         output = False
+        headers = {
+            'accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+        
         params_post_commande = {
             'identifiant_client': identifiant,
             'mot_de_passe_client': mot_de_passe
             }
-        post_commande = requests.post('http://localhost:5000/commande/',
+        post_commande = requests.post('http://localhost:5000/commandes/',
                                      json = dict(commande),
-                                     params = params_post_commande).json()
-        if post_commande: 
-            output = True
-            return output
-        return output    
+                                     params = params_post_commande,
+                                     headers= headers)
+        
+        return post_commande.status_code    
    
 
     @staticmethod

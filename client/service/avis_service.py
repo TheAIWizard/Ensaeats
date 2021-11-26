@@ -25,16 +25,16 @@ class AvisService:
     # Post Avis
     @staticmethod
     def post_avis_by_id_restaurant(identifiant, mot_de_passe, avis):
-        output = False
+        
         param_avis_post = {
             'identifiant_client': identifiant,
             'mot_de_passe_client': mot_de_passe
             }
         post_avis = requests.post('http://localhost:5000/avis/', 
                                  json = dict(avis),
-                                 params = param_avis_post).json()
+                                 params = param_avis_post)
         
-        if post_avis:
-            output = True
-            return output
-        return output
+        if post_avis.status_code == 200:
+            return True
+        else:
+            return False
