@@ -15,8 +15,9 @@ def getMenus_By_Id_restaurant(id_restaurant, identifiant, mdp):
             'mot-de-passe': mdp,
         }
         
-        menus_by_id_restaurant=requests.get('http://localhost:5000/menus/{}'.format(id_restaurant),headers= headers).json()
-
+        menus_by_id_restaurant = requests.get('http://localhost:5000/menus/{}'.format(id_restaurant),
+                                            headers= headers)
+        #menu = BusinessMapper.menus_mapper(menus_by_id_restaurant)
         return menus_by_id_restaurant
 
 
@@ -81,17 +82,22 @@ def valider_commande(identifiant, mot_de_passe, commande: Commande):
         """
         ## Requete post 
         output = False
+        headers = {
+            'accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+        data = dict(commande)
         params_post_commande = {
             'identifiant_client': identifiant,
             'mot_de_passe_client': mot_de_passe
             }
         post_commande = requests.post('http://localhost:5000/commande/',
                                      json = dict(commande),
-                                     params = params_post_commande).json()
-        if post_commande: 
-            output = True
-            return output
-        return output 
+                                     params = params_post_commande,
+                                     headers= headers,
+                                     data = data)
+        
+        return post_commande 
 
 
 
@@ -148,6 +154,8 @@ mdp = '1234'
 
 from client.service.commande_service import Faire_commande
 cmd = Faire_commande.command_avec_menu_serializable(cmd)
+
+
 reponse = getMenus_By_Id_restaurant(id_restau, identifiant, mdp)
 
 print(reponse)

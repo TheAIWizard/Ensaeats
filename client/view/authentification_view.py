@@ -55,7 +55,7 @@ class AuthentificationView(AbstractView):
                 "mot_de_passe": self.mot_de_passe,
                 "telephone": self.telephone}
             try:
-                self.client=requests.post('http://localhost:8000/clients/',json=self.client_json).json()
+                self.client=requests.post('http://localhost:5000/clients/',json=self.client_json).json()
 
                 AbstractView.session.client = self.client
                 AbstractView.session.nom = self.nom
