@@ -6,13 +6,8 @@ from client.service.mapper import BusinessMapper
 
 """ def getMenus_By_Id_restaurant(id_restaurant):
         # Requête vers api get menus
-<<<<<<< HEAD
-        menus_headers={'accept': 'application/json','identifiant': 'Tige','mot-de-passe': '1234',}
-        menus_by_id_restaurant=requests.get('http://localhost:8000/menus/{}'.format(id_restaurant),headers=menus_headers).json()
-=======
         menus_headers={'accept': 'application/json','identifiant': 'Tige','mot-de-passe': '1234'}
         menus_by_id_restaurant=requests.get('http://localhost:5000/menus/{}'.format(id_restaurant),headers=menus_headers).json()
->>>>>>> 5b0527e3d5bd00dd6c6bca2d43e3750b547e415c
 
         return menus_by_id_restaurant """
 headers = {
