@@ -501,6 +501,7 @@ class MenuDao():
                         res = cursor.fetchone()
                     if res :
                         update_article3 = True    
+                        return updated_menu,update_article1,update_article2,update_article3
 
                     
 

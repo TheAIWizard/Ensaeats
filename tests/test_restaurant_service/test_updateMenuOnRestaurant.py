@@ -13,8 +13,8 @@ class TestupdateMenuonRestaurant(TestCase):
         That's why we don't need to give the restaurant id"""
         # GIVEN
        
-        #The value 0 of the attibute id_article is given on purpose to be dealt by the auto-increment system of the database
-        menu=Menu(  id_menu= 0,
+    
+        menu=Menu(  id_menu= 40,
                 nom= "Menu printannier",
                 prix= 54,
                 article1= Article(
@@ -36,10 +36,10 @@ class TestupdateMenuonRestaurant(TestCase):
                 type= "plat"
                 )
         )
-        expected_state=True
+        expected_state=True,True,True,True
 
         # WHEN
-        state = RestaurantsService.deleteMenuOnRestaurant(menu=menu)
+        state = RestaurantsService.updateMenuOnRestaurant(menu=menu)
         # THEN
         self.assertEqual(expected_state, state)
 

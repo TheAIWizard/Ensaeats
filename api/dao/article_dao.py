@@ -111,7 +111,7 @@ class ArticleDao:
                     " type_article = %(type)s, "\
                     " composition = %(composition)s "\
                     "WHERE id_article = %(id_article)s "\
-                    "RETURNING id_article ; "
+                    "RETURNING * ; "
                     , {"nom" : article.nom
                     , "type" : article.type
                     , "composition" : article.composition

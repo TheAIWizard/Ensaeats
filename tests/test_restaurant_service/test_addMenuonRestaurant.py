@@ -8,11 +8,12 @@ from api.metier.article import Article
 
 class TestaddMenuonRestaurant(TestCase):
     def test_add_menu_on_restaurant(self):
-        """ The goal here is to test if a menu is added properly in the PostgreSQL database"""
+        """ The goal here is to test if a menu is added properly in the PostgreSQL database.
+            The restaurant id should be added in all the appropriate five tables where it needs to appear"""
         # GIVEN
         id_restaurant='LTy9AUgMnLn8YS21KfFZ8g'
         #The value 0 of the attibute id_article is given on purpose to be dealt by the auto-increment system of the database
-        menu=Menu(  id_menu= 0,
+        menu=Menu(  id_menu= 40,
                 nom= "Menu printannier",
                 prix= 54,
                 article1= Article(
@@ -34,7 +35,7 @@ class TestaddMenuonRestaurant(TestCase):
                 type= "plat"
                 )
         )
-        expected_state=True
+        expected_state=True,True,True,True,True
 
         # WHEN
         state = RestaurantsService.addMenuOnRestaurant(id_restaurant=id_restaurant,menu=menu)

@@ -14,7 +14,7 @@ class TestdeleteMenuonRestaurant(TestCase):
         # GIVEN
        
         #The value 0 of the attibute id_article is given on purpose to be dealt by the auto-increment system of the database
-        menu=Menu(  id_menu= 0,
+        menu=Menu(  id_menu= 37,
                 nom= "Menu printannier",
                 prix= 54,
                 article1= Article(
@@ -38,7 +38,7 @@ class TestdeleteMenuonRestaurant(TestCase):
         )
         #we want to make sure menu,article1,article2 and article3 are erased from the database. 
         #The restorer will have to create new articles again if he wants a new menu
-        expected_state=True,True,True,True
+        expected_state=True,True,True
 
         # WHEN
         state = RestaurantsService.deleteMenuOnRestaurant(menu=menu)

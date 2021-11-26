@@ -11,7 +11,7 @@ class TestaddArticle(TestCase):
         # GIVEN
         
         #The value 0 of the attibute id_article is given on purpose to be dealt by the auto-increment system of the database
-        article =Article(id_article=0, nom='frites aux herbes', composition='herbes de Provence', type='accompagnement')
+        article =Article(id_article=50, nom='frites aux herbes', composition='herbes de Provence', type='accompagnement')
         expected_state=True
 
         # WHEN
