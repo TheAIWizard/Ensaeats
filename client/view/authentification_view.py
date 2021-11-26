@@ -1,6 +1,5 @@
 from PyInquirer import prompt
 from PyInquirer.separator import Separator
-from api.metier.adresse import Adresse
 from client.view.abstract_view import AbstractView
 from client.view.welcom_view import WelcomeView
 from client.service.client_service import ClientService

@@ -60,6 +60,7 @@ params_ajout_avis_by_id_restaurant={'identifiant_client':identifiant_client,'mot
 ajout_avis_by_id_restaurant=requests.post('http://localhost:5000/avis/',params=params_ajout_avis_by_id_restaurant,json=dict(avis)).json()
 #print(ajout_avis_by_id_restaurant)
 
+
 json_client={
   "id_client": 0,
   "nom": "string",

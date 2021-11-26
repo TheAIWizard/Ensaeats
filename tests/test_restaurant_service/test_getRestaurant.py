@@ -7,6 +7,7 @@ import requests
 class TestgetRestaurant(TestCase):
     def test_get_restaurant(self):
         # GIVEN
+        mauvais_id_restaurant='faux id'
         id_restaurant='LTy9AUgMnLn8YS21KfFZ8g'
         expected_response = {"id_restaurant": "LTy9AUgMnLn8YS21KfFZ8g", 
                             "adresse": {"adresse": "96 rue de la Poterie", "code_postal": 35700, "ville": "Rennes", "pays": "FR"}, 
