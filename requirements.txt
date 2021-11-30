@@ -8,4 +8,4 @@ uvicorn
 PyInquirer==1.0.3
 pydantic
 psycopg2-binary
-#psycopg2
+

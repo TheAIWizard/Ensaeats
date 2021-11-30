@@ -12,6 +12,18 @@ class RestaurantService:
     #Get restaurants
     @staticmethod
     def getRestaurants(localite, term, radius, identifiant, mot_de_passe):
+        """Requete d'obtention des restaurants
+
+        Args:
+            localite (str): Zone de recherche
+            term (str): Nom restaurant ou spécialite
+            radius (str): rayon
+            identifiant (str): identifiant de l'utilisateur
+            mot_de_passe (str): mot de passe de l'utilisateur
+
+        Returns:
+            [type]: [description]
+        """
         
         params_restaurants = {'localisation':localite,'term': term,
                             'radius':radius,'identifiant_client': identifiant,

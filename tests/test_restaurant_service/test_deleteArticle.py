@@ -11,7 +11,7 @@ class TestdeleteArticle(TestCase):
         when an article is deleted, it shall not appear in table_menu_article and article. We check its presence with a couple of booleans"""
         # GIVEN
         expected_state=True,True
-        article_to_delete =Article(id_article=50, nom='frites sans herbes', composition='sans herbes de Provence', type='accompagnement')
+        article_to_delete =Article(id_article=1, nom='frites sans herbes', composition='sans herbes de Provence', type='accompagnement')
 
         # WHEN
         article = RestaurantsService.deleteArticle(article_to_delete)

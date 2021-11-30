@@ -41,7 +41,7 @@ class AvisView(AbstractView):
             avis_user = Avis(avis = avis_txt, identifiant_auteur = identifiant,
              id_restaurant = id_restaurant, date = today)
             ## Ajout avis dans la base de données
-            result_ajout_avis =  AvisService.post_avis_by_id_restaurant(id_restaurant, identifiant, mdp, avis_user)
+            result_ajout_avis =  AvisService.post_avis_by_id_restaurant(identifiant, mdp, avis_user)
         
             if result_ajout_avis : 
                 print("Votre avis a été bien ajouté ! ")

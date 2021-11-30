@@ -56,10 +56,10 @@ class AuthentificationView(AbstractView):
                 "mot_de_passe": self.mot_de_passe,
                 "telephone": self.telephone}
            
+            add_client = ClientService.postClient(BusinessMapper.client_mapper(self.client_json))
             
-            result_get_new_client = ClientService.getClient(self.identifiant, self.mot_de_passe)
-            if result_get_new_client:
-                
+            if add_client== 200:
+                result_get_new_client = ClientService.getClient(self.identifiant, self.mot_de_passe)
                 AbstractView.session.client = result_get_new_client
                 AbstractView.session.nom = self.nom
                 AbstractView.session.prenom = self.prenom

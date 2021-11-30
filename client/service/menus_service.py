@@ -10,6 +10,16 @@ class MenusService:
     # Get menus
     @staticmethod
     def getMenus_By_Id_restaurant(id_restaurant, identifiant, mdp):
+        """Permet d'obtenir les menus d'un restaurant
+
+        Args:
+            id_restaurant (str): identifiant du restaurant
+            identifiant (str): L'identifiant de l'utilisateur
+            mot_de_passe (str): Le mot de passe de l'utilisateur
+
+        Returns:
+            list: Liste de menus
+        """
         # Requête vers api get menus
         headers = {
             'accept': 'application/json',
@@ -24,6 +34,15 @@ class MenusService:
     
     @staticmethod
     def menu_to_menu_serializable(menu):
+        """Afin de faire la requête d'insertion des commandes nous avons besoin
+        de transformer les articles de chaque menu sous format dictionnaire.
+
+        Args:
+            menu ([type]): [description]
+
+        Returns:
+            dict: Dictionnaire menu dont les articles sont transformés en dictionnaie
+        """
         menu_seri = Menu_serializable(
             id_menu = menu.id_menu,
             nom = menu.nom,

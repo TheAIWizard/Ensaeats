@@ -16,10 +16,3 @@ if __name__ == '__main__':
 
         # le choix que doit saisir l'utilisateur
         current_vue = current_vue.make_choice()
-
-    
-    
-    
-    
-
-

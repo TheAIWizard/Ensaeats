@@ -10,8 +10,8 @@ class TestaddArticle(TestCase):
         """ The goal here is to test if an article is added properly in the PostgreSQL database"""
         # GIVEN
         
-        #The value 0 of the attibute id_article is given on purpose to be dealt by the auto-increment system of the database
-        article =Article(id_article=50, nom='frites aux herbes', composition='herbes de Provence', type='accompagnement')
+        #The value 0 of the attibute id_article is given on purpose to be dealt by the auto-increment system of the database : the auto_increment will give the id 1
+        article =Article(id_article=0, nom='frites aux herbes', composition='herbes de Provence', type='accompagnement')
         expected_state=True
 
         # WHEN
