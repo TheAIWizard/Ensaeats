@@ -2,18 +2,14 @@ version: "3"
 services:
   api_ensaeats_image:
     image: api_ensaeats_image
-    build: 
-      dockerfile: Dockerfile
-    links:
-      - "postgres:database"
+    depends_on:
+      - postgres
     ports:
       - 80:80
     networks:
       - monreseau
   postgres:
-    build:
-      dockerfile: Dockerfile
-      context: ./script_bdd
+    image: postgres
     volumes:
       - ./script_bdd/script_sql_bdd.sql:/docker-entrypoint-initdb.d/script_sql_bdd.sql
     env_file:
