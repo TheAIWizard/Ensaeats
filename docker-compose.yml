@@ -1,0 +1,25 @@
+version: "3"
+services:
+  api_ensaeats_image:
+    image: api_ensaeats_image
+    depends_on:
+      - postgres
+    ports:
+      - 80:80
+    networks:
+      - monreseau
+  postgres:
+    image: postgres
+    volumes:
+      - ./script_bdd/script_sql_bdd.sql:/docker-entrypoint-script_bdd.d/script_sql_bdd.sql
+    env_file:
+      - docker.env
+    ports: 
+      - "5432:5432"
+    networks:
+      - monreseau
+
+networks:
+  monreseau:
+
+

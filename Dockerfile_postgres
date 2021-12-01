@@ -1,0 +1,7 @@
+FROM postgres
+COPY ./script_bdd/script_sql_bdd.sql /docker-entrypoint-initdb.d/script_sql_bdd.sql
+CMD ["docker-entrypoint.sh", "postgres"]
+
+
+
+

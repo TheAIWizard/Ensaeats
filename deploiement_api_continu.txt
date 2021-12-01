@@ -1,0 +1,67 @@
+Project key: a0wrm90d_2hJ4TfjVfHiDQHpKx1mufLDgN2KxoRhy
+Project ID: a0wrm90d
+
+Powershell: iwr https://get.deta.dev/cli.ps1 -useb | iex ou curl -fsSL https://get.deta.dev/cli.sh | sh
+/c/Users/natha/.deta/bin/deta --help
+
+
+#résultat
+PS C:\Users\natha\Desktop\ensaeats-2\ensaeats> cd fastapideta
+PS C:\Users\natha\Desktop\ensaeats-2\ensaeats\fastapideta> deta new
+Successfully created a new micro
+{
+        "name": "ensaeats",
+        "id": "42af9b6d-e1b8-4309-a55b-56001d531624",
+        "project": "a0wrm90d",
+        "runtime": "python3.9",
+        "endpoint": "https://lyj4je.deta.dev",
+        "region": "eu-central-1",
+        "visor": "enabled",
+        "http_auth": "disabled"
+}
+Use the following Deta CLI command to clone this Micro to your local machine:
+deta clone --name fastapideta --project default
+
+
+#RUN DOCKER
+$ docker run -p 80:80 api_ensaeats_image
+# DOCKER POSTGRES
+Pas besoin de créer un conteneur pour postgre puisque
+docker dispose dékà une image de postgres
+docker run --name pg-docker --rm -p 5432:5432 -e POSTGRES_PASSWORD=docker -e POSTGRES_USER=docker -d postgres
+#LIEN ENTRE DOCKER ET POSTGRES
+Tout est defini dans le fichier docker-compose.yml
+on initialise la base avec le fichier script_sql_bdd.sql
+
+#TO DEAL WITH THE .env file
+Passing the --env-file argument overrides the default file path:
+docker-compose --env-file ./config/.env.dev config 
+#initialize db
+To init it, you need to delete every existing volumes in the
+postgre docke
+
+List all containers by id:
+
+docker container ls -qa
+
+run this to each container:
+
+docker container rm [id]
+
+And same with volumes:
+
+docker volume ls
+docker volume rm [VolumeName]
+
+
+Pour tout démarrer (faire le lien entre les 2 conteneurs),
+ on a ensuite fait "docker-compose up"
+
+ #POUR SE CONNECTER AU RESEAU DE L'ENSAI
+ dans docker-compose
+ HOST_WEBSERVICE: "${HOST_WEBSERVICE}"
+      PASSWORD: "${PASSWORD}"
+      HOST: "${HOST}"
+      PORT: "${PORT}"
+      DATABASE: "${DATABASE}"
+      USER: "${USER}"
