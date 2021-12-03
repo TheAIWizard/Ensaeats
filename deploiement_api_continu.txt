@@ -14,13 +14,14 @@ Successfully created a new micro
         "id": "42af9b6d-e1b8-4309-a55b-56001d531624",
         "project": "a0wrm90d",
         "runtime": "python3.9",
-        "endpoint": "https://lyj4je.deta.dev",
+        "endpoint": "https://oyooou.deta.dev/",
         "region": "eu-central-1",
         "visor": "enabled",
         "http_auth": "disabled"
 }
 Use the following Deta CLI command to clone this Micro to your local machine:
 deta clone --name fastapideta --project default
+
 
 #CREATE CONTAINER IMAGE OF ENSAEATS
 docker build -t api_ensaeats_image .
@@ -116,3 +117,6 @@ SCRIPT_SQL_BDD=# SELECT * FROM ensaeats.restaurant;
 SCRIPT_SQL_BDD=# SELECT * FROM ensaeats.avis;
 
 SELECT * FROM ensaeats.restaurateur WHERE identifiant='TheSmith' and mot_de_passe='92f5104020ca76336d74e6c98eab68463cb79c937435536f428ee34669d72518892fe8c8af72757204d4a1f3cd6505d03a9093013b4c0e3e517eb515b7a75e2e';
+
+FIX vmmem consumption
+Restart-Service LxssManager (admin)

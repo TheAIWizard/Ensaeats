@@ -36,6 +36,7 @@ RESTAURATEUR
 CLIENT
 
 {
+  "id_client": 0,
   "nom": "Martin",
   "prenom": "Alex",
   "adresse": "4 rue de la soif",
@@ -43,5 +44,7 @@ CLIENT
   "mot_de_passe": "KingAlex35",
   "telephone": "07.25.98.15.37"
 }
+
+
 
  """

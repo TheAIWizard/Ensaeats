@@ -4,6 +4,7 @@ services:
     image: api_ensaeats_image
     build: 
       dockerfile: Dockerfile
+      context: .
     links:
       - "postgres:database"
     ports:
