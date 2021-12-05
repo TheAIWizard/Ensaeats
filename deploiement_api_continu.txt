@@ -1,0 +1,122 @@
+Project key: a0wrm90d_2hJ4TfjVfHiDQHpKx1mufLDgN2KxoRhy
+Project ID: a0wrm90d
+
+Powershell: iwr https://get.deta.dev/cli.ps1 -useb | iex ou curl -fsSL https://get.deta.dev/cli.sh | sh
+/c/Users/natha/.deta/bin/deta --help
+
+
+#résultat
+PS C:\Users\natha\Desktop\ensaeats-2\ensaeats> cd fastapideta
+PS C:\Users\natha\Desktop\ensaeats-2\ensaeats\fastapideta> deta new
+Successfully created a new micro
+{
+        "name": "ensaeats",
+        "id": "42af9b6d-e1b8-4309-a55b-56001d531624",
+        "project": "a0wrm90d",
+        "runtime": "python3.9",
+        "endpoint": "https://oyooou.deta.dev/",
+        "region": "eu-central-1",
+        "visor": "enabled",
+        "http_auth": "disabled"
+}
+Use the following Deta CLI command to clone this Micro to your local machine:
+deta clone --name fastapideta --project default
+
+
+#CREATE CONTAINER IMAGE OF ENSAEATS
+docker build -t api_ensaeats_image .
+#RUN DOCKER
+$ docker run -p 80:80 api_ensaeats_image
+# DOCKER POSTGRES
+choose the folder script_bdd in bash command -> vim Dockerfile 
+docker build -t my-postgres-image .
+docker run -d --name postgres-own-container -p 5432:5432 my-postgres-image
+#LIEN ENTRE DOCKER ET POSTGRES
+Tout est defini dans le fichier docker-compose.yml
+on initialise la base avec le fichier script_sql_bdd.sql
+
+#TO DEAL WITH THE .env file
+Passing the --env-file argument overrides the default file path:
+docker-compose --env-file ./config/.env.dev config 
+#initialize db
+To init it, you need to delete every existing volumes in the
+postgre docker
+
+List all containers by id:
+
+docker container ls -qa
+
+run this to each container:
+
+docker container rm [id]
+
+And same with volumes:
+
+docker volume ls
+docker volume rm [VolumeName]
+
+Delete all containers using the following command:
+
+docker rm -f $(docker ps -a -q)
+
+Delete all volumes using the following command:
+
+docker volume rm $(docker volume ls -q)
+
+Restart the containers using the following command:
+
+docker-compose up -d
+
+
+
+
+Pour tout démarrer (faire le lien entre les 2 conteneurs),
+ on a ensuite fait "docker-compose up"
+
+ #POUR SE CONNECTER AU RESEAU DE L'ENSAI
+ dans docker-compose
+ HOST_WEBSERVICE: "${HOST_WEBSERVICE}"
+      PASSWORD: "${PASSWORD}"
+      HOST: "${HOST}"
+      PORT: "${PORT}"
+      DATABASE: "${DATABASE}"
+      USER: "${USER}"
+
+# read in the postgres docker to check if there's data
+docker exec -it ensaeats-postgres-1 /bin/bash
+psql -U postgres
+\d
+\c
+\l
+cat script_sql_bdd.sql
+
+
+
+
+
+psql -h localhost -p 5432 -U postgres
+\c "ENSAEATS-DB"
+set search_path to "ENSAEATS-DB";
+\dt
+
+# TO connect psycopg2 from ensaeats api to postgres you need to give the HOST
+
+#to know your ip adress
+docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
+172.25.0.3
+
+#Initialization error can't read the sql script inside the docker
+docker container top ensaeats-postgres-1
+docker container logs ensaeats-postgres-1
+
+host.docker.internal
+
+psql -U postgres -W
+\c SCRIPT_SQL_BDD
+SCRIPT_SQL_BDD=# SELECT * FROM ensaeats.restaurant;
+SCRIPT_SQL_BDD=# SELECT * FROM ensaeats.avis;
+
+SELECT * FROM ensaeats.restaurateur WHERE identifiant='TheSmith' and mot_de_passe='92f5104020ca76336d74e6c98eab68463cb79c937435536f428ee34669d72518892fe8c8af72757204d4a1f3cd6505d03a9093013b4c0e3e517eb515b7a75e2e';
+
+FIX vmmem consumption
+Restart-Service LxssManager (admin)

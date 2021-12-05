@@ -1,0 +1,30 @@
+version: "3"
+services:
+  api_ensaeats_image:
+    image: api_ensaeats_image
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    links:
+      - "postgres:database"
+    ports:
+      - 80:80
+    networks:
+      - monreseau
+  postgres:
+    build:
+      dockerfile: Dockerfile
+      context: ./script_bdd
+    volumes:
+      - ./script_bdd/script_sql_bdd.sql:/docker-entrypoint-initdb.d/script_sql_bdd.sql
+    env_file:
+      - docker.env
+    ports: 
+      - "5432:5432"
+    networks:
+      - monreseau
+
+networks:
+  monreseau:
+
+

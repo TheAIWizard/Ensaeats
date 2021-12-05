@@ -1,3 +1,4 @@
+CREATE SCHEMA ensaeats;
 CREATE TABLE ensaeats.Restaurant (
 id_restaurant text PRIMARY KEY );
 
