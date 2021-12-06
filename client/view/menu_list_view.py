@@ -18,6 +18,8 @@ class MenuListView(AbstractView):
         ## Liste des noms des menus
         self.list_nom_menu = [menu.nom for menu in self.list_menu]
         self.list_nom_menu.append(Separator())
+        self.list_nom_menu.append("Retour au restaurant")
+        self.list_nom_menu.append(Separator())
         self.list_nom_menu.append("Liste restaurant")
         self.list_nom_menu.append(Separator())
         self.list_nom_menu.append("Accueil")
@@ -59,7 +61,9 @@ class MenuListView(AbstractView):
         elif reponse['Menu'] == 'Valider la commande active':
             from client.view.valide_commande_view import Valider
             return Valider()
-
+        elif reponse['Menu'] == "Retour au restaurant":
+            from client.view.restaurant_view import RestaurantView
+            return RestaurantView()
         else: 
             ## Ajouter le menu dans la session
             index = self.list_nom_menu.index(reponse['Menu'])

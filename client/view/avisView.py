@@ -6,7 +6,8 @@ from datetime  import datetime
 
 class AvisView(AbstractView):
     def __init__(self) -> None:
-        list_choix = ['Ajouter un avis', Separator(), 'Voir les menus', Separator(), 'Liste des restaurants',Separator(), 'Accueil']
+        list_choix = ['Ajouter un avis', Separator(), 'Voir les menus', 
+        Separator(), 'Retour au restaurant', Separator(),'Liste des restaurants',Separator(), 'Accueil']
         self.question = [{
             'type': 'list',
             'name': 'Menu',
@@ -59,6 +60,9 @@ class AvisView(AbstractView):
         elif reponse['Menu'] == 'Liste des restaurants':
             from client.view.liste_restaurant_view import RestaurantListeView
             return RestaurantListeView()
+        elif reponse['Menu'] == 'Retour au restaurant':
+            from client.view.restaurant_view import RestaurantView
+            return RestaurantView()
         else: 
             ## Retour à l'accueil
             from client.view.welcom_view import WelcomeView
