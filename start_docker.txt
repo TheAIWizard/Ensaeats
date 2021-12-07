@@ -1,0 +1,9 @@
+Open 2 powershell terminals
+
+Terminal 1 : docker-compose up to turn on (to shut it down ctrl+C then docker-compose down)
+Terminal 2 : (password: postgres)
+    see the active containers: docker ps
+    enter in the postgres one: docker exec -it ensaeats_postgres_1 /bin/bash
+    access postgres in the container: psql -U postgres -W
+    access the SCRIPT_SQL_BDD db: \c SCRIPT_SQL_BDD
+    enter your request: ex --> SELECT * from ensaeats.restaurateur
