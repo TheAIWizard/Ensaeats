@@ -19,7 +19,7 @@ class DBConnection(metaclass=Singleton):
             database=os.environ["DATABASE"],
             user=os.environ["USER"],
             password=os.environ["PASSWORD"],
-            cursor_factory=RealDictCursor) 
+            cursor_factory=RealDictCursor)
         # Connect to postgres docker
         """ self.__connection =psycopg2.connect(
             dbname = "SCRIPT_SQL_BDD",
@@ -27,8 +27,8 @@ class DBConnection(metaclass=Singleton):
             host = "host.docker.internal",
             password = "postgres",
             cursor_factory=RealDictCursor
-) 
-         """
+) """
+        
 
     @property
     def connection(self):

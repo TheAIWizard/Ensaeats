@@ -4,7 +4,7 @@ from client.view.abstract_view import AbstractView
 from client.view.welcom_view import WelcomeView
 from client.service.client_service import ClientService
 from client.service.mapper import BusinessMapper
-
+import getpass
 import requests
 
 class AuthentificationView(AbstractView):
@@ -23,7 +23,7 @@ class AuthentificationView(AbstractView):
         reponse = prompt(question)
         if reponse['Menu']=='Oui':
             self.identifiant = input("Entrez votre identifiant client:   ")
-            self.mot_de_passe = input("Entrez votre mot de passe:   ")
+            self.mot_de_passe = getpass.getpass("Entrez votre mot de passe:   ")
             #sans erreur d'authentification, on passe à la view suivante
             
             self.client = ClientService.getClient(self.identifiant, self.mot_de_passe)

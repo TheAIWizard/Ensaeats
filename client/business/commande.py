@@ -55,8 +55,8 @@ class Commande (BaseModel):
         #return prix_total
     
         prix_total = 0
-        for menu in self.liste_menu:
-            prix_total += menu.prix
+        for menu,quantite in zip(self.liste_menu, self.liste_quantite):
+            prix_total += menu.prix*quantite
             
         return prix_total
     
@@ -78,7 +78,7 @@ class Commande (BaseModel):
             output += '\n'
             output += '\n'
         
-        output += "La somme à payer est : " + str(self.prix_total())
+        output += "La somme à payer est : " + str(self.prix_total()) + " Euros"
         output += '\n'
         output += '\n'
         return output
