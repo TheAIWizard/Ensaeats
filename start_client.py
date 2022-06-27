@@ -9,8 +9,9 @@ if __name__ == '__main__':
     # tant qu'on a un écran à afficher, on continue
     while current_vue:
         # on affiche une bordure pour séparer les vue
-        with open('client/view/assets/banner.txt', 'r', encoding="utf-8") as asset:
-            print(asset.read()) 
+        with open('client/view/assets/banner.txt',
+             'r', encoding="utf-8") as asset:
+            print(asset.read())
         # les infos à afficher
         current_vue.display_info()
 
