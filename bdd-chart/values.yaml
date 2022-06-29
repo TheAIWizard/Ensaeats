@@ -8,18 +8,14 @@ postgresql:
         ports:
           postgresql: 5432
   auth:
-    postgresPassword: "user"
-    username: "user"
-    password: "user"
-    database: "user"
-  extensions:
-    postgis: false
+    postgresPassword: changeme
+    username: changeme
+    password: changeme
+    database: changeme
+ 
 # primary:
-  #  initdb:
-  #   scriptsConfigMap: ./script_bdd/script_sql_bdd.sql
-  
-discoverable:
-  allow: true
+#      initdb:
+#      scriptsConfigMap: ./script_bdd/script_sql_bdd.sql
 
 security:
   networkPolicy: 

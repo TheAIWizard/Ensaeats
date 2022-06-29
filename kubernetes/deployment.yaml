@@ -14,7 +14,10 @@ spec:
     spec:
       containers:
       - name: api
-        image: aiflowzone/ensaeats_2021:latest
-     # imagePullSecrets:
-     # - name: regcred
+        image: aiflowzone/ensaeats:27.06.2022
+        envFrom: 
+        - secretRef:
+            name: secret-api
+        
+    
      
