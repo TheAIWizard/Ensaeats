@@ -8,10 +8,10 @@ postgresql:
         ports:
           postgresql: 5432
   auth:
-    postgresPassword: changeme
-    username: changeme
-    password: changeme
-    database: changeme
+    postgresPassword: eyerys
+    username: user
+    password: eyerys
+    database: bdd
  
 # primary:
 #      initdb:
