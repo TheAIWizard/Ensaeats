@@ -8,14 +8,15 @@ from api.utils.singleton import Singleton
 
 class DBConnection(metaclass=Singleton):
     """
-    La classe DBConnection est la super classe permettant de faire la connexion avec notre base de données.
+    La classe DBConnection est la super classe permettant de faire la
+    connexion avec notre base de données.
     """
     def __init__(self):
         dotenv.load_dotenv(override=True)
-        # Open the connection to the ENSAI postgres server. 
+        # Open the connection to the ENSAI postgres server.
         self.__connection = psycopg2.connect(
-            host=os.environ["HOST"],
-            port=os.environ["PORT"],
+            host=os.environ["DB_HOST"],
+            port=os.environ["DB_PORT"],
             database=os.environ["DATABASE"],
             user=os.environ["USER"],
             password=os.environ["PASSWORD"],
@@ -28,7 +29,6 @@ class DBConnection(metaclass=Singleton):
             password = "postgres",
             cursor_factory=RealDictCursor
 ) """
-        
 
     @property
     def connection(self):

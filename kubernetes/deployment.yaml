@@ -15,7 +15,7 @@ spec:
       containers:
       - name: api
         image: aiflowzone/ensaeats:27.06.2022
-        imagePullPolicy: Always
+        imagePullPolicy: Always #effet de cache
         envFrom: 
         - secretRef:
             name: secret-api
