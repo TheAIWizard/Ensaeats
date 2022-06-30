@@ -13,10 +13,10 @@ postgresql:
     password: eyerys
     database: bdd
  
-# primary:
-#      initdb:
-#      scriptsConfigMap: ./script_bdd/script_sql_bdd.sql
-
+# extendedConfConfigMap:
+  #  initdbScripts:
+   #   my_init_script.sql: |
 security:
   networkPolicy: 
     enabled: true
+
