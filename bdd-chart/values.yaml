@@ -13,10 +13,27 @@ postgresql:
     password: eyerys
     database: bdd
  
-# extendedConfConfigMap:
-  #  initdbScripts:
-   #   my_init_script.sql: |
 security:
   networkPolicy: 
     enabled: true
+
+primary:
+    extraVolumes:
+      - name: dump
+        emptyDir: {}
+    initContainers: 
+      - name: load-dump
+        image: minio/mc
+        imagePullPolicy: Always
+        command: ["mc"]
+        args: ["cp", "toto/nrandriamanana/script_sql_bdd.sql", "/data/"]
+        env:
+          - name: MC_HOST_toto
+            value: "https://YXGVlEPBDIN5SxAh:uLR246ioJv6euyKsSCtWCpeEfI9nm0vZ@minio.lab.sspcloud.fr"
+        volumeMounts:
+          - mountPath: /data
+            name: dump
+    extraVolumeMounts: 
+      - mountPath: /docker-entrypoint-initdb.d
+        name: dump
 

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-persistence
+spec:
+  selector:
+    app: postgres-persistence
+  ports:
+  - port: 5432
+    targetPort: 5432

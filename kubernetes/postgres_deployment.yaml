@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-persistence
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-persistence
+  template:
+    metadata:
+      labels:
+        app: postgres-persistence
+    spec:
+      initContainers:
+        - name: load-dump
+          image: minio/mc
+          imagePullPolicy: Always
+          command: ["mc"]
+          args: ["cp", "toto/nrandriamanana/script_sql_bdd.sql", "/data/"]
+          env:
+            - name: MC_HOST_toto
+              value: "https://YXGVlEPBDIN5SxAh:uLR246ioJv6euyKsSCtWCpeEfI9nm0vZ@minio.lab.sspcloud.fr"
+          volumeMounts:
+            - mountPath: /data
+              name: dump
+      containers:
+      - name: postgres-persistence
+        image: postgres:14.4
+        env:
+          - name: POSTGRES_PASSWORD
+            value: eyerys
+          - name: PASSWORD
+            value: eyerys
+          - name: POSTGRES_USER
+            value: user
+          - name: USER
+            value: user
+          - name: POSTGRES_DB
+            value: bdd
+          - name: DB_HOST
+            value: postgres-persistence
+        volumeMounts:
+          - name: postgres-persistence-volume
+            mountPath: /var/lib/postgresql/data
+            subPath: portal #trick un peu arnaque pour éviter le dossier lost+found
+          - name: dump
+            mountPath: /docker-entrypoint-initdb.d
+      volumes:
+      - name: postgres-persistence-volume
+        persistentVolumeClaim:
+          claimName: pvc
+      - name: dump
+        emptyDir: {}
+  
+
+
+#access_key: YXGVlEPBDIN5SxAh
+# secret_key:uLR246ioJv6euyKsSCtWCpeEfI9nm0vZ
+
+#avoir credentials temporaires: env | grep -i mc
+#si privé: mc alias set toto https://minio.lab.sspcloud.fr access_key secret_key
+#si publique :  wget https://minio.lab.sspcloud.fr/nrandriamanana/script_sql_bdd.sql -O /tmp/oto.sql
+#copier et coller dans le bucket : mc cp toto s3/nrandriamanana/toto  (alias/nrandriamanana/toto)
+#importer depuis le bucket: mc cp s3/nrandriamanana/script_sql_bdd.sql .
+
+#check crédential créé pour accès au bucket: env | grep -i mc
