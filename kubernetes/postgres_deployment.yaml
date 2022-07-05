@@ -19,27 +19,30 @@ spec:
           command: ["mc"]
           args: ["cp", "toto/nrandriamanana/script_sql_bdd.sql", "/data/"]
           env:
-            - name: MC_HOST_toto
-              value: "https://YXGVlEPBDIN5SxAh:uLR246ioJv6euyKsSCtWCpeEfI9nm0vZ@minio.lab.sspcloud.fr"
+           - name: MC_HOST_toto
+             valueFrom:
+              secretKeyRef:
+                name: secret-cred-mc
+                key: MC_HOST_toto
+                optional: false # same as default; "mysecret" must exist
+                                  # and include a key named "username 
           volumeMounts:
             - mountPath: /data
               name: dump
       containers:
       - name: postgres-persistence
         image: postgres:14.4
+        envFrom: 
+        - configMapRef:
+            name: configmap-postgres
         env:
-          - name: POSTGRES_PASSWORD
-            value: eyerys
-          - name: PASSWORD
-            value: eyerys
-          - name: POSTGRES_USER
-            value: user
-          - name: USER
-            value: user
-          - name: POSTGRES_DB
-            value: bdd
-          - name: DB_HOST
-            value: postgres-persistence
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-api
+              key: POSTGRES_PASSWORD
+              optional: false # same as default; "mysecret" must exist
+                                      # and include a key named "username 
         volumeMounts:
           - name: postgres-persistence-volume
             mountPath: /var/lib/postgresql/data
@@ -52,16 +55,7 @@ spec:
           claimName: pvc
       - name: dump
         emptyDir: {}
+
+      
   
 
-
-#access_key: YXGVlEPBDIN5SxAh
-# secret_key:uLR246ioJv6euyKsSCtWCpeEfI9nm0vZ
-
-#avoir credentials temporaires: env | grep -i mc
-#si privé: mc alias set toto https://minio.lab.sspcloud.fr access_key secret_key
-#si publique :  wget https://minio.lab.sspcloud.fr/nrandriamanana/script_sql_bdd.sql -O /tmp/oto.sql
-#copier et coller dans le bucket : mc cp toto s3/nrandriamanana/toto  (alias/nrandriamanana/toto)
-#importer depuis le bucket: mc cp s3/nrandriamanana/script_sql_bdd.sql .
-
-#check crédential créé pour accès au bucket: env | grep -i mc
