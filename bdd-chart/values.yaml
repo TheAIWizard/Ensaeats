@@ -1,39 +1,25 @@
-postgresql:
-  image:
-    tag: "14"
-    pullPolicy: IfNotPresent
-  global:
-    postgresql:
-      service: 
-        ports:
-          postgresql: 5432
-  auth:
-    postgresPassword: eyerys
-    username: user
-    password: eyerys
-    database: bdd
- 
-security:
-  networkPolicy: 
-    enabled: true
-
 primary:
-    extraVolumes:
+  persistence:
+    #enabled: false
+    size: 1Gi
+  initContainers:
+    - name: load-dump
+      image: minio/mc
+      imagePullPolicy: Always
+      command: ["mc"]
+      args: ["cp", "toto/nrandriamanana/script_sql_bdd.sql", "/data/"]
+      env:
+        - name: MC_HOST_toto
+          valueFrom:
+            secretKeyRef:
+              name: secret-cred-mc
+              key: MC_HOST_toto
+      volumeMounts:
+            - mountPath: /data
+              name: dump
+  extraVolumes:
+    - name: dump
+      emptyDir: {}
+  extraVolumeMounts:
       - name: dump
-        emptyDir: {}
-    initContainers: 
-      - name: load-dump
-        image: minio/mc
-        imagePullPolicy: Always
-        command: ["mc"]
-        args: ["cp", "toto/nrandriamanana/script_sql_bdd.sql", "/data/"]
-        env:
-          - name: MC_HOST_toto
-            value: "https://YXGVlEPBDIN5SxAh:uLR246ioJv6euyKsSCtWCpeEfI9nm0vZ@minio.lab.sspcloud.fr"
-        volumeMounts:
-          - mountPath: /data
-            name: dump
-    extraVolumeMounts: 
-      - mountPath: /docker-entrypoint-initdb.d
-        name: dump
-
+        mountPath: /docker-entrypoint-initdb.d
