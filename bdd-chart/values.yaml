@@ -23,3 +23,7 @@ primary:
   extraVolumeMounts:
       - name: dump
         mountPath: /docker-entrypoint-initdb.d
+postgresql:
+  auth:
+    existingSecret: secret-api
+  #fullnameOverride: postgres-persistence
