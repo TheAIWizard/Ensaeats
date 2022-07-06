@@ -23,7 +23,8 @@ primary:
   extraVolumeMounts:
     - name: dump
       mountPath: /docker-entrypoint-initdb.d
-postgresql:
-  auth:
-    existingSecret: secret-postgres-bitnami
-    fullnameOverride: bdd
+global:
+  postgresql:
+    auth:
+      existingSecret: secret-postgres-bitnami
+      fullnameOverride: bdd
