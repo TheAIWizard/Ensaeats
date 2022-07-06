@@ -15,15 +15,15 @@ primary:
               name: secret-cred-mc
               key: MC_HOST_toto
       volumeMounts:
-            - mountPath: /data
-              name: dump
+        - mountPath: /data
+          name: dump
   extraVolumes:
     - name: dump
       emptyDir: {}
   extraVolumeMounts:
-      - name: dump
-        mountPath: /docker-entrypoint-initdb.d
+    - name: dump
+      mountPath: /docker-entrypoint-initdb.d
 postgresql:
   auth:
-    existingSecret: secret-api
-  #fullnameOverride: postgres-persistence
+    existingSecret: secret-postgres-bitnami
+    fullnameOverride: bdd

@@ -18,7 +18,7 @@ spec:
         imagePullPolicy: Always #effet de cache
         envFrom: 
         - secretRef:
-            name: secret-api
+            name: secret-postgres-bitnami
         
     
      

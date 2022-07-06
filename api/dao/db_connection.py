@@ -18,7 +18,7 @@ class DBConnection(metaclass=Singleton):
             host=os.environ["DB_HOST"],
             port=os.environ["DB_PORT"],
             database=os.environ["DATABASE"],
-            user=os.environ["USER"],
+            # user=os.environ["USER"],
             password=os.environ["PASSWORD"],
             cursor_factory=RealDictCursor)
         # Connect to postgres docker
