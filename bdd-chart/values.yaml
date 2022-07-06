@@ -1,30 +1,33 @@
-primary:
-  persistence:
-    #enabled: false
-    size: 1Gi
-  initContainers:
-    - name: load-dump
-      image: minio/mc
-      imagePullPolicy: Always
-      command: ["mc"]
-      args: ["cp", "toto/nrandriamanana/script_sql_bdd.sql", "/data/"]
-      env:
-        - name: MC_HOST_toto
-          valueFrom:
-            secretKeyRef:
-              name: secret-cred-mc
-              key: MC_HOST_toto
-      volumeMounts:
-        - mountPath: /data
-          name: dump
-  extraVolumes:
-    - name: dump
-      emptyDir: {}
-  extraVolumeMounts:
-    - name: dump
-      mountPath: /docker-entrypoint-initdb.d
-global:
-  postgresql:
-    auth:
-      existingSecret: secret-postgres-bitnami
-      fullnameOverride: bdd
+postgresql:
+  primary:
+    persistence:
+      #enabled: false
+      size: 1Gi
+    initContainers:
+      - name: load-dump
+        image: minio/mc
+        imagePullPolicy: Always
+        command: ["mc"]
+        args: ["cp", "toto/nrandriamanana/script_sql_bdd.sql", "/data/"]
+        env:
+          - name: MC_HOST_toto
+            valueFrom:
+              secretKeyRef:
+                name: secret-cred-mc
+                key: MC_HOST_toto
+        volumeMounts:
+          - mountPath: /data
+            name: dump
+    extraVolumes:
+      - name: dump
+        emptyDir: {}
+    extraVolumeMounts:
+      - name: dump
+        mountPath: /docker-entrypoint-initdb.d
+  global:
+    postgresql:
+      auth:
+        username: user
+        database: ensaeats
+        existingSecret: secret-postgres-bitnami
+        fullnameOverride: bdd
