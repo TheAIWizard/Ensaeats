@@ -1,5 +1,6 @@
 # EnsaEats
 
+<img src="./EnsaEats.png">
 
 ## Installation
 
