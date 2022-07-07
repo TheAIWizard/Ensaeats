@@ -49,7 +49,7 @@ go to your favourite browser and type : 'localhost:port/docs' --> example : 'loc
 ### Acces the UI (FOR CLIENTS): launch the interface locally (views)
 
 ```shell 
-python
+python start_client.py
 ```
 execute the start_client.py file on on terminal and start_api.py on another one
 
