@@ -19,7 +19,7 @@ class DBConnection(metaclass=Singleton):
             port=os.environ["DB_PORT"],
             database=os.environ["DATABASE"],
             user=os.environ["USER"],
-            password=os.environ["PASSWORD"],
+            password=os.environ["postgres-password"],
             cursor_factory=RealDictCursor)
         # Connect to postgres docker
         """ self.__connection = psycopg2.connect(
