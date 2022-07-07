@@ -20,5 +20,17 @@ spec:
         - secretRef:
             name: secret-postgres-bitnami
         
-    
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: secret-postgres-bitnami
+# type: Opaque
+# stringData:
+#   password: ****
+#   postgres-password: ****
+#   replication-password: ****
+#   DB_HOST: bdd-postgresql
+#   DB_PORT: "5432"
+#   DATABASE: ensaeats
+#   USER: user
      

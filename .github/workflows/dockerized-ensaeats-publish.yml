@@ -28,4 +28,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ensaeats:05.07.2022
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ensaeats:helm-postgresql
