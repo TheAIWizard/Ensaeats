@@ -2,12 +2,20 @@
 
 <img src="./EnsaEats.png">
 
+EnsaEats is an app developed by student for the students which aims to connect the restorers and their clients. It's an academic project aiming at teaching the second-year student at ENSAI how to design their own API using Python. 
+
+EnsaEats was originally meant to run locally on student's own computer for a pure academic purpose.
+In this repo, the project is powered by Docker, Kubernetes and Helm to be deployed online and be more scalable and customizable.
+
 ## Installation
 
-EnsaEats is an app developed by student for the students which aims to connect the restorers and their clients
+If you want to install the app locally, you need to clone the project (for example):
 
+```shell 
+git clone https://github.com/TheAIWizard/Ensaeats.git
+``` 
 
-you need to load 
+Then, on your terminal, you need to load 
 
 ```shell 
 pip install -r requirements.txt
@@ -26,33 +34,34 @@ In order to request one of these endpoints, you can :
 
 Tip: using the built-in interface will help you to get the accurate curl request
 
-### FOR RESTORERS: launch the built-in interface locally 
+### Access the API (FOR RESTORERS): launch the built-in interface locally 
+
+Execute the start_api.py file in the project root:
 
 ```shell 
-python
+python start_api.py
 ```
-execute the start_api.py file 
+In this file, choose the appropriate port (default:80 but 5000 works too)
 
-choose the appropriate port (default:80 but on VM 5000 works too)
-
-go to your favourite browser and tap : 'localhost:port/docs' --> example : 'localhost:80/docs'
+go to your favourite browser and type : 'localhost:port/docs' --> example : 'localhost:80/docs'
 
 
-### FOR CLIENTS: launch the interface locally (views)
+### Acces the UI (FOR CLIENTS): launch the interface locally (views)
 
 ```shell 
 python
 ```
 execute the start_client.py file on on terminal and start_api.py on another one
 
-### Still to come: launch the built-in interface on a remote cloud from any laptop (still need privilege to access the ENSAI Network)
+### Deploy the built-in API and interface on a remote cloud from any laptop
 
-go to your favourite browser and write : https ://oyooou.deta.dev/docs
+The API and UI are deployed on the SSP Cloud (an instance of the open source project Onyxia developed by the DIIT team from The National Institute of Statistics and Economic Studie) powered by a Kubernetes cluster.
 
-```shell 
-deta
-```
+If you have a kubernetes cluster and a domain host, you can choose the DNS in the ingress.yaml file
+(kubernetes approach)
 
-to connect : executes deta login
+(Helm still to come)
 
-the files main.py and the folder deta are used to deploy the app on a remote cloud
+Access the API developed by the students for the project: you can go to your favourite browser and type https://ensaeats-api.lab.sspcloud.fr/docs 
+
+Access the UI: (still to come)
