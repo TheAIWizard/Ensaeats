@@ -2,5 +2,8 @@ dependencies:
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
   version: 11.0.2
-digest: sha256:742c240354e60231210ebef2bf64cec6de43882780852fc6e066e5faea40e8fc
-generated: "2022-06-29T11:21:06.894704066Z"
+- name: library-chart
+  repository: https://inseefrlab.github.io/helm-charts-datascience
+  version: 2.0.20
+digest: sha256:9d3ed852b91f4b8cf47dcc5cc7dd47ff8558fd26faaad15c63c1207c2481efd8
+generated: "2022-07-08T12:04:29.975648682Z"
