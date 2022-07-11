@@ -73,7 +73,7 @@ s3:
   sessionToken: ""
 
 postgresql:
-  enabled: false
+  enabled: true
   primary:
     persistence:
       #enabled: false
